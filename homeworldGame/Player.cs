@@ -4,7 +4,6 @@ namespace homeworld
 {
     public class Player : Entity
     {
-
         public Player (string name = "jod", XY location = new XY())
         {
             Name = name;
@@ -30,7 +29,8 @@ namespace homeworld
                 {
                     Console.WriteLine($"You're already there!");
                     return;
-                } else 
+                }
+                else 
                 {
                     // Check that the X and Y are between -1 and 1
                     Location = targetLocation;
@@ -44,7 +44,8 @@ namespace homeworld
             if(Room.Exists(newLocation))
             {
                 Move(newLocation);
-            } else
+            }
+            else
             {
                 Console.WriteLine($"You cannot move in that direction.");
             }

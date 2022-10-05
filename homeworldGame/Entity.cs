@@ -3,7 +3,7 @@ namespace homeworld
     public class Entity : IExists
     {
         [Flags]
-        public enum Status
+        public enum EntityFlags
         {
             None = 0,
             Dead = 1
@@ -31,7 +31,7 @@ namespace homeworld
             }
         }
         public List<Item> Inventory { get; }
-        public Status EntityStatus { get; set; }
+        public EntityFlags EntityStatus { get; set; }
 
         public Entity(string name = "jort", XY location = new XY(), string description = "")
         {
@@ -40,7 +40,7 @@ namespace homeworld
             Health = 10;
             Location = location;
             Inventory = new List<Item>();
-            EntityStatus = Status.None;
+            EntityStatus = EntityFlags.None;
         }
 
         // METHODS
@@ -53,7 +53,7 @@ namespace homeworld
         public void Die()
         {
             Health = 0;
-            EntityStatus = Status.Dead;
+            EntityStatus = EntityFlags.Dead;
         }
 
         public void DropItem(Item droppedItem)
@@ -69,17 +69,17 @@ namespace homeworld
 
         public void GetItem(Item gotItem)
         {
-            Room thisRoom = Room.GetRoom(Location);
-            if (thisRoom!.Inventory.Contains(gotItem))
+            //Room thisRoom = Room.GetRoom(Location);
+            //if (thisRoom!.Inventory.Contains(gotItem))
             {
                 Inventory.Add(gotItem);
-                thisRoom.Inventory.Remove(gotItem);
+                //thisRoom.Inventory.Remove(gotItem);
             }
         }
 
         public void HarvestFrom(Plant plant)
         {
-            if (plant.PlantStatus == Plant.Status.Harvestable)
+            if (plant.PlantStatus == Plant.PlantFlags.Harvestable)
             {
                 Item myItem = plant.Harvest();
             }
