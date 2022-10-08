@@ -1,6 +1,6 @@
 namespace homeworld
 {
-    public struct XY
+    public class XY : IComponent
     {
         public int X { get; }
         public int Y { get; }
@@ -12,6 +12,12 @@ namespace homeworld
 
         // METHODS
 
+        public override string ToString()
+        {
+            return $"({X},{Y})";
+        }
+
+/*
         public static XY CheckDirection(string direction)
         {
             XY coords;
@@ -42,15 +48,11 @@ namespace homeworld
             return result;
         }
 
-        public override string ToString()
-        {
-            return $"({X},{Y})";
-        }
-
         public static XY Translate(XY myLocation, XY translationVector)
         {
             XY result = new XY((myLocation.X + translationVector.X), (myLocation.Y + translationVector.Y));
             return result;
         }
+*/
     }
 }

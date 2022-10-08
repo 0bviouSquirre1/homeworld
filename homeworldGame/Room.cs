@@ -16,14 +16,14 @@ namespace homeworld
         }
         
         public string Name { get; set; }
-        public Room(XY location = new XY())
+        /*public Room(XY location = new XY())
         {
             Location = location;
             Name = "(blank)";
             Description = "";
             Inventory = new List<Item>();
             Map.GetOrAdd(Location, this);
-        }
+        }*/
 
         // METHODS
 
@@ -67,10 +67,10 @@ namespace homeworld
             return false;
         }
 
-        public static Room GetRoom(XY location)
+        /*public static Room GetRoom(XY location)
         {
             Room thisRoom = Room.Map.GetOrAdd(location, new Room(location));
             return thisRoom;
-        }
+        }*/
     }
 }

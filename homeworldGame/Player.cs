@@ -4,12 +4,12 @@ namespace homeworld
 {
     public class Player : Entity
     {
-        public Player (string name = "jod", XY location = new XY())
+        /* public Player (string name = "jod", XY location = new XY())
         {
             Name = name;
             Location = location;
             Description = "a strapping young adventurer bound for glory or a hole";
-        }
+        } */
 
         // METHODS
 
@@ -37,7 +37,7 @@ namespace homeworld
                 }
             }
         }
-        public void Move(string direction)
+        /*public void Move(string direction)
         {
             XY coords = XY.CheckDirection(direction);
             XY newLocation = XY.Translate(Location, coords);
@@ -49,6 +49,6 @@ namespace homeworld
             {
                 Console.WriteLine($"You cannot move in that direction.");
             }
-        }
+        }*/
     }
 }

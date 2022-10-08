@@ -33,7 +33,7 @@ namespace homeworld
         public List<Item> Inventory { get; }
         public EntityFlags EntityStatus { get; set; }
 
-        public Entity(string name = "jort", XY location = new XY(), string description = "")
+        /*public Entity(string name = "jort", XY location = new XY(), string description = "")
         {
             Name = name;
             Description = description;
@@ -41,7 +41,7 @@ namespace homeworld
             Location = location;
             Inventory = new List<Item>();
             EntityStatus = EntityFlags.None;
-        }
+        }*/
 
         // METHODS
 
@@ -56,7 +56,7 @@ namespace homeworld
             EntityStatus = EntityFlags.Dead;
         }
 
-        public void DropItem(Item droppedItem)
+        /*public void DropItem(Item droppedItem)
         {
             Room thisRoom = Room.GetRoom(Location);
             if (Inventory.Contains(droppedItem))
@@ -65,7 +65,7 @@ namespace homeworld
                 Inventory.Remove(droppedItem);
                 Console.WriteLine($"{droppedItem.Name}");
             }
-        }
+        }*/
 
         public void GetItem(Item gotItem)
         {

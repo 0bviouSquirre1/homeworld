@@ -1,4 +1,4 @@
-using NUnit.Framework;
+/*using NUnit.Framework;
 using homeworld;
 using System.Collections.Generic;
 
@@ -98,4 +98,4 @@ public class RoomTests
         // Assert
         Assert.That(result.Location, Is.EqualTo(room.Location));
     }
-}
+}*/

@@ -29,12 +29,12 @@
             } */
           
             // Create player
-            Player player = new Player("jeans", new XY());
+            // Player player = new Player("jeans", new XY());
 
-            bool exit = false;
+            // bool exit = false;
 
             // Main body of the program happens in this loop
-            do
+            /*do
             {
                 // Get {input} from the user, verify and chop it up
                 Room viewRoom = Room.GetRoom(player.Location);
@@ -58,7 +58,7 @@
                         break;
                 }
             }
-            while (!exit);
+            while (!exit); */
         }
 
         internal static (string,string,string[]) HandleUserInput(string input)

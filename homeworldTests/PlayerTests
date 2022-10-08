@@ -4,7 +4,7 @@ using System;
 
 
 // These test the basic interactions of the Player class with the fabric of the universe
-[TestFixture]
+/*[TestFixture]
 public class PlayerTests { 
     private Player player;
     private Item sword = new Item("a rusty sword");
@@ -79,4 +79,4 @@ public class PlayerTests {
         // Assert that the player's location has changed
         Assert.AreEqual(player.Location, location);
     }
-}
+}*/
