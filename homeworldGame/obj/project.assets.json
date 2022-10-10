@@ -2,134 +2,78 @@
   "version": 3,
   "targets": {
     "net6.0": {
-      "Castle.Core/5.1.0": {
-        "type": "package",
-        "dependencies": {
-          "System.Diagnostics.EventLog": "6.0.0"
-        },
-        "compile": {
-          "lib/net6.0/Castle.Core.dll": {}
-        },
-        "runtime": {
-          "lib/net6.0/Castle.Core.dll": {}
-        }
-      },
-      "Moq/4.18.2": {
-        "type": "package",
-        "dependencies": {
-          "Castle.Core": "5.1.0"
-        },
-        "compile": {
-          "lib/net6.0/Moq.dll": {}
-        },
-        "runtime": {
-          "lib/net6.0/Moq.dll": {}
-        }
-      },
-      "System.Diagnostics.EventLog/6.0.0": {
+      "Stub.System.Data.SQLite.Core.NetStandard/1.0.116": {
         "type": "package",
         "compile": {
-          "lib/net6.0/System.Diagnostics.EventLog.dll": {}
+          "lib/netstandard2.1/System.Data.SQLite.dll": {}
         },
         "runtime": {
-          "lib/net6.0/System.Diagnostics.EventLog.dll": {}
-        },
-        "build": {
-          "buildTransitive/netcoreapp3.1/_._": {}
+          "lib/netstandard2.1/System.Data.SQLite.dll": {}
         },
         "runtimeTargets": {
-          "runtimes/win/lib/net6.0/System.Diagnostics.EventLog.Messages.dll": {
-            "assetType": "runtime",
-            "rid": "win"
+          "runtimes/linux-x64/native/SQLite.Interop.dll": {
+            "assetType": "native",
+            "rid": "linux-x64"
           },
-          "runtimes/win/lib/net6.0/System.Diagnostics.EventLog.dll": {
-            "assetType": "runtime",
-            "rid": "win"
+          "runtimes/osx-x64/native/SQLite.Interop.dll": {
+            "assetType": "native",
+            "rid": "osx-x64"
+          },
+          "runtimes/win-x64/native/SQLite.Interop.dll": {
+            "assetType": "native",
+            "rid": "win-x64"
+          },
+          "runtimes/win-x86/native/SQLite.Interop.dll": {
+            "assetType": "native",
+            "rid": "win-x86"
           }
+        }
+      },
+      "System.Data.SQLite.Core/1.0.116": {
+        "type": "package",
+        "dependencies": {
+          "Stub.System.Data.SQLite.Core.NetStandard": "[1.0.116]"
         }
       }
     }
   },
   "libraries": {
-    "Castle.Core/5.1.0": {
-      "sha512": "31UJpTHOiWq95CDOHazE3Ub/hE/PydNWsJMwnEVTqFFP4WhAugwpaVGxzOxKgNeSUUeqS2W6lxV+q7u1pAOfXg==",
+    "Stub.System.Data.SQLite.Core.NetStandard/1.0.116": {
+      "sha512": "VEe/vzvn2ECKovtyb+nf8fsnNQ4EYOUms7gnp9729NN7FSR/0v/uVoBDO7DETzV7YCquRVwRnSnYuoOwAoTEKA==",
       "type": "package",
-      "path": "castle.core/5.1.0",
+      "path": "stub.system.data.sqlite.core.netstandard/1.0.116",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "ASL - Apache Software Foundation License.txt",
-        "CHANGELOG.md",
-        "LICENSE",
-        "castle-logo.png",
-        "castle.core.5.1.0.nupkg.sha512",
-        "castle.core.nuspec",
-        "lib/net462/Castle.Core.dll",
-        "lib/net462/Castle.Core.xml",
-        "lib/net6.0/Castle.Core.dll",
-        "lib/net6.0/Castle.Core.xml",
-        "lib/netstandard2.0/Castle.Core.dll",
-        "lib/netstandard2.0/Castle.Core.xml",
-        "lib/netstandard2.1/Castle.Core.dll",
-        "lib/netstandard2.1/Castle.Core.xml",
-        "readme.txt"
+        "lib/netstandard2.0/System.Data.SQLite.dll",
+        "lib/netstandard2.0/System.Data.SQLite.dll.altconfig",
+        "lib/netstandard2.0/System.Data.SQLite.xml",
+        "lib/netstandard2.1/System.Data.SQLite.dll",
+        "lib/netstandard2.1/System.Data.SQLite.dll.altconfig",
+        "lib/netstandard2.1/System.Data.SQLite.xml",
+        "runtimes/linux-x64/native/SQLite.Interop.dll",
+        "runtimes/osx-x64/native/SQLite.Interop.dll",
+        "runtimes/win-x64/native/SQLite.Interop.dll",
+        "runtimes/win-x86/native/SQLite.Interop.dll",
+        "stub.system.data.sqlite.core.netstandard.1.0.116.nupkg.sha512",
+        "stub.system.data.sqlite.core.netstandard.nuspec"
       ]
     },
-    "Moq/4.18.2": {
-      "sha512": "SjxKYS5nX6prcaT8ZjbkONh3vnh0Rxru09+gQ1a07v4TM530Oe/jq3Q4dOZPfo1wq0LYmTgLOZKrqRfEx4auPw==",
+    "System.Data.SQLite.Core/1.0.116": {
+      "sha512": "djwmo97syWCpUPJbDS0e2qUFUa8cDLeIfMotVkaRkAC5gpfBSZLMzvoLkLp1prY8waAuH1jEC3wcB2ymVVQWtA==",
       "type": "package",
-      "path": "moq/4.18.2",
+      "path": "system.data.sqlite.core/1.0.116",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "lib/net462/Moq.dll",
-        "lib/net462/Moq.xml",
-        "lib/net6.0/Moq.dll",
-        "lib/net6.0/Moq.xml",
-        "lib/netstandard2.0/Moq.dll",
-        "lib/netstandard2.0/Moq.xml",
-        "lib/netstandard2.1/Moq.dll",
-        "lib/netstandard2.1/Moq.xml",
-        "moq.4.18.2.nupkg.sha512",
-        "moq.nuspec",
-        "moq.png"
-      ]
-    },
-    "System.Diagnostics.EventLog/6.0.0": {
-      "sha512": "lcyUiXTsETK2ALsZrX+nWuHSIQeazhqPphLfaRxzdGaG93+0kELqpgEHtwWOlQe7+jSFnKwaCAgL4kjeZCQJnw==",
-      "type": "package",
-      "path": "system.diagnostics.eventlog/6.0.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "Icon.png",
-        "LICENSE.TXT",
-        "THIRD-PARTY-NOTICES.TXT",
-        "buildTransitive/netcoreapp2.0/System.Diagnostics.EventLog.targets",
-        "buildTransitive/netcoreapp3.1/_._",
-        "lib/net461/System.Diagnostics.EventLog.dll",
-        "lib/net461/System.Diagnostics.EventLog.xml",
-        "lib/net6.0/System.Diagnostics.EventLog.dll",
-        "lib/net6.0/System.Diagnostics.EventLog.xml",
-        "lib/netcoreapp3.1/System.Diagnostics.EventLog.dll",
-        "lib/netcoreapp3.1/System.Diagnostics.EventLog.xml",
-        "lib/netstandard2.0/System.Diagnostics.EventLog.dll",
-        "lib/netstandard2.0/System.Diagnostics.EventLog.xml",
-        "runtimes/win/lib/net6.0/System.Diagnostics.EventLog.Messages.dll",
-        "runtimes/win/lib/net6.0/System.Diagnostics.EventLog.dll",
-        "runtimes/win/lib/net6.0/System.Diagnostics.EventLog.xml",
-        "runtimes/win/lib/netcoreapp3.1/System.Diagnostics.EventLog.Messages.dll",
-        "runtimes/win/lib/netcoreapp3.1/System.Diagnostics.EventLog.dll",
-        "runtimes/win/lib/netcoreapp3.1/System.Diagnostics.EventLog.xml",
-        "system.diagnostics.eventlog.6.0.0.nupkg.sha512",
-        "system.diagnostics.eventlog.nuspec",
-        "useSharedDesignerContext.txt"
+        "system.data.sqlite.core.1.0.116.nupkg.sha512",
+        "system.data.sqlite.core.nuspec"
       ]
     }
   },
   "projectFileDependencyGroups": {
     "net6.0": [
-      "Moq >= 4.18.2"
+      "System.Data.SQLite.Core >= 1.0.116"
     ]
   },
   "packageFolders": {
@@ -169,9 +113,9 @@
       "net6.0": {
         "targetAlias": "net6.0",
         "dependencies": {
-          "Moq": {
+          "System.Data.SQLite.Core": {
             "target": "Package",
-            "version": "[4.18.2, )"
+            "version": "[1.0.116, )"
           }
         },
         "imports": [

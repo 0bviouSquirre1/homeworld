@@ -2,18 +2,6 @@
   "version": 3,
   "targets": {
     "net6.0": {
-      "Castle.Core/5.1.0": {
-        "type": "package",
-        "dependencies": {
-          "System.Diagnostics.EventLog": "6.0.0"
-        },
-        "compile": {
-          "lib/net6.0/Castle.Core.dll": {}
-        },
-        "runtime": {
-          "lib/net6.0/Castle.Core.dll": {}
-        }
-      },
       "coverlet.collector/3.1.0": {
         "type": "package",
         "build": {
@@ -344,18 +332,6 @@
           "build/netcoreapp2.1/Microsoft.TestPlatform.TestHost.props": {}
         }
       },
-      "Moq/4.18.2": {
-        "type": "package",
-        "dependencies": {
-          "Castle.Core": "5.1.0"
-        },
-        "compile": {
-          "lib/net6.0/Moq.dll": {}
-        },
-        "runtime": {
-          "lib/net6.0/Moq.dll": {}
-        }
-      },
       "NETStandard.Library/2.0.0": {
         "type": "package",
         "dependencies": {
@@ -434,6 +410,33 @@
           "build/netcoreapp2.1/NUnit3TestAdapter.props": {}
         }
       },
+      "Stub.System.Data.SQLite.Core.NetStandard/1.0.116": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/System.Data.SQLite.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.1/System.Data.SQLite.dll": {}
+        },
+        "runtimeTargets": {
+          "runtimes/linux-x64/native/SQLite.Interop.dll": {
+            "assetType": "native",
+            "rid": "linux-x64"
+          },
+          "runtimes/osx-x64/native/SQLite.Interop.dll": {
+            "assetType": "native",
+            "rid": "osx-x64"
+          },
+          "runtimes/win-x64/native/SQLite.Interop.dll": {
+            "assetType": "native",
+            "rid": "win-x64"
+          },
+          "runtimes/win-x86/native/SQLite.Interop.dll": {
+            "assetType": "native",
+            "rid": "win-x86"
+          }
+        }
+      },
       "System.Collections/4.0.11": {
         "type": "package",
         "dependencies": {
@@ -445,6 +448,12 @@
           "ref/netstandard1.3/System.Collections.dll": {}
         }
       },
+      "System.Data.SQLite.Core/1.0.116": {
+        "type": "package",
+        "dependencies": {
+          "Stub.System.Data.SQLite.Core.NetStandard": "[1.0.116]"
+        }
+      },
       "System.Diagnostics.Debug/4.0.11": {
         "type": "package",
         "dependencies": {
@@ -454,28 +463,6 @@
         },
         "compile": {
           "ref/netstandard1.3/System.Diagnostics.Debug.dll": {}
-        }
-      },
-      "System.Diagnostics.EventLog/6.0.0": {
-        "type": "package",
-        "compile": {
-          "lib/net6.0/System.Diagnostics.EventLog.dll": {}
-        },
-        "runtime": {
-          "lib/net6.0/System.Diagnostics.EventLog.dll": {}
-        },
-        "build": {
-          "buildTransitive/netcoreapp3.1/_._": {}
-        },
-        "runtimeTargets": {
-          "runtimes/win/lib/net6.0/System.Diagnostics.EventLog.Messages.dll": {
-            "assetType": "runtime",
-            "rid": "win"
-          },
-          "runtimes/win/lib/net6.0/System.Diagnostics.EventLog.dll": {
-            "assetType": "runtime",
-            "rid": "win"
-          }
         }
       },
       "System.Diagnostics.Tools/4.0.1": {
@@ -933,7 +920,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
-          "Moq": "4.18.2"
+          "System.Data.SQLite.Core": "1.0.116"
         },
         "compile": {
           "bin/placeholder/homeworldGame.dll": {}
@@ -945,30 +932,6 @@
     }
   },
   "libraries": {
-    "Castle.Core/5.1.0": {
-      "sha512": "31UJpTHOiWq95CDOHazE3Ub/hE/PydNWsJMwnEVTqFFP4WhAugwpaVGxzOxKgNeSUUeqS2W6lxV+q7u1pAOfXg==",
-      "type": "package",
-      "path": "castle.core/5.1.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "ASL - Apache Software Foundation License.txt",
-        "CHANGELOG.md",
-        "LICENSE",
-        "castle-logo.png",
-        "castle.core.5.1.0.nupkg.sha512",
-        "castle.core.nuspec",
-        "lib/net462/Castle.Core.dll",
-        "lib/net462/Castle.Core.xml",
-        "lib/net6.0/Castle.Core.dll",
-        "lib/net6.0/Castle.Core.xml",
-        "lib/netstandard2.0/Castle.Core.dll",
-        "lib/netstandard2.0/Castle.Core.xml",
-        "lib/netstandard2.1/Castle.Core.dll",
-        "lib/netstandard2.1/Castle.Core.xml",
-        "readme.txt"
-      ]
-    },
     "coverlet.collector/3.1.0": {
       "sha512": "YzYqSRrjoP5lULBhTDcTOjuM4IDPPi6PhFsl4w8EI4WdZhE6llt7E38Tg4CHyrS+QKwyu1+9OwkdDgluOdoBTw==",
       "type": "package",
@@ -1675,26 +1638,6 @@
         "microsoft.testplatform.testhost.nuspec"
       ]
     },
-    "Moq/4.18.2": {
-      "sha512": "SjxKYS5nX6prcaT8ZjbkONh3vnh0Rxru09+gQ1a07v4TM530Oe/jq3Q4dOZPfo1wq0LYmTgLOZKrqRfEx4auPw==",
-      "type": "package",
-      "path": "moq/4.18.2",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "lib/net462/Moq.dll",
-        "lib/net462/Moq.xml",
-        "lib/net6.0/Moq.dll",
-        "lib/net6.0/Moq.xml",
-        "lib/netstandard2.0/Moq.dll",
-        "lib/netstandard2.0/Moq.xml",
-        "lib/netstandard2.1/Moq.dll",
-        "lib/netstandard2.1/Moq.xml",
-        "moq.4.18.2.nupkg.sha512",
-        "moq.nuspec",
-        "moq.png"
-      ]
-    },
     "NETStandard.Library/2.0.0": {
       "sha512": "7jnbRU+L08FXKMxqUflxEXtVymWvNOrS8yHgu9s6EM8Anr6T/wIX4nZ08j/u3Asz+tCufp3YVwFSEvFTPYmBPA==",
       "type": "package",
@@ -1918,6 +1861,27 @@
         "nunit3testadapter.nuspec"
       ]
     },
+    "Stub.System.Data.SQLite.Core.NetStandard/1.0.116": {
+      "sha512": "VEe/vzvn2ECKovtyb+nf8fsnNQ4EYOUms7gnp9729NN7FSR/0v/uVoBDO7DETzV7YCquRVwRnSnYuoOwAoTEKA==",
+      "type": "package",
+      "path": "stub.system.data.sqlite.core.netstandard/1.0.116",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/netstandard2.0/System.Data.SQLite.dll",
+        "lib/netstandard2.0/System.Data.SQLite.dll.altconfig",
+        "lib/netstandard2.0/System.Data.SQLite.xml",
+        "lib/netstandard2.1/System.Data.SQLite.dll",
+        "lib/netstandard2.1/System.Data.SQLite.dll.altconfig",
+        "lib/netstandard2.1/System.Data.SQLite.xml",
+        "runtimes/linux-x64/native/SQLite.Interop.dll",
+        "runtimes/osx-x64/native/SQLite.Interop.dll",
+        "runtimes/win-x64/native/SQLite.Interop.dll",
+        "runtimes/win-x86/native/SQLite.Interop.dll",
+        "stub.system.data.sqlite.core.netstandard.1.0.116.nupkg.sha512",
+        "stub.system.data.sqlite.core.netstandard.nuspec"
+      ]
+    },
     "System.Collections/4.0.11": {
       "sha512": "YUJGz6eFKqS0V//mLt25vFGrrCvOnsXjlvFQs+KimpwNxug9x0Pzy4PlFMU3Q2IzqAa9G2L4LsK3+9vCBK7oTg==",
       "type": "package",
@@ -1986,6 +1950,17 @@
         "system.collections.nuspec"
       ]
     },
+    "System.Data.SQLite.Core/1.0.116": {
+      "sha512": "djwmo97syWCpUPJbDS0e2qUFUa8cDLeIfMotVkaRkAC5gpfBSZLMzvoLkLp1prY8waAuH1jEC3wcB2ymVVQWtA==",
+      "type": "package",
+      "path": "system.data.sqlite.core/1.0.116",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "system.data.sqlite.core.1.0.116.nupkg.sha512",
+        "system.data.sqlite.core.nuspec"
+      ]
+    },
     "System.Diagnostics.Debug/4.0.11": {
       "sha512": "w5U95fVKHY4G8ASs/K5iK3J5LY+/dLFd4vKejsnI/ZhBsWS9hQakfx3Zr7lRWKg4tAw9r4iktyvsTagWkqYCiw==",
       "type": "package",
@@ -2052,37 +2027,6 @@
         "ref/xamarinwatchos10/_._",
         "system.diagnostics.debug.4.0.11.nupkg.sha512",
         "system.diagnostics.debug.nuspec"
-      ]
-    },
-    "System.Diagnostics.EventLog/6.0.0": {
-      "sha512": "lcyUiXTsETK2ALsZrX+nWuHSIQeazhqPphLfaRxzdGaG93+0kELqpgEHtwWOlQe7+jSFnKwaCAgL4kjeZCQJnw==",
-      "type": "package",
-      "path": "system.diagnostics.eventlog/6.0.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "Icon.png",
-        "LICENSE.TXT",
-        "THIRD-PARTY-NOTICES.TXT",
-        "buildTransitive/netcoreapp2.0/System.Diagnostics.EventLog.targets",
-        "buildTransitive/netcoreapp3.1/_._",
-        "lib/net461/System.Diagnostics.EventLog.dll",
-        "lib/net461/System.Diagnostics.EventLog.xml",
-        "lib/net6.0/System.Diagnostics.EventLog.dll",
-        "lib/net6.0/System.Diagnostics.EventLog.xml",
-        "lib/netcoreapp3.1/System.Diagnostics.EventLog.dll",
-        "lib/netcoreapp3.1/System.Diagnostics.EventLog.xml",
-        "lib/netstandard2.0/System.Diagnostics.EventLog.dll",
-        "lib/netstandard2.0/System.Diagnostics.EventLog.xml",
-        "runtimes/win/lib/net6.0/System.Diagnostics.EventLog.Messages.dll",
-        "runtimes/win/lib/net6.0/System.Diagnostics.EventLog.dll",
-        "runtimes/win/lib/net6.0/System.Diagnostics.EventLog.xml",
-        "runtimes/win/lib/netcoreapp3.1/System.Diagnostics.EventLog.Messages.dll",
-        "runtimes/win/lib/netcoreapp3.1/System.Diagnostics.EventLog.dll",
-        "runtimes/win/lib/netcoreapp3.1/System.Diagnostics.EventLog.xml",
-        "system.diagnostics.eventlog.6.0.0.nupkg.sha512",
-        "system.diagnostics.eventlog.nuspec",
-        "useSharedDesignerContext.txt"
       ]
     },
     "System.Diagnostics.Tools/4.0.1": {
@@ -3988,9 +3932,9 @@
   "projectFileDependencyGroups": {
     "net6.0": [
       "Microsoft.NET.Test.Sdk >= 16.11.0",
-      "Moq >= 4.18.2",
       "NUnit >= 3.13.2",
       "NUnit3TestAdapter >= 4.0.0",
+      "System.Data.SQLite.Core >= 1.0.116",
       "coverlet.collector >= 3.1.0",
       "homeworldGame >= 1.0.0"
     ]
@@ -4040,10 +3984,6 @@
             "target": "Package",
             "version": "[16.11.0, )"
           },
-          "Moq": {
-            "target": "Package",
-            "version": "[4.18.2, )"
-          },
           "NUnit": {
             "target": "Package",
             "version": "[3.13.2, )"
@@ -4051,6 +3991,10 @@
           "NUnit3TestAdapter": {
             "target": "Package",
             "version": "[4.0.0, )"
+          },
+          "System.Data.SQLite.Core": {
+            "target": "Package",
+            "version": "[1.0.116, )"
           },
           "coverlet.collector": {
             "target": "Package",

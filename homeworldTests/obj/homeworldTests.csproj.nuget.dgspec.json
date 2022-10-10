@@ -38,9 +38,9 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
-            "Moq": {
+            "System.Data.SQLite.Core": {
               "target": "Package",
-              "version": "[4.18.2, )"
+              "version": "[1.0.116, )"
             }
           },
           "imports": [
@@ -104,10 +104,6 @@
               "target": "Package",
               "version": "[16.11.0, )"
             },
-            "Moq": {
-              "target": "Package",
-              "version": "[4.18.2, )"
-            },
             "NUnit": {
               "target": "Package",
               "version": "[3.13.2, )"
@@ -115,6 +111,10 @@
             "NUnit3TestAdapter": {
               "target": "Package",
               "version": "[4.0.0, )"
+            },
+            "System.Data.SQLite.Core": {
+              "target": "Package",
+              "version": "[1.0.116, )"
             },
             "coverlet.collector": {
               "target": "Package",

@@ -1,12 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "757WwcEgDbxD6aY3jwiCAXn3dXOv9UIefwtftNKVhLOUv922w3Mz9ecd13MFXJY2sWxnOttOzQN2E8bLCQH8LA==",
+  "dgSpecHash": "bNItac3m+TOFPHrFGqjDMvP7uEtbVPEZ717eIBSrvDkAh7GDED/WfKcc16HHBN0Vo36jD+S7wvH5HRaxwPHAbQ==",
   "success": true,
   "projectFilePath": "/home/shannon/Documents/programming/homeworld/homeworldGame/homeworldGame.csproj",
   "expectedPackageFiles": [
-    "/home/shannon/.nuget/packages/castle.core/5.1.0/castle.core.5.1.0.nupkg.sha512",
-    "/home/shannon/.nuget/packages/moq/4.18.2/moq.4.18.2.nupkg.sha512",
-    "/home/shannon/.nuget/packages/system.diagnostics.eventlog/6.0.0/system.diagnostics.eventlog.6.0.0.nupkg.sha512"
+    "/home/shannon/.nuget/packages/stub.system.data.sqlite.core.netstandard/1.0.116/stub.system.data.sqlite.core.netstandard.1.0.116.nupkg.sha512",
+    "/home/shannon/.nuget/packages/system.data.sqlite.core/1.0.116/system.data.sqlite.core.1.0.116.nupkg.sha512"
   ],
   "logs": []
 }
