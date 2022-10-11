@@ -132,4 +132,19 @@ public class Tests
         // Assert
         Assert.That(result, Is.False);
     }
+
+    [Test]
+    public void TestDatabaseController_AddAComponent()
+    {
+        // Arrange
+        int targetEntity = dbController.CreateEntity();
+        XY locationComponent = new XY();
+
+        // Act
+        int component_data_id = dbController.AddComponent(targetEntity, locationComponent);
+        var result = dbController.EntityHasComponent(targetEntity, locationComponent);
+
+        // Assert
+        Assert.That(result, Is.True);
+    }
 }
