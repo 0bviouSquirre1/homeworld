@@ -2,8 +2,7 @@ using System.Data.SQLite;
 
 namespace homeworld
 {
-    public class DatabaseController
-    {
+    public class DatabaseController {
         string connectionString;
         SQLiteConnection connection;
 
@@ -13,282 +12,325 @@ namespace homeworld
             connection = new SQLiteConnection(connectionString);
         }
 
-        // will add/remove entities to/from all_entities
-        // access assemblage tables to build new entities
-        // will add/remove components to/from entities
-        // add new components to their respective tables and
-        // the entity_components table
-        // read: assemblages, assemblage_components, all_components, 
-        // write: entity_components, component-specfic tables
+        // METHODS
 
-        // ENTITY METHODS
-
-        // public void GetAllEntitiesPossessingComponentType()
-        // public void EntityHasComponent()
-
-        public int CreateEntity()
-        {
-            int result = 0;
-            connection.Open();
-
-            string addStatement = 
-            @"
-                INSERT INTO all_entities(entity_name) 
-                VALUES('jod')
-            ";
-
-            using var command = new SQLiteCommand(addStatement, connection);
-            command.ExecuteNonQuery();
-            connection.Close();
-
-            result = GetLastEntityID();
-
-            return result;
-        }
-
-        public bool EntityExists(int entity_id)
+        // Database-level Methods (contain queries, no logic)
+        public int GetComponentDataID(int entity_id, int component_type_id)
         {
             connection.Open();
 
-            string statement = 
+            string get_component_data_id_statement = 
             @"
-                SELECT entity_id 
-                FROM all_entities
-                WHERE entity_id = (@entity_id)
-            ";
-            using var command = new SQLiteCommand(statement, connection);
-            command.Parameters.AddWithValue("@entity_id", entity_id);
-
-            using SQLiteDataReader reader = command.ExecuteReader();
-            int returned_id = 0;
-
-            while (reader.Read())
-            {
-                returned_id = reader.GetInt32(0);
-            }
-            connection.Close();
-
-            if (returned_id == entity_id)
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        public bool EntityHasComponent(int entity_id, IComponent component)
-        {
-            int component_type_id = GetComponentTypeID(component);
-            connection.Open();
-
-            string statement =
-            @"
-                SELECT entity_id, component_type_id
+                SELECT component_data_id
                 FROM entity_components
                 WHERE entity_id = (@entity_id) AND component_type_id = (@component_type_id)
             ";
-            using var command = new SQLiteCommand(statement, connection);
-            command.Parameters.AddWithValue("@entity_id", entity_id);
-            command.Parameters.AddWithValue("@component_type_id", component_type_id);
-            using SQLiteDataReader reader = command.ExecuteReader();
+            using var get_component_data_id_command = new SQLiteCommand(get_component_data_id_statement, connection);
+            get_component_data_id_command.Parameters.AddWithValue("@entity_id", entity_id);
+            get_component_data_id_command.Parameters.AddWithValue("@component_type_id", component_type_id);
+            using SQLiteDataReader entity_component_reader = get_component_data_id_command.ExecuteReader();
 
-            int returned_id = 0;
-
-            while (reader.Read())
+            int component_data_id = 0;
+            while (entity_component_reader.Read())
             {
-                returned_id = reader.GetInt32(0);
+                component_data_id = entity_component_reader.GetInt32(0);
             }
+
             connection.Close();
-            if (returned_id == 0)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+            return component_data_id;
         }
 
-        public List<int> GetAllEntities()
+        public List<int> GetComponentsOfAnEntity(int entity_id)
         {
-            List<int> result = new List<int>();
             connection.Open();
-
-            string statement = 
+            string get_component_data_ids_statement = 
             @"
-                SELECT entity_id 
-                FROM all_entities
+                SELECT component_data_id
+                FROM entity_components
+                WHERE entity_id = (@entity_id)
             ";
-            using var command = new SQLiteCommand(statement, connection);
-            using SQLiteDataReader reader = command.ExecuteReader();
-
-            while (reader.Read())
+            using var get_component_data_ids_command = new SQLiteCommand(get_component_data_ids_statement, connection);
+            get_component_data_ids_command.Parameters.AddWithValue("@entity_id", entity_id);
+            using SQLiteDataReader entity_component_reader = get_component_data_ids_command.ExecuteReader();
+            
+            List<int> list_of_component_data_ids = new List<int>();
+            while (entity_component_reader.Read())
             {
-                int entityID = reader.GetInt32(0);
-                result.Add(entityID);
+                list_of_component_data_ids.Add(entity_component_reader.GetInt32(0));
             }
-
             connection.Close();
-
-            return result;
+            return list_of_component_data_ids;
         }
 
-        public int GetLastEntityID()
+        public List<int> GetAllActiveComponentsOfType(int component_type_id)
         {
-            int result = 0;
             connection.Open();
-
-            string statement = 
+            string get_component_data_ids_statement = 
             @"
-                SELECT MAX(entity_id) 
-                FROM all_entities 
+                SELECT component_data_id
+                FROM entity_components
+                WHERE component_type_id = (@component_type_id)
             ";
-
-            using var command = new SQLiteCommand(statement, connection);
-            using SQLiteDataReader reader = command.ExecuteReader();
-
-            while (reader.Read())
+            using var get_component_data_ids_command = new SQLiteCommand(get_component_data_ids_statement, connection);
+            get_component_data_ids_command.Parameters.AddWithValue("@component_type_id", component_type_id);
+            using SQLiteDataReader entity_component_reader = get_component_data_ids_command.ExecuteReader();
+            
+            List<int> list_of_component_data_ids = new List<int>();
+            while (entity_component_reader.Read())
             {
-                result = reader.GetInt32(0);
+                list_of_component_data_ids.Add(entity_component_reader.GetInt32(0));
             }
             connection.Close();
-
-            return result;
+            return list_of_component_data_ids;
         }
 
-        public void KillAllEntities()
+        public List<int> GetAllComponentTypeIDs()
+        {
+            connection.Open();
+            string get_all_component_type_ids_statement =
+            @"
+                SELECT component_type_id
+                FROM all_components
+            ";
+            using var get_all_component_type_ids_command = new SQLiteCommand(get_all_component_type_ids_statement, connection);
+            using SQLiteDataReader all_components_reader = get_all_component_type_ids_command.ExecuteReader();
+            connection.Close();
+
+            List<int> list_of_component_type_ids = new List<int>();
+            while (all_components_reader.Read())
+            {
+                list_of_component_type_ids.Add(all_components_reader.GetInt32(0));
+            }
+            return list_of_component_type_ids;
+        }
+
+        public List<int> GetComponentsForAssemblage(int assemblage_id)
         {
             connection.Open();
 
-            string statement = 
+            string assemblage_statement =
+            @"
+                SELECT component_type_id
+                FROM assemblage_components
+                WHERE assemblage_id = (@assemblage_id)
+            ";
+            using var assemblage_command = new SQLiteCommand(assemblage_statement, connection);
+            assemblage_command.Parameters.AddWithValue("@assemblage_id", assemblage_id);
+            using SQLiteDataReader assemblage_reader = assemblage_command.ExecuteReader();
+
+            List<int> list_of_component_type_ids = new List<int>();
+            while (assemblage_reader.Read())
+            {
+                list_of_component_type_ids.Add(assemblage_reader.GetInt32(0));
+            }
+
+            connection.Close();
+            return list_of_component_type_ids;
+        }
+
+        public List<int> GetAllEntitiesWithComponentOfType(int component_type_id)
+        {
+            connection.Open();
+            string get_entity_ids_statement = 
+            @"
+                SELECT entity_id
+                FROM entity_components
+                WHERE component_type_id = (@component_type_id)
+            ";
+            using var get_entity_ids_command = new SQLiteCommand(get_entity_ids_statement, connection);
+            get_entity_ids_command.Parameters.AddWithValue("@component_type_id", component_type_id);
+            using SQLiteDataReader entity_component_reader = get_entity_ids_command.ExecuteReader();
+            
+            List<int> list_of_entity_ids = new List<int>();
+            while (entity_component_reader.Read())
+            {
+                list_of_entity_ids.Add(entity_component_reader.GetInt32(0));
+            }
+            connection.Close();
+            return list_of_entity_ids;
+        }
+
+        public int InsertEntity(string entity_name)
+        {
+            connection.Open();
+
+            string insert_entity_statement =
+            @"
+                INSERT INTO all_entities (entity_name)
+                VALUES (@entity_name)
+                RETURNING entity_id
+            ";
+            using var create_entity_command = new SQLiteCommand(insert_entity_statement, connection);
+            create_entity_command.Parameters.AddWithValue("@entity_name", entity_name);
+            create_entity_command.ExecuteNonQuery();
+            long entity_id = connection.LastInsertRowId;
+
+            connection.Close();
+            return (int)entity_id;
+        }
+
+        public int InsertComponent(int entity_id, int component_type_id)
+        {
+            connection.Open();
+
+            string add_to_entity_components_statement = 
+            @"
+                INSERT INTO entity_components (entity_id, component_type_id)
+                VALUES (@entity_id, @component_type_id)
+                RETURNING component_data_id
+            ";
+            using var add_to_entity_components_command = new SQLiteCommand(add_to_entity_components_statement, connection);
+            add_to_entity_components_command.Parameters.AddWithValue("@entity_id", entity_id);
+            add_to_entity_components_command.Parameters.AddWithValue("@component_type_id", component_type_id);
+            add_to_entity_components_command.ExecuteNonQuery();
+            long component_data_id = connection.LastInsertRowId;
+
+            connection.Close();
+            return (int)component_data_id;
+        }
+
+        public int InsertComponentToXYTable(int component_data_id, int component_x, int component_y)
+        {
+            connection.Open();
+
+            string add_to_xy_table_statement = 
+            @"
+                INSERT INTO xy_table (component_data_id, x, y)
+                VALUES (@component_data_id, @component_x, @component_y)
+            ";
+            using var add_to_xy_table_command = new SQLiteCommand(add_to_xy_table_statement, connection);
+            add_to_xy_table_command.Parameters.AddWithValue("@component_data_id", component_data_id);
+            add_to_xy_table_command.Parameters.AddWithValue("@component_x", component_x);
+            add_to_xy_table_command.Parameters.AddWithValue("@component_y", component_y);
+            add_to_xy_table_command.ExecuteNonQuery();
+
+            connection.Close();
+            return component_data_id;
+        }
+
+        public void DeleteComponentFromEntity(int entity_id, int component_data_id)
+        {
+            connection.Open();
+            string delete_from_entity_components_statement = 
+            @"
+                DELETE FROM entity_components
+                WHERE entity_id = (@entity_id) AND component_data_id = (@component_data_id)
+            ";
+            using var delete_from_entity_components_command = new SQLiteCommand(delete_from_entity_components_statement, connection);
+            delete_from_entity_components_command.Parameters.AddWithValue("@entity_id", entity_id);
+            delete_from_entity_components_command.Parameters.AddWithValue("@component_data_id", component_data_id);
+            delete_from_entity_components_command.ExecuteNonQuery();
+            connection.Close();
+        }
+
+        public void DeleteEntity(int entity_id)
+        {
+            connection.Open();
+            string delete_entity_statement = 
+            @"
+                DELETE FROM all_entities
+                WHERE entity_id = (@entity_id)
+            ";
+            using var delete_entity_command = new SQLiteCommand(delete_entity_statement, connection);
+            delete_entity_command.Parameters.AddWithValue("@entity_id", entity_id);
+            delete_entity_command.ExecuteNonQuery();
+            connection.Close();
+        }
+
+        public void DeleteAllEntities()
+        {
+            connection.Open();
+            string delete_all_entities_statement = 
             @"
                 DELETE FROM all_entities
             ";
-
-            using var command = new SQLiteCommand(statement, connection);
-            command.ExecuteNonQuery();
+            using var delete_all_entities_command = new SQLiteCommand(delete_all_entities_statement, connection);
+            delete_all_entities_command.ExecuteNonQuery();
             connection.Close();
+        }
+
+        public void DeleteAllComponentsFromEntity(int entity_id)
+        {
+            connection.Open();
+            string delete_from_entity_components_statement = 
+            @"
+                DELETE FROM entity_components
+                WHERE entity_id = (@entity_id)
+            ";
+            using var delete_from_entity_components_command = new SQLiteCommand(delete_from_entity_components_statement, connection);
+            delete_from_entity_components_command.Parameters.AddWithValue("@entity_id", entity_id);
+            delete_from_entity_components_command.ExecuteNonQuery();
+            connection.Close();
+        }
+
+        // Game architecture layer? This is implementing business rules aboug how entities are created
+        
+        public int CreateEntity(int assemblage_id, string entity_name)
+        {
+            // look up assemblage_id on assemblage_components
+            List<int> assemblage_component_type_ids = GetComponentsForAssemblage(assemblage_id);
+            
+            int entity_id = InsertEntity(entity_name);
+
+            foreach (int component_type_id in assemblage_component_type_ids)
+            {
+                CreateComponent(entity_id, component_type_id);
+            }
+            return entity_id;
+        }
+
+        public int CreateComponent(int entity_id, int component_type_id)
+        {
+            // if the entity does NOT have this component type already
+            if (!EntityHasComponentType(entity_id, component_type_id))
+            {
+                // create a new XY component/object
+                XY location = new XY(1,2);
+                int location_component_data_id = InsertComponent(entity_id, component_type_id);
+
+                InsertComponentToXYTable(location_component_data_id, location.X, location.Y);
+                return location_component_data_id;
+            }
+            else
+            {
+                // the entity DOES have this component type, return component_data_id
+                int component_data_id = GetComponentDataID(entity_id, component_type_id);
+                return component_data_id;
+            }
+        }
+
+        public bool EntityHasComponentType(int entity_id, int component_type_id)
+        {
+            int component_data_id = GetComponentDataID(entity_id, component_type_id);
+
+            if (component_data_id != 0) // figure out what actually gets returned when no records
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public void RemoveComponent(int entity_id, int component_data_id)
+        {
+            DeleteComponentFromEntity(entity_id, component_data_id);
+        }
+
+        public void RemoveAllComponents(int entity_id)
+        {
+            DeleteAllComponentsFromEntity(entity_id);
         }
 
         public void KillEntity(int entity_id)
         {
-            connection.Open();
-
-            string statement = 
-            @"
-                DELETE FROM all_entities
-                WHERE entity_id = (@entity_id)
-            ";
-            using var command = new SQLiteCommand(statement, connection);
-            command.Parameters.AddWithValue("@entity_id", entity_id);
-            command.ExecuteNonQuery();
-            connection.Close();
+            DeleteEntity(entity_id);
         }
 
-        // COMPONENT METHODS
-
-        public int AddComponent(int entity_id, IComponent component)
+        public void KillAllEntities()
         {
-            int component_type_id = GetComponentTypeID(component);
-            Type component_type = component.GetType();
-            // add entity_id and component_type_id to the table to get component_data_id
-            // add component_data_id and values to the correct type table
-            connection.Open();
-            string entity_component_statement =
-            @"
-                INSERT INTO entity_components(entity_id, component_type_id)
-                VALUES(@entity_id, @component_type_id)
-            ";
-            using var command = new SQLiteCommand(entity_component_statement, connection);
-            command.Parameters.AddWithValue("@entity_id", entity_id);
-            command.Parameters.AddWithValue("@component_type_id", component_type_id);
-            command.ExecuteNonQuery();
-            connection.Close();
-            int component_data_id = GetLastComponentID();
-            connection.Open();
-            XY newComponent = (XY)component;
-            string xytype_table_statement =
-            @"
-                INSERT INTO xy_table(component_data_id, X, Y)
-                VALUES(@component_data_id, @X, @Y)
-            ";
-            var command2 = new SQLiteCommand(xytype_table_statement, connection);
-            command2.Parameters.AddWithValue("@component_data_id", component_data_id);
-            command2.Parameters.AddWithValue("@X", newComponent.X);
-            command2.Parameters.AddWithValue("@Y", newComponent.Y);
-            command2.ExecuteNonQuery();
-            connection.Close();
-            int result = GetLastComponentID();
-            return result;
-            
-        }
-        // public void GetAllComponentsOfType()
-        // public IComponent GetComponent()
-
-        public int GetComponentTypeID(IComponent component)
-        {
-            Type component_type = component.GetType();
-            int component_type_id = 0;
-            switch (component_type.ToString())
-            {
-                case "XY":
-                    component_type_id = 1;
-                    break;
-                case "HealthPoints":
-                    component_type_id = 2;
-                    break;
-                case "Grows":
-                    component_type_id = 3;
-                    break;
-                default:
-                    component_type_id = 4;
-                    break;
-            }
-            return component_type_id;
-
-        }
-
-        public int GetLastComponentID()
-        {
-            int result = 0;
-            connection.Open();
-
-            string statement = 
-            @"
-                SELECT MAX(component_data_id) 
-                FROM entity_components 
-            ";
-
-            using var command = new SQLiteCommand(statement, connection);
-            using SQLiteDataReader reader = command.ExecuteReader();
-
-            while (reader.Read())
-            {
-                result = reader.GetInt32(0);
-            }
-            connection.Close();
-
-            return result;
-        }
-        // public void RemoveComponent()
-
-        public List<string> GetAllComponentTypes()
-        {
-            List<string> result = new List<string>();
-            connection.Open();
-
-            string statement = "SELECT * FROM all_component_types";
-            using var command = new SQLiteCommand(statement, connection);
-            using SQLiteDataReader reader = command.ExecuteReader();
-
-            while (reader.Read())
-            {
-                string className = reader.GetString(1);
-                result.Add(className);
-            }
-
-            connection.Close();
-            return result;
+            DeleteAllEntities();
         }
     }
 }

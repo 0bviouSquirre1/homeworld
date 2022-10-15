@@ -410,33 +410,6 @@
           "build/netcoreapp2.1/NUnit3TestAdapter.props": {}
         }
       },
-      "Stub.System.Data.SQLite.Core.NetStandard/1.0.116": {
-        "type": "package",
-        "compile": {
-          "lib/netstandard2.1/System.Data.SQLite.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard2.1/System.Data.SQLite.dll": {}
-        },
-        "runtimeTargets": {
-          "runtimes/linux-x64/native/SQLite.Interop.dll": {
-            "assetType": "native",
-            "rid": "linux-x64"
-          },
-          "runtimes/osx-x64/native/SQLite.Interop.dll": {
-            "assetType": "native",
-            "rid": "osx-x64"
-          },
-          "runtimes/win-x64/native/SQLite.Interop.dll": {
-            "assetType": "native",
-            "rid": "win-x64"
-          },
-          "runtimes/win-x86/native/SQLite.Interop.dll": {
-            "assetType": "native",
-            "rid": "win-x86"
-          }
-        }
-      },
       "System.Collections/4.0.11": {
         "type": "package",
         "dependencies": {
@@ -446,12 +419,6 @@
         },
         "compile": {
           "ref/netstandard1.3/System.Collections.dll": {}
-        }
-      },
-      "System.Data.SQLite.Core/1.0.116": {
-        "type": "package",
-        "dependencies": {
-          "Stub.System.Data.SQLite.Core.NetStandard": "[1.0.116]"
         }
       },
       "System.Diagnostics.Debug/4.0.11": {
@@ -914,19 +881,6 @@
         },
         "runtime": {
           "lib/netstandard1.3/System.Xml.XDocument.dll": {}
-        }
-      },
-      "homeworldGame/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v6.0",
-        "dependencies": {
-          "System.Data.SQLite.Core": "1.0.116"
-        },
-        "compile": {
-          "bin/placeholder/homeworldGame.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/homeworldGame.dll": {}
         }
       }
     }
@@ -1861,27 +1815,6 @@
         "nunit3testadapter.nuspec"
       ]
     },
-    "Stub.System.Data.SQLite.Core.NetStandard/1.0.116": {
-      "sha512": "VEe/vzvn2ECKovtyb+nf8fsnNQ4EYOUms7gnp9729NN7FSR/0v/uVoBDO7DETzV7YCquRVwRnSnYuoOwAoTEKA==",
-      "type": "package",
-      "path": "stub.system.data.sqlite.core.netstandard/1.0.116",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "lib/netstandard2.0/System.Data.SQLite.dll",
-        "lib/netstandard2.0/System.Data.SQLite.dll.altconfig",
-        "lib/netstandard2.0/System.Data.SQLite.xml",
-        "lib/netstandard2.1/System.Data.SQLite.dll",
-        "lib/netstandard2.1/System.Data.SQLite.dll.altconfig",
-        "lib/netstandard2.1/System.Data.SQLite.xml",
-        "runtimes/linux-x64/native/SQLite.Interop.dll",
-        "runtimes/osx-x64/native/SQLite.Interop.dll",
-        "runtimes/win-x64/native/SQLite.Interop.dll",
-        "runtimes/win-x86/native/SQLite.Interop.dll",
-        "stub.system.data.sqlite.core.netstandard.1.0.116.nupkg.sha512",
-        "stub.system.data.sqlite.core.netstandard.nuspec"
-      ]
-    },
     "System.Collections/4.0.11": {
       "sha512": "YUJGz6eFKqS0V//mLt25vFGrrCvOnsXjlvFQs+KimpwNxug9x0Pzy4PlFMU3Q2IzqAa9G2L4LsK3+9vCBK7oTg==",
       "type": "package",
@@ -1948,17 +1881,6 @@
         "ref/xamarinwatchos10/_._",
         "system.collections.4.0.11.nupkg.sha512",
         "system.collections.nuspec"
-      ]
-    },
-    "System.Data.SQLite.Core/1.0.116": {
-      "sha512": "djwmo97syWCpUPJbDS0e2qUFUa8cDLeIfMotVkaRkAC5gpfBSZLMzvoLkLp1prY8waAuH1jEC3wcB2ymVVQWtA==",
-      "type": "package",
-      "path": "system.data.sqlite.core/1.0.116",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "system.data.sqlite.core.1.0.116.nupkg.sha512",
-        "system.data.sqlite.core.nuspec"
       ]
     },
     "System.Diagnostics.Debug/4.0.11": {
@@ -3922,11 +3844,6 @@
         "system.xml.xdocument.4.0.11.nupkg.sha512",
         "system.xml.xdocument.nuspec"
       ]
-    },
-    "homeworldGame/1.0.0": {
-      "type": "project",
-      "path": "../homeworldGame/homeworldGame.csproj",
-      "msbuildProject": "../homeworldGame/homeworldGame.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -3934,9 +3851,7 @@
       "Microsoft.NET.Test.Sdk >= 16.11.0",
       "NUnit >= 3.13.2",
       "NUnit3TestAdapter >= 4.0.0",
-      "System.Data.SQLite.Core >= 1.0.116",
-      "coverlet.collector >= 3.1.0",
-      "homeworldGame >= 1.0.0"
+      "coverlet.collector >= 3.1.0"
     ]
   },
   "packageFolders": {
@@ -3963,11 +3878,7 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "projectReferences": {
-            "/home/shannon/Documents/programming/homeworld/homeworldGame/homeworldGame.csproj": {
-              "projectPath": "/home/shannon/Documents/programming/homeworld/homeworldGame/homeworldGame.csproj"
-            }
-          }
+          "projectReferences": {}
         }
       },
       "warningProperties": {
@@ -3992,10 +3903,6 @@
             "target": "Package",
             "version": "[4.0.0, )"
           },
-          "System.Data.SQLite.Core": {
-            "target": "Package",
-            "version": "[1.0.116, )"
-          },
           "coverlet.collector": {
             "target": "Package",
             "version": "[3.1.0, )"
@@ -4016,7 +3923,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/lib/dotnet/dotnet6-6.0.109/sdk/6.0.109/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/lib/dotnet/dotnet6-6.0.110/sdk/6.0.110/RuntimeIdentifierGraph.json"
       }
     }
   }

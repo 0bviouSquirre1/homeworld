@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "pmI+f6mO52eQ2WcTT4GiT0chIl2wHO/RXv78nA9jVGkilcck6egYfQz1nN3sNCslKmRXbLy4a7bq7J/ttEnSZg==",
+  "dgSpecHash": "aDz3aVrB46cjNh9wSpnqByem9N1HSlOPhwUqWs+6LR2LMeG34lKC8O/zRHxYSpvGTcJZJxr2Jl6OkitLKYF7vA==",
   "success": true,
   "projectFilePath": "/home/shannon/Documents/programming/homeworld/homeworldTests/homeworldTests.csproj",
   "expectedPackageFiles": [
@@ -17,9 +17,7 @@
     "/home/shannon/.nuget/packages/nuget.frameworks/5.0.0/nuget.frameworks.5.0.0.nupkg.sha512",
     "/home/shannon/.nuget/packages/nunit/3.13.2/nunit.3.13.2.nupkg.sha512",
     "/home/shannon/.nuget/packages/nunit3testadapter/4.0.0/nunit3testadapter.4.0.0.nupkg.sha512",
-    "/home/shannon/.nuget/packages/stub.system.data.sqlite.core.netstandard/1.0.116/stub.system.data.sqlite.core.netstandard.1.0.116.nupkg.sha512",
     "/home/shannon/.nuget/packages/system.collections/4.0.11/system.collections.4.0.11.nupkg.sha512",
-    "/home/shannon/.nuget/packages/system.data.sqlite.core/1.0.116/system.data.sqlite.core.1.0.116.nupkg.sha512",
     "/home/shannon/.nuget/packages/system.diagnostics.debug/4.0.11/system.diagnostics.debug.4.0.11.nupkg.sha512",
     "/home/shannon/.nuget/packages/system.diagnostics.tools/4.0.1/system.diagnostics.tools.4.0.1.nupkg.sha512",
     "/home/shannon/.nuget/packages/system.dynamic.runtime/4.0.11/system.dynamic.runtime.4.0.11.nupkg.sha512",

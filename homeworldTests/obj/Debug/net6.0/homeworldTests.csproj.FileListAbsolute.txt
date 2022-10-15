@@ -96,14 +96,3 @@
 /home/shannon/Documents/programming/homeworld/homeworldTests/obj/Debug/net6.0/ref/homeworldTests.dll
 /home/shannon/Documents/programming/homeworld/homeworldTests/obj/Debug/net6.0/homeworldTests.pdb
 /home/shannon/Documents/programming/homeworld/homeworldTests/obj/Debug/net6.0/homeworldTests.genruntimeconfig.cache
-/home/shannon/Documents/programming/homeworld/homeworldTests/bin/Debug/net6.0/System.Data.SQLite.dll
-/home/shannon/Documents/programming/homeworld/homeworldTests/bin/Debug/net6.0/runtimes/linux-x64/native/SQLite.Interop.dll
-/home/shannon/Documents/programming/homeworld/homeworldTests/bin/Debug/net6.0/runtimes/osx-x64/native/SQLite.Interop.dll
-/home/shannon/Documents/programming/homeworld/homeworldTests/bin/Debug/net6.0/runtimes/win-x64/native/SQLite.Interop.dll
-/home/shannon/Documents/programming/homeworld/homeworldTests/bin/Debug/net6.0/runtimes/win-x86/native/SQLite.Interop.dll
-/home/shannon/Documents/programming/homeworld/homeworldTests/bin/Debug/net6.0/CoverletSourceRootsMapping
-/home/shannon/Documents/programming/homeworld/homeworldTests/bin/Debug/net6.0/homeworldGame.deps.json
-/home/shannon/Documents/programming/homeworld/homeworldTests/bin/Debug/net6.0/homeworldGame.runtimeconfig.json
-/home/shannon/Documents/programming/homeworld/homeworldTests/bin/Debug/net6.0/homeworldGame
-/home/shannon/Documents/programming/homeworld/homeworldTests/bin/Debug/net6.0/homeworldGame.dll
-/home/shannon/Documents/programming/homeworld/homeworldTests/bin/Debug/net6.0/homeworldGame.pdb

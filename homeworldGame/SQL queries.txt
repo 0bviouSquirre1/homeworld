@@ -1,0 +1,54 @@
+string get_component_type_ids =
+@"
+    SELECT component_type_id
+    FROM assemblage_components
+    WHERE assemblage_id = (@assemblage_id)
+";
+
+string get_component_data_ids_statement = 
+@"
+    SELECT component_data_id
+    FROM entity_components
+    WHERE entity_id = (@entity_id)
+";
+
+string get_component_data_id_statement = 
+@"
+    SELECT component_data_id
+    FROM entity_components
+    WHERE entity_id = (@entity_id) AND component_type_id = (@component_type_id)
+";
+
+
+            
+string add_to_all_entities_statement =
+@"
+    INSERT INTO all_entities (entity_name)
+    VALUES (@entity_name)
+    RETURNING entity_id
+"; get one int
+
+string add_to_entity_components_statement = 
+@"
+    INSERT INTO entity_components (entity_id, component_type_id)
+    VALUES (@entity_id, @component_type_id)
+    RETURNING component_data_id
+"; get one nt
+
+string add_to_xy_table_statement = 
+@"
+    INSERT INTO xy_table (component_data_id, x, y)
+    VALUES (@component_data_id, @component_x, @component_y)
+";
+            
+string delete_component_from_entity_components_statement = 
+@"
+    DELETE FROM entity_components
+    WHERE entity_id = (@entity_id) AND component_data_id = (@component_data_id)
+";
+            
+string delete_entity_from_entity_components_statement = 
+@"
+    DELETE FROM entity_components
+    WHERE entity_id = (@entity_id)
+";
