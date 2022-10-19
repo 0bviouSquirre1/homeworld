@@ -39,7 +39,6 @@ namespace homeworld
             
             MovementTest(player);
             ItemTest(player);
-
             Item produce = new Item("tomato");
             Plant plant = new Plant("tomato plant", new XYComponent(0,-2), produce);
 
@@ -58,6 +57,35 @@ namespace homeworld
 
             DisplayProcessor.DisplayInventory(plant);
             DisplayProcessor.DisplayInventory(player);
+            Container well = new Container("a sturdy well", new XYComponent(-3,0));
+            Container bucket = new Container("a wooden bucket", new XYComponent(-3,0));
+            Container kettle = new Container("an iron kettle", new XYComponent(-1,0));
+
+            player.Move("west");
+            player.Move("west");
+            player.Move("west");
+            player.Move("north");
+            player.Move("north");
+
+            player.Get(bucket);
+            player.Fill(bucket, well);
+
+            player.Move("east");
+            player.Move("east");
+
+            player.Fill(kettle, bucket);
+            player.Fill(kettle, bucket);
+
+            DisplayProcessor.DisplayInventory(player);
+            player.Light(kettle);
+
+            DisplayProcessor.DisplayInventory(player);
+            Item tea = player.PrepareTea(kettle, produce);
+
+            player.Extinguish(kettle);
+            DisplayProcessor.DisplayInventory(player);
+            
+            player.Drink(tea);
         }
 
         public static void MovementTest(Player player)
@@ -70,7 +98,6 @@ namespace homeworld
             player.Move("first");
             // output: jod has moved north.
         }
-
         public static void ItemTest(Player player)
         {
             Item tomato = new Item("tomato", new XYComponent(1,1));
@@ -94,6 +121,10 @@ namespace homeworld
             player.Drop(tomato);
             DisplayProcessor.DisplayInventory(player);
             DisplayProcessor.DisplayAllItemsInLocation(player.Location);
+        }
+        public static void PlantTest(Player player)
+        {
+            
         }
     }
 }

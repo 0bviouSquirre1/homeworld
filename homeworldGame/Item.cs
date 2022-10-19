@@ -11,7 +11,6 @@ namespace homeworld
         {
             Name = name;
             ItemID = GetNewItemID();
-            
         }
         public Item(string name, XYComponent location = new XYComponent())
         {
