@@ -2,20 +2,14 @@ using System.Data.SQLite;
 
 namespace homeworld
 {
-    public class DatabaseController {
-        string connectionString;
-        SQLiteConnection connection;
-
-        public DatabaseController()
-        {
-            connectionString = @"URI=file:/home/shannon/Documents/programming/homeworld/homeworld.db";
-            connection = new SQLiteConnection(connectionString);
-        }
+    public static class DatabaseController {
+        static string connectionString = @"URI=file:/home/shannon/Documents/programming/homeworld/homeworld.db";
+        static SQLiteConnection connection = new SQLiteConnection(connectionString);
 
         // METHODS
-
         // Database-level Methods (contain queries, no logic)
-        public int GetComponentDataID(int entity_id, int component_type_id)
+
+        public static int GetComponentDataID(int entity_id, int component_type_id)
         {
             connection.Open();
 
@@ -40,7 +34,7 @@ namespace homeworld
             return component_data_id;
         }
 
-        public List<int> GetComponentsOfAnEntity(int entity_id)
+        public static List<int> GetComponentsOfAnEntity(int entity_id)
         {
             connection.Open();
             string get_component_data_ids_statement = 
@@ -62,7 +56,7 @@ namespace homeworld
             return list_of_component_data_ids;
         }
 
-        public List<int> GetAllActiveComponentsOfType(int component_type_id)
+        public static List<int> GetAllActiveComponentsOfType(int component_type_id)
         {
             connection.Open();
             string get_component_data_ids_statement = 
@@ -84,7 +78,7 @@ namespace homeworld
             return list_of_component_data_ids;
         }
 
-        public List<int> GetAllComponentTypeIDs()
+        public static List<int> GetAllComponentTypeIDs()
         {
             connection.Open();
             string get_all_component_type_ids_statement =
@@ -104,7 +98,7 @@ namespace homeworld
             return list_of_component_type_ids;
         }
 
-        public List<int> GetComponentsForAssemblage(int assemblage_id)
+        public static List<int> GetComponentsForAssemblage(int assemblage_id)
         {
             connection.Open();
 
@@ -128,7 +122,7 @@ namespace homeworld
             return list_of_component_type_ids;
         }
 
-        public List<int> GetAllEntitiesWithComponentOfType(int component_type_id)
+        public static List<int> GetAllEntitiesWithComponentOfType(int component_type_id)
         {
             connection.Open();
             string get_entity_ids_statement = 
@@ -150,7 +144,27 @@ namespace homeworld
             return list_of_entity_ids;
         }
 
-        public int InsertEntity(string entity_name)
+        public static List<int> GetAllEntities()
+        {
+            connection.Open();
+            string get_entity_ids_statement = 
+            @"
+                SELECT entity_id
+                FROM all_entities
+            ";
+            using var get_entity_ids_command = new SQLiteCommand(get_entity_ids_statement, connection);
+            using SQLiteDataReader entity_component_reader = get_entity_ids_command.ExecuteReader();
+            
+            List<int> list_of_entity_ids = new List<int>();
+            while (entity_component_reader.Read())
+            {
+                list_of_entity_ids.Add(entity_component_reader.GetInt32(0));
+            }
+            connection.Close();
+            return list_of_entity_ids;
+        }
+
+        public static int InsertEntity(string entity_name)
         {
             connection.Open();
 
@@ -169,7 +183,7 @@ namespace homeworld
             return (int)entity_id;
         }
 
-        public int InsertComponent(int entity_id, int component_type_id)
+        public static int InsertComponent(int entity_id, int component_type_id)
         {
             connection.Open();
 
@@ -189,7 +203,7 @@ namespace homeworld
             return (int)component_data_id;
         }
 
-        public int InsertComponentToXYTable(int component_data_id, int component_x, int component_y)
+        public static int InsertComponentToXYTable(int component_data_id, int component_x, int component_y)
         {
             connection.Open();
 
@@ -208,7 +222,7 @@ namespace homeworld
             return component_data_id;
         }
 
-        public void DeleteComponentFromEntity(int entity_id, int component_data_id)
+        public static void DeleteComponentFromEntity(int entity_id, int component_data_id)
         {
             connection.Open();
             string delete_from_entity_components_statement = 
@@ -223,7 +237,7 @@ namespace homeworld
             connection.Close();
         }
 
-        public void DeleteEntity(int entity_id)
+        public static void DeleteEntity(int entity_id)
         {
             connection.Open();
             string delete_entity_statement = 
@@ -237,7 +251,7 @@ namespace homeworld
             connection.Close();
         }
 
-        public void DeleteAllEntities()
+        public static void DeleteAllEntities()
         {
             connection.Open();
             string delete_all_entities_statement = 
@@ -249,7 +263,7 @@ namespace homeworld
             connection.Close();
         }
 
-        public void DeleteAllComponentsFromEntity(int entity_id)
+        public static void DeleteAllComponentsFromEntity(int entity_id)
         {
             connection.Open();
             string delete_from_entity_components_statement = 
@@ -261,76 +275,6 @@ namespace homeworld
             delete_from_entity_components_command.Parameters.AddWithValue("@entity_id", entity_id);
             delete_from_entity_components_command.ExecuteNonQuery();
             connection.Close();
-        }
-
-        // Game architecture layer? This is implementing business rules aboug how entities are created
-        
-        public int CreateEntity(int assemblage_id, string entity_name)
-        {
-            // look up assemblage_id on assemblage_components
-            List<int> assemblage_component_type_ids = GetComponentsForAssemblage(assemblage_id);
-            
-            int entity_id = InsertEntity(entity_name);
-
-            foreach (int component_type_id in assemblage_component_type_ids)
-            {
-                CreateComponent(entity_id, component_type_id);
-            }
-            return entity_id;
-        }
-
-        public int CreateComponent(int entity_id, int component_type_id)
-        {
-            // if the entity does NOT have this component type already
-            if (!EntityHasComponentType(entity_id, component_type_id))
-            {
-                // create a new XY component/object
-                XY location = new XY(1,2);
-                int location_component_data_id = InsertComponent(entity_id, component_type_id);
-
-                InsertComponentToXYTable(location_component_data_id, location.X, location.Y);
-                return location_component_data_id;
-            }
-            else
-            {
-                // the entity DOES have this component type, return component_data_id
-                int component_data_id = GetComponentDataID(entity_id, component_type_id);
-                return component_data_id;
-            }
-        }
-
-        public bool EntityHasComponentType(int entity_id, int component_type_id)
-        {
-            int component_data_id = GetComponentDataID(entity_id, component_type_id);
-
-            if (component_data_id != 0) // figure out what actually gets returned when no records
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        public void RemoveComponent(int entity_id, int component_data_id)
-        {
-            DeleteComponentFromEntity(entity_id, component_data_id);
-        }
-
-        public void RemoveAllComponents(int entity_id)
-        {
-            DeleteAllComponentsFromEntity(entity_id);
-        }
-
-        public void KillEntity(int entity_id)
-        {
-            DeleteEntity(entity_id);
-        }
-
-        public void KillAllEntities()
-        {
-            DeleteAllEntities();
         }
     }
 }
