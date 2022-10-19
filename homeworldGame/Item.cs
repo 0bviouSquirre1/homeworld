@@ -7,6 +7,12 @@ namespace homeworld
         public static Dictionary<XYComponent, List<Item>> AllItemsInWorld = new Dictionary<XYComponent, List<Item>>();
         public static int LastItemID = 0;
 
+        public Item(string name)
+        {
+            Name = name;
+            ItemID = GetNewItemID();
+            
+        }
         public Item(string name, XYComponent location = new XYComponent())
         {
             Name = name;

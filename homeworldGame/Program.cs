@@ -39,6 +39,25 @@ namespace homeworld
             
             MovementTest(player);
             ItemTest(player);
+
+            Item produce = new Item("tomato");
+            Plant plant = new Plant("tomato plant", new XYComponent(0,-2), produce);
+
+            player.Move("south");
+            player.Move("south");
+
+            player.Gather(plant, produce);
+
+            DisplayProcessor.DisplayAllPlantsInWorld();
+            DisplayProcessor.DisplayInventory(plant);
+            DisplayProcessor.DisplayInventory(player);
+
+            player.Gather(plant, produce);
+            player.Gather(plant, produce);
+            player.Gather(plant, produce);
+
+            DisplayProcessor.DisplayInventory(plant);
+            DisplayProcessor.DisplayInventory(player);
         }
 
         public static void MovementTest(Player player)
@@ -59,16 +78,16 @@ namespace homeworld
             Item marigold = new Item("marigold bloom");
             DisplayProcessor.DisplayAllItemsInWorld();
 
-            player.Get(tomato, player.Location);
-            player.Get(hyssop, player.Location);
-            player.Get(marigold, player.Location);
+            player.Get(tomato);
+            player.Get(hyssop);
+            player.Get(marigold);
             DisplayProcessor.DisplayInventory(player);
             DisplayProcessor.DisplayAllItemsInWorld();
 
             player.Move("south");
             player.Move("west");
 
-            player.Get(hyssop, player.Location);
+            player.Get(hyssop);
             DisplayProcessor.DisplayInventory(player);
             DisplayProcessor.DisplayAllItemsInLocation(player.Location);
 

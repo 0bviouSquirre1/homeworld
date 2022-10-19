@@ -3,23 +3,56 @@ namespace homeworld {
     {
         public string Name;
         public XYComponent Location;
-        public List<Item> Inventory;
-
+        public Dictionary<Item, int> Inventory;
         public Player(string name, XYComponent location)
         {
             Name = name;
             Location = location;
-            Inventory = new List<Item>();
+            Inventory = new Dictionary<Item, int>();
         }
 
         // METHODS
 
-        public void Get(Item item, XYComponent location)
+        public void Gather(Plant plant, Item produce)
         {
-            if(Item.AllItemsInWorld.TryGetValue(location, out List<Item>? AllItemsInLocation) && AllItemsInLocation.Contains(item))
+            if (plant.Inventory.Count == 0)
+            {
+                Console.WriteLine();
+                Console.WriteLine($"There is nothing to harvest on this {plant.Name}!");
+            }
+            else
+            {
+                plant.Inventory[produce]--;
+                if (plant.Inventory[produce] == 0)
+                {
+                    plant.Inventory.Remove(produce);
+                }
+
+                if (Inventory.ContainsKey(produce))
+                {
+                    Inventory[produce]++;
+                }
+                else
+                {
+                    Inventory.Add(produce, 1);
+                }
+                Console.WriteLine();
+                Console.WriteLine($"{Name} harvests {produce.Name} from {plant.Name}.");
+            }
+        }
+        public void Get(Item item)
+        {
+            if(Item.AllItemsInWorld.TryGetValue(Location, out List<Item>? AllItemsInLocation) && AllItemsInLocation.Contains(item))
             {
                 AllItemsInLocation.Remove(item);
-                Inventory.Add(item);
+                if (Inventory.ContainsKey(item))
+                {
+                    Inventory[item]++;
+                }
+                else
+                {
+                    Inventory.Add(item, 1);
+                }
                 Console.WriteLine();
                 Console.WriteLine($"{Name} took the {item.Name}.");
             }
@@ -28,13 +61,14 @@ namespace homeworld {
                 Console.WriteLine($"There is no {item.Name} here!");
             }
         }
-
         public void Drop(Item item)
         {
-            if (Inventory.Contains(item))
+            if (Inventory.ContainsKey(item))
             {
                 Inventory.Remove(item);
                 Item.AddToWorld(Location, item);
+                Console.WriteLine();
+                Console.WriteLine($"{Name} drops a {item.Name} here.");
             }
             else
             {
@@ -42,7 +76,6 @@ namespace homeworld {
                 Console.WriteLine($"You are not carrying any {item.Name}!");
             }
         }
-
         public void Move(string direction)
         {
             XYComponent oldLocation = Location;
