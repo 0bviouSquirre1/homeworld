@@ -30,5 +30,14 @@ namespace homeworld
                 currentPlants.Add(plant);
             }
         }
+
+        public static void RandomPlants(string name, Item produce)
+        {
+            for (int i = 0; i <= 4; i++)
+            {
+                XYComponent location = XYComponent.RandomLocation();
+                new Plant(name, location, produce);
+            }
+        }
     }
 }

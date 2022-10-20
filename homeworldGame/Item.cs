@@ -39,5 +39,14 @@ namespace homeworld
             LastItemID++;
             return LastItemID;
         }
+
+        public static void RandomItems(string name)
+        {
+            for (int i = 0; i <= 2; i++)
+            {
+                XYComponent location = XYComponent.RandomLocation();
+                new Item(name, location);
+            }
+        }
     }
 }

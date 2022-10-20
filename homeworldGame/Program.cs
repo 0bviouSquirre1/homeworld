@@ -36,95 +36,29 @@ namespace homeworld
         public static void Main()
         {
             Player player = new Player("jod", new XYComponent(1,1));
+            bool exit = false;
             
-            MovementTest(player);
-            ItemTest(player);
-            Item produce = new Item("tomato");
-            Plant plant = new Plant("tomato plant", new XYComponent(0,-2), produce);
+            // Create the world
+            // Create a bunch of plants on a -5 to +5 XY grid (100 squares)
+            Plant.RandomPlants("a tomato plant", new Item("a tomato"));
+            Plant.RandomPlants("a mint plant", new Item("a spring of mint"));
+            Plant.RandomPlants("a thyme plant", new Item("a spring of thyme"));
+            Plant.RandomPlants("a sunflower plant", new Item("a sunflower"));
+            Plant.RandomPlants("a nightshade plant", new Item("a handful of nightshade leaves"));
 
-            player.Move("south");
-            player.Move("south");
+            // Create a bunch of items on a -5 to +5 grid around the starting house (1,1)
+            Item.RandomItems("a teacup");
+            Item.RandomItems("a silver spoon");
+            Item.RandomItems("a saucer");
 
-            player.Gather(plant, produce);
+            // Create the well, bucket, and kettle
+            Container well = new Container("a stone well", new XYComponent(3,3));
+            Container bucket = new Container("a wooden bucket", new XYComponent(-2,4));
+            Container kettle = new Container("an iron kettle suspended over the hearth", new XYComponent(1,1));
 
+            // View the world
+            DisplayProcessor.DisplayAllItemsInWorld();
             DisplayProcessor.DisplayAllPlantsInWorld();
-            DisplayProcessor.DisplayInventory(plant);
-            DisplayProcessor.DisplayInventory(player);
-
-            player.Gather(plant, produce);
-            player.Gather(plant, produce);
-            player.Gather(plant, produce);
-
-            DisplayProcessor.DisplayInventory(plant);
-            DisplayProcessor.DisplayInventory(player);
-            Container well = new Container("a sturdy well", new XYComponent(-3,0));
-            Container bucket = new Container("a wooden bucket", new XYComponent(-3,0));
-            Container kettle = new Container("an iron kettle", new XYComponent(-1,0));
-
-            player.Move("west");
-            player.Move("west");
-            player.Move("west");
-            player.Move("north");
-            player.Move("north");
-
-            player.Get(bucket);
-            player.Fill(bucket, well);
-
-            player.Move("east");
-            player.Move("east");
-
-            player.Fill(kettle, bucket);
-            player.Fill(kettle, bucket);
-
-            DisplayProcessor.DisplayInventory(player);
-            player.Light(kettle);
-
-            DisplayProcessor.DisplayInventory(player);
-            Item tea = player.PrepareTea(kettle, produce);
-
-            player.Extinguish(kettle);
-            DisplayProcessor.DisplayInventory(player);
-            
-            player.Drink(tea);
-        }
-
-        public static void MovementTest(Player player)
-        {
-
-            player.Move("north");
-            player.Move("south");
-            player.Move("east");
-            player.Move("west");
-            player.Move("first");
-            // output: jod has moved north.
-        }
-        public static void ItemTest(Player player)
-        {
-            Item tomato = new Item("tomato", new XYComponent(1,1));
-            Item hyssop = new Item("hyssop flower");
-            Item marigold = new Item("marigold bloom");
-            DisplayProcessor.DisplayAllItemsInWorld();
-
-            player.Get(tomato);
-            player.Get(hyssop);
-            player.Get(marigold);
-            DisplayProcessor.DisplayInventory(player);
-            DisplayProcessor.DisplayAllItemsInWorld();
-
-            player.Move("south");
-            player.Move("west");
-
-            player.Get(hyssop);
-            DisplayProcessor.DisplayInventory(player);
-            DisplayProcessor.DisplayAllItemsInLocation(player.Location);
-
-            player.Drop(tomato);
-            DisplayProcessor.DisplayInventory(player);
-            DisplayProcessor.DisplayAllItemsInLocation(player.Location);
-        }
-        public static void PlantTest(Player player)
-        {
-            
         }
     }
 }

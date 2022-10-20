@@ -1,0 +1,28 @@
+component canditates:
+    idBlob (name & id #)
+    location
+    Inventory
+    lightable
+    fillable
+    consumable
+    forCooking
+    stationary
+    isPlayer
+
+lists
+    AllItemsInWorld
+    AllPlantsInWorld
+        could become AllEntitiesInWorld
+
+archetypes:
+    plant (Id, location, inventory, stationary)
+    Player (Id, location, inventory, isPlayer)
+    mobile container (Id, fillable)
+    item (id)
+    cookingContainer (id, forcooking, lightable, location,)
+
+setup
+    create player, add (id location isplayer)
+    create plants throughout the world (id location inventory stationary)
+    create stationary entities [wells, house, etc] (id location stationary)
+    create mobile items (id ismobile)
