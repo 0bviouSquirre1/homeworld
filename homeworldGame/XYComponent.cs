@@ -1,18 +1,24 @@
-using System.Diagnostics.Tracing;
 namespace homeworld
 {
-    public struct XYComponent //: IComponent
+    public struct XYComponent : IComponent
     {
-        public int X { get; }
-        public int Y { get; }
+        public int xValue { get; }
+        public int yValue { get; }
+        public int ComponentID { get; set; }
+
         public XYComponent(int x = 0, int y = 0)
         {
-            X = x;
-            Y = y;
+            xValue = x;
+            yValue = y;
+            ComponentID = IComponent.NextComponentID();
         }
 
         // METHODS
 
+        public override string ToString()
+        {
+            return $"({xValue},{yValue})";
+        }
         public static XYComponent RandomLocation()
         {
             var random = new Random();
@@ -24,11 +30,6 @@ namespace homeworld
                 return reroll;
             }
             return new XYComponent(x,y);
-        }
-
-        public override string ToString()
-        {
-            return $"({X},{Y})";
         }
     }
 }

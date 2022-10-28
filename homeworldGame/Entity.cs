@@ -1,45 +1,33 @@
-using System.Xml.Serialization;
-namespace homeworld {
+namespace homeworld
+{
     public class Entity
     {
-        string Name;
-        XYComponent Location;
-
-        public Entity(string name, XYComponent location = new XYComponent())
+        private int entity_id;
+        private static int last_entity_id = 0;
+        public int EntityID 
         {
-            Name = name;
-            Location = location;
+            get => entity_id;
+            set => entity_id = value;
+        }
+
+        public Dictionary<int, IComponent> EntityComponents = new Dictionary<int, IComponent>();
+
+        public Entity()
+        {
+            EntityID = NextEntityID();
         }
 
         // METHODS
 
-        public void Move(string direction)
+        private static int NextEntityID()
         {
-            XYComponent oldLocation = Location;
-            XYComponent neoLocation = new XYComponent();
+            last_entity_id++;
+            return last_entity_id;
+        }
 
-            switch (direction)
-            {
-                case "north":
-                    neoLocation = new XYComponent(Location.X, Location.Y + 1);
-                    break;
-                case "south":
-                    neoLocation = new XYComponent(Location.X, Location.Y - 1);
-                    break;
-                case "east":
-                    neoLocation = new XYComponent(Location.X + 1, Location.Y);
-                    break;
-                case "west":
-                    neoLocation = new XYComponent(Location.X - 1, Location.Y);
-                    break;
-                default:
-                    Console.WriteLine($"Move() switch case default activated.");
-                    return;
-            }
-            Location = neoLocation;
-
-            // Display code
-            Console.WriteLine($"{Name} moves {direction} from {oldLocation} to {neoLocation}.");
+        public override string ToString()
+        {
+            return $"{EntityID}";
         }
     }
 }

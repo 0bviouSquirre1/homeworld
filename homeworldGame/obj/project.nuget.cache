@@ -1,11 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "iLD97EaDJ1G6cVr+r5mjTpe/P7njggl1GhKSyJ1w+r7Y3Y9sz1DixXffnKoKfAt6D+AhRHAxTq186JY6g/R9QQ==",
+  "dgSpecHash": "92XVDsGRx2AfRv9UofR2Kxv0evD3v8RgbGrW7GXY09LYQEaJVA+kCisJCZBFvLPUToAHWBqyWgtb/54XfH9Z6g==",
   "success": true,
   "projectFilePath": "/home/shannon/Documents/programming/homeworld/homeworldGame/homeworldGame.csproj",
-  "expectedPackageFiles": [
-    "/home/shannon/.nuget/packages/stub.system.data.sqlite.core.netstandard/1.0.116/stub.system.data.sqlite.core.netstandard.1.0.116.nupkg.sha512",
-    "/home/shannon/.nuget/packages/system.data.sqlite.core/1.0.116/system.data.sqlite.core.1.0.116.nupkg.sha512"
-  ],
+  "expectedPackageFiles": [],
   "logs": []
 }
