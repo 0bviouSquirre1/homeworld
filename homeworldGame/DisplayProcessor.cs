@@ -6,20 +6,25 @@ namespace homeworld
         {
             Console.WriteLine($"All entities currently present:");
             int count = 0;
+            var all_entities = new List<int>();
             foreach (KeyValuePair<int, Dictionary<int, IComponent>> entity in EntityManager.AllEntities)
             {
                 int entity_id = entity.Key;
                 Dictionary<int, IComponent> component_list = entity.Value;
 
-                Console.Write(entity_id.ToString("000"));
+                all_entities.Add(entity_id);
                 foreach (KeyValuePair<int, IComponent> component_node in component_list)
                 {
-                    IComponent component = component_node.Value;
-                    Console.Write(" : ");
-                    Console.Write(component.ToString());
+                    var component = component_node.Value;
+                    if (component is NameComponent)
+                    {
+                        Console.Write(entity_id);
+                        Console.Write(" : ");
+                        Console.Write(component.ToString());
+                        Console.WriteLine();
+                    }
                 }
                 count++;
-                Console.WriteLine();
             }
             Console.WriteLine($"{count} entities present");
         }
@@ -45,9 +50,9 @@ namespace homeworld
         {
             Console.WriteLine($"All components of type {typeof(T)}:");
             var component_list = EntityManager.GetAllComponentsOfType<T>();
-            foreach (KeyValuePair<int, IComponent> componentNode in component_list)
+            foreach (var component in component_list)
             {
-                Console.Write($"{componentNode.Value}, ");
+                Console.Write($"{component.ComponentID}, ");
             }
             Console.WriteLine();
         }
@@ -58,6 +63,56 @@ namespace homeworld
             foreach (int entity in entity_list)
             {
                 Console.Write($"{entity}, ");
+            }
+            Console.WriteLine();
+        }
+        public static void OverheadMap()
+        {
+            List<XYComponent> all_locations = EntityManager.GetAllComponentsOfType<XYComponent>();
+            all_locations = all_locations.OrderBy(z => z.xValue).ThenBy(z => z.yValue).ToList();
+
+            // Display the map
+            for (int x = -5; x < 6; x++)
+            {
+                if (x >= 0) 
+                    Console.Write($" {x}");
+                else
+                    Console.Write(x);
+
+                Console.Write("[   ]");
+                for (int y = -5; y < 6; y++)
+                {
+                    bool locationContainsSomething = all_locations.Any(location => location.xValue == x && location.yValue == y);
+                    bool roomIsExplored = Map.ExploredMap[new XYComponent(x,y)];
+                    bool playerLocation = (new XYComponent(x,y).Equals(EntityManager.GetEntityLocation(1)));
+                    if (playerLocation)
+                    {
+                        Console.Write("[ P ]");
+                    }
+                    else if (locationContainsSomething && !roomIsExplored)
+                    {
+                        Console.Write("[ X ]");
+                    }
+                    else if (locationContainsSomething && roomIsExplored)
+                    {
+                        Console.Write("[ o ]");
+                    }
+                    else
+                    {
+                        Console.Write("[   ]");
+
+                    }
+                }
+                Console.WriteLine();
+            }
+            
+            Console.Write(" ");
+            for (int y = -5; y < 6; y++)
+            {
+                if (y < 0)
+                    Console.Write($"  {y} ");
+                else
+                    Console.Write($"   {y} ");
             }
             Console.WriteLine();
         }

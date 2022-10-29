@@ -16,6 +16,8 @@ namespace homeworld
             ComponentID = IComponent.NextComponentID();
         }
 
+        // METHODS
+
         public override string ToString()
         {
             return Name;

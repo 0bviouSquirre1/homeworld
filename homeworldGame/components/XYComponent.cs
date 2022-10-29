@@ -1,3 +1,5 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace homeworld
 {
     public struct XYComponent : IComponent
@@ -19,6 +21,13 @@ namespace homeworld
         {
             return $"({xValue},{yValue})";
         }
+        public override bool Equals([NotNullWhen(true)] object? xycomponent)
+        {
+            XYComponent component = (XYComponent)xycomponent!;
+            if (xValue == component.xValue && yValue == component.yValue)
+                return true;
+            return false;
+        }
         public static XYComponent RandomLocation()
         {
             var random = new Random();
@@ -30,6 +39,10 @@ namespace homeworld
                 return reroll;
             }
             return new XYComponent(x,y);
+        }
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
     }
 }

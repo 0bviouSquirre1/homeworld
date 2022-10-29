@@ -1,27 +1,27 @@
 namespace homeworld
 {
-    public class Mobility : IComponent
+    public class Consumable : IComponent
     {
         public enum States : int
         {
-            Immovable = 0,
-            Portable = 1,
-            Movable = 2
+            Deadly = 0,
+            Edible = 1,
+            Potable = 2,
+            Applicable = 3
         }
         public States State { get; set; }
         public int ComponentID { get; set; }
-
-        public Mobility(States state)
+        public Consumable(States state)
         {
-            ComponentID = IComponent.NextComponentID();
             State = state;
+            ComponentID = IComponent.NextComponentID();
         }
 
         // METHODS
 
         public override string ToString()
         {
-            return $"Mobility: {State}";
+            return $"Consumability: {State}";
         }
     }
 }

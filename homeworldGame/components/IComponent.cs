@@ -10,5 +10,10 @@ namespace homeworld
             last_component_id++;
             return last_component_id;
         }
+
+        public void Update()
+        {
+            
+        }
     }
 }

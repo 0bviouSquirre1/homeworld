@@ -8,13 +8,15 @@ namespace homeworld
 
         // METHODS
 
-        public static int CreateEntity(string name, XYComponent location)
+        public static int CreateEntity(List<IComponent> components)
         {
             Entity entity = new Entity();
             AllEntities.Add(entity.EntityID, entity.EntityComponents);
 
-            AddComponentToEntity(entity.EntityID, new NameComponent(name));
-            AddComponentToEntity(entity.EntityID, location);
+            foreach (IComponent component in components)
+            {
+                entity.EntityComponents.Add(component.ComponentID, component);
+            }
 
             return entity.EntityID;
         }
@@ -46,9 +48,9 @@ namespace homeworld
             Dictionary<int, IComponent> entity_components = AllEntities[entity_id];
             return entity_components;
         }
-        public static Dictionary<int, IComponent> GetAllComponentsOfType<T>() where T : IComponent
+        public static List<T> GetAllComponentsOfType<T>() where T : IComponent
         {
-            Dictionary<int, IComponent> list_of_components = new Dictionary<int, IComponent>();
+            List<T> list_of_components = new List<T>();
 
             foreach (KeyValuePair<int, Dictionary<int, IComponent>> entity in AllEntities)
             {
@@ -56,7 +58,7 @@ namespace homeworld
                 {
                     if (componentNode.Value is T)
                     {
-                        list_of_components.Add(componentNode.Key, componentNode.Value);
+                        list_of_components.Add((T)componentNode.Value);
                     }
                 }
             }
@@ -87,6 +89,20 @@ namespace homeworld
         {
             // possibly decommission components first?
             AllEntities.Remove(entity_id);
+        }
+
+        // Component-Specific Methods (split out into Systems?)
+        public static XYComponent GetEntityLocation(int entity_id)
+        {
+            var component_list = GetComponentsOfEntity(entity_id);
+            foreach (var component in component_list)
+            {
+                if (component.Value.GetType() == typeof(XYComponent))
+                {
+                    return (XYComponent)component.Value;
+                }
+            }
+            return new XYComponent(99,99);
         }
     }
 }
