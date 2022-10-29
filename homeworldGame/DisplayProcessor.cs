@@ -4,6 +4,7 @@ namespace homeworld
     {
         public static void AllEntities()
         {
+            Console.WriteLine($"All entities currently present:");
             int count = 0;
             foreach (KeyValuePair<int, Dictionary<int, IComponent>> entity in EntityManager.AllEntities)
             {
@@ -16,8 +17,8 @@ namespace homeworld
                     IComponent component = component_node.Value;
                     Console.Write(" : ");
                     Console.Write(component.ToString());
-                    count++;
                 }
+                count++;
                 Console.WriteLine();
             }
             Console.WriteLine($"{count} entities present");
@@ -25,7 +26,8 @@ namespace homeworld
         public static void AllComponentsOfEntity(int entity_id)
         {
             // Validation
-            if (EntityManager.AllEntities[entity_id] is not null)
+            EntityManager.AllEntities.TryGetValue(entity_id, out Dictionary<int, IComponent>? entity);
+            if (entity is not null)
             {
                 Console.WriteLine($"Entity {entity_id} Component List:");
                 var component_list = EntityManager.GetComponentsOfEntity(entity_id);
@@ -34,14 +36,30 @@ namespace homeworld
                     Console.WriteLine($"{componentNode.Key} - {componentNode.Value.GetType().ToString()} - {componentNode.Value}");
                 }
             }
+            else
+            {
+                Console.WriteLine($"Entity {entity_id} does not exist.");
+            }
         }
-        public static void AllComponentsOfType(Type type)
+        public static void AllComponentsOfType<T>() where T : IComponent
         {
-            var component_list = EntityManager.GetAllComponentsOfType(type);
+            Console.WriteLine($"All components of type {typeof(T)}:");
+            var component_list = EntityManager.GetAllComponentsOfType<T>();
             foreach (KeyValuePair<int, IComponent> componentNode in component_list)
             {
-                Console.WriteLine(componentNode.Value);
+                Console.Write($"{componentNode.Value}, ");
             }
+            Console.WriteLine();
+        }
+        public static void AllEntitiesWithComponentType<T>() where T : IComponent
+        {
+            Console.WriteLine($"All entities with component of type {typeof(T)}:");
+            var entity_list = EntityManager.GetAllEntitiesWithComponentType<T>();
+            foreach (int entity in entity_list)
+            {
+                Console.Write($"{entity}, ");
+            }
+            Console.WriteLine();
         }
     }
 }

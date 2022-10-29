@@ -8,7 +8,7 @@ namespace homeworld
 
         // METHODS
 
-        public static Entity CreateEntity(string name, XYComponent location)
+        public static int CreateEntity(string name, XYComponent location)
         {
             Entity entity = new Entity();
             AllEntities.Add(entity.EntityID, entity.EntityComponents);
@@ -16,21 +16,25 @@ namespace homeworld
             AddComponentToEntity(entity.EntityID, new NameComponent(name));
             AddComponentToEntity(entity.EntityID, location);
 
-            return entity;
+            return entity.EntityID;
         }
-        public static IComponent CreateComponent(int component_type_id)
+        public static IComponent CreateComponent<T>(T type) where T : IComponent
         {
-            IComponent returnComponent;
-            switch (component_type_id)
+            object? returnComponent;
+            switch (type)
             {
-                case 0:
+                case NameComponent:
+                    string? name = Console.ReadLine();
+                    returnComponent = new NameComponent(name!);
+                    break;
+                case XYComponent:
                     returnComponent = new XYComponent();
                     break;
                 default:
-                    returnComponent = new XYComponent(99,99);
+                    returnComponent = null;
                     break;
             }
-            return returnComponent;
+            return (T)returnComponent!;
         }
         public static void AddComponentToEntity(int entity_id, IComponent component)
         {
@@ -42,7 +46,7 @@ namespace homeworld
             Dictionary<int, IComponent> entity_components = AllEntities[entity_id];
             return entity_components;
         }
-        public static Dictionary<int, IComponent> GetAllComponentsOfType(Type type)
+        public static Dictionary<int, IComponent> GetAllComponentsOfType<T>() where T : IComponent
         {
             Dictionary<int, IComponent> list_of_components = new Dictionary<int, IComponent>();
 
@@ -50,7 +54,7 @@ namespace homeworld
             {
                 foreach (KeyValuePair<int, IComponent> componentNode in entity.Value)
                 {
-                    if (componentNode.Value.GetType() == type)
+                    if (componentNode.Value is T)
                     {
                         list_of_components.Add(componentNode.Key, componentNode.Value);
                     }
@@ -58,14 +62,14 @@ namespace homeworld
             }
             return list_of_components;
         }
-        public static List<int> GetAllEntitiesWithComponentType(Type type)
+        public static List<int> GetAllEntitiesWithComponentType<T>() where T : IComponent
         {
             List<int> entity_list = new List<int>();
             foreach (KeyValuePair<int, Dictionary<int, IComponent>> entity in AllEntities)
             {
                 foreach (KeyValuePair<int, IComponent> componentNode in entity.Value)
                 {
-                    if (componentNode.Value.GetType() == type)
+                    if (componentNode.Value is T)
                     {
                         entity_list.Add(entity.Key);
                     }
@@ -73,10 +77,10 @@ namespace homeworld
             }
             return entity_list;
         }
-        public static void RemoveComponentFromEntity(int entity_id, int component_type_id)
+        public static void RemoveComponentFromEntity(int entity_id, int component_id)
         {
             var entity_components = GetComponentsOfEntity(entity_id);
-            entity_components.Remove(component_type_id);
+            entity_components.Remove(component_id);
 
         }
         public static void DestroyEntity(int entity_id)
