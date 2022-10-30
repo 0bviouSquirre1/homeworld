@@ -20,24 +20,6 @@ namespace homeworld
 
             return entity.EntityID;
         }
-        public static IComponent CreateComponent<T>(T type) where T : IComponent
-        {
-            object? returnComponent;
-            switch (type)
-            {
-                case NameComponent:
-                    string? name = Console.ReadLine();
-                    returnComponent = new NameComponent(name!);
-                    break;
-                case XYComponent:
-                    returnComponent = new XYComponent();
-                    break;
-                default:
-                    returnComponent = null;
-                    break;
-            }
-            return (T)returnComponent!;
-        }
         public static void AddComponentToEntity(int entity_id, IComponent component)
         {
             var entity_components = GetComponentsOfEntity(entity_id);
@@ -89,20 +71,6 @@ namespace homeworld
         {
             // possibly decommission components first?
             AllEntities.Remove(entity_id);
-        }
-
-        // Component-Specific Methods (split out into Systems?)
-        public static XYComponent GetEntityLocation(int entity_id)
-        {
-            var component_list = GetComponentsOfEntity(entity_id);
-            foreach (var component in component_list)
-            {
-                if (component.Value.GetType() == typeof(XYComponent))
-                {
-                    return (XYComponent)component.Value;
-                }
-            }
-            return new XYComponent(99,99);
         }
     }
 }

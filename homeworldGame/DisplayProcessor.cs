@@ -5,8 +5,9 @@ namespace homeworld
         public static void AllEntities()
         {
             Console.WriteLine($"All entities currently present:");
-            int count = 0;
-            var all_entities = new List<int>();
+            List<int> all_entities = new List<int>();
+            string name = "";
+            XY location = new XY(99,99);
             foreach (KeyValuePair<int, Dictionary<int, IComponent>> entity in EntityManager.AllEntities)
             {
                 int entity_id = entity.Key;
@@ -18,15 +19,18 @@ namespace homeworld
                     var component = component_node.Value;
                     if (component is NameComponent)
                     {
-                        Console.Write(entity_id);
-                        Console.Write(" : ");
-                        Console.Write(component.ToString());
-                        Console.WriteLine();
+                        var name_component = (NameComponent)component;
+                        name = name_component.Name;
+                    }
+                    if (component is Mobility)
+                    {
+                        var mobility_component = (Mobility)component;
+                        location = mobility_component.Location;
                     }
                 }
-                count++;
+                Console.WriteLine($"{entity_id} : {name} : {location}");
             }
-            Console.WriteLine($"{count} entities present");
+            Console.WriteLine($"{all_entities.Count} entities present");
         }
         public static void AllComponentsOfEntity(int entity_id)
         {
@@ -68,51 +72,69 @@ namespace homeworld
         }
         public static void OverheadMap()
         {
-            List<XYComponent> all_locations = EntityManager.GetAllComponentsOfType<XYComponent>();
+            var mobs = Movement.entity_locations;
+            List<XY> all_locations = new List<XY>();
+            foreach (KeyValuePair<int, XY> mobile in mobs)
+            {
+                all_locations.Add(mobile.Value);
+            }
+
             all_locations = all_locations.OrderBy(z => z.xValue).ThenBy(z => z.yValue).ToList();
 
             // Display the map
-            for (int x = -5; x < 6; x++)
+            for (int y = 5; y > -6; y--)
             {
-                if (x >= 0) 
-                    Console.Write($" {x}");
+                if (y >= 0) 
+                    Console.Write($" {y}");
                 else
-                    Console.Write(x);
+                    Console.Write(y);
 
-                Console.Write("[   ]");
-                for (int y = -5; y < 6; y++)
+                for (int x = -5; x < 6; x++)
                 {
-                    bool locationContainsSomething = all_locations.Any(location => location.xValue == x && location.yValue == y);
-                    bool roomIsExplored = Map.ExploredMap[new XYComponent(x,y)];
-                    bool playerLocation = (new XYComponent(x,y).Equals(EntityManager.GetEntityLocation(1)));
-                    if (playerLocation)
+                    XY this_location = new XY(x,y);
+                    XY player_location = Movement.GetEntityLocation(1);
+
+                    bool isPlayerLocation = (this_location.Equals(player_location));
+                    bool containsSomething = all_locations.Contains(this_location);
+                    bool roomExplored = Map.ExploredMap[this_location];
+                    
+                    if (isPlayerLocation)
                     {
-                        Console.Write("[ P ]");
+                        Console.Write($"[ P ]");
                     }
-                    else if (locationContainsSomething && !roomIsExplored)
+                    else if (containsSomething && roomExplored)
                     {
-                        Console.Write("[ X ]");
-                    }
-                    else if (locationContainsSomething && roomIsExplored)
+                        Console.Write($"[ o ]");
+                    } 
+                    else if (containsSomething && !roomExplored)
                     {
-                        Console.Write("[ o ]");
+                        Console.Write($"[ ? ]");
                     }
                     else
                     {
-                        Console.Write("[   ]");
-
+                        Console.Write($"[   ]");
                     }
                 }
+
+                /* for bigger boxes, uncomment
+                Console.WriteLine();
+                Console.Write("  ");
+                for (int y = -5; y < 6; y++)
+                {
+                    Console.Write($"[   ]");
+                }*/
+
                 Console.WriteLine();
             }
             
+            // Displays the X-axis label
             Console.Write(" ");
-            for (int y = -5; y < 6; y++)
+            for (int x = -5; x < 6; x++)
             {
-                if (y < 0)
-                    Console.Write($"  {y} ");
+                if (x < 0)
+                    Console.Write($"  {x} ");
                 else
-                    Console.Write($"   {y} ");
+                    Console.Write($"   {x} ");
             }
             Console.WriteLine();
         }
