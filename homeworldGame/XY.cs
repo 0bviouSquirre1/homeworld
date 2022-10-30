@@ -6,28 +6,17 @@ namespace homeworld
     {
         public int xValue { get; }
         public int yValue { get; }
-        public int ComponentID { get; set; }
 
         public XY(int x = 0, int y = 0)
         {
             xValue = x;
             yValue = y;
-            ComponentID = IComponent.NextComponentID();
         }
 
         // METHODS
 
-        public override string ToString()
-        {
-            return $"({xValue},{yValue})";
-        }
-        public override bool Equals([NotNullWhen(true)] object? xycomponent)
-        {
-            XY component = (XY)xycomponent!;
-            if (xValue == component.xValue && yValue == component.yValue)
-                return true;
-            return false;
-        }
+        // Used for distributing entities randomly during setup
+        // Rerolls on (1,1) so that nothing is assigned to the starting position
         public static XY RandomLocation()
         {
             var random = new Random();
@@ -40,9 +29,25 @@ namespace homeworld
             }
             return new XY(x,y);
         }
+
+#region OVERRIDES
+        // OVERRIDES
+
+        public override string ToString()
+        {
+            return $"({xValue},{yValue})";
+        }
+        public override bool Equals([NotNullWhen(true)] object? xycomponent)
+        {
+            XY component = (XY)xycomponent!;
+            if (xValue == component.xValue && yValue == component.yValue)
+                return true;
+            return false;
+        }
         public override int GetHashCode()
         {
             return base.GetHashCode();
         }
+#endregion
     }
 }

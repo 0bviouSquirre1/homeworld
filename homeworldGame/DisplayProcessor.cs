@@ -2,35 +2,44 @@ namespace homeworld
 {
     public static class Display
     {
+        public static List<XY> occupied_locations = Movement.entities_locations.Values.ToList();
+
         public static void AllEntities()
         {
+            List<int> all_entities_display  = new List<int>();
+            string name                     = "";
+            XY location                     = new XY(99,99);
+
             Console.WriteLine($"All entities currently present:");
-            List<int> all_entities = new List<int>();
-            string name = "";
-            XY location = new XY(99,99);
+
             foreach (KeyValuePair<int, Dictionary<int, IComponent>> entity in EntityManager.AllEntities)
             {
-                int entity_id = entity.Key;
-                Dictionary<int, IComponent> component_list = entity.Value;
+                int entity_id                               = entity.Key;
+                Dictionary<int, IComponent> component_list  = entity.Value;
 
-                all_entities.Add(entity_id);
+                all_entities_display.Add(entity_id);
                 foreach (KeyValuePair<int, IComponent> component_node in component_list)
                 {
-                    var component = component_node.Value;
+                    IComponent component             = component_node.Value;
                     if (component is NameComponent)
                     {
-                        var name_component = (NameComponent)component;
-                        name = name_component.Name;
+                        NameComponent name_component    = (NameComponent)component;
+                        name                            = name_component.Name;
                     }
                     if (component is Mobility)
                     {
-                        var mobility_component = (Mobility)component;
-                        location = mobility_component.Location;
+                        Mobility mobility_component     = (Mobility)component;
+                        location                        = mobility_component.Location;
                     }
                 }
-                Console.WriteLine($"{entity_id} : {name} : {location}");
+                string entity_id_display    = String.Format("{0,3}",   entity_id);
+                string name_display         = String.Format("{0,-20}", name);
+                string location_display     = String.Format("{0,-10}", location);
+
+                Console.WriteLine($"{entity_id_display} : {name_display} : {location_display}");
             }
-            Console.WriteLine($"{all_entities.Count} entities present");
+
+            Console.WriteLine($"{all_entities_display.Count} entities present");
         }
         public static void AllComponentsOfEntity(int entity_id)
         {
@@ -38,11 +47,17 @@ namespace homeworld
             EntityManager.AllEntities.TryGetValue(entity_id, out Dictionary<int, IComponent>? entity);
             if (entity is not null)
             {
+                Dictionary<int, IComponent> component_list = EntityManager.GetComponentsOfEntity(entity_id);
+
                 Console.WriteLine($"Entity {entity_id} Component List:");
-                var component_list = EntityManager.GetComponentsOfEntity(entity_id);
-                foreach (KeyValuePair<int, IComponent> componentNode in component_list)
+
+                foreach (KeyValuePair<int, IComponent> component_node in component_list)
                 {
-                    Console.WriteLine($"{componentNode.Key} - {componentNode.Value.GetType().ToString()} - {componentNode.Value}");
+                    int component_id        = component_node.Key;
+                    string component_type   = component_node.Value.GetType().ToString();
+                    IComponent component    = component_node.Value;
+
+                    Console.WriteLine($"{component_id} - {component_type} - {component}");
                 }
             }
             else
@@ -52,61 +67,62 @@ namespace homeworld
         }
         public static void AllComponentsOfType<T>() where T : IComponent
         {
+            List<T> component_list = EntityManager.GetAllComponentsOfType<T>();
+
             Console.WriteLine($"All components of type {typeof(T)}:");
-            var component_list = EntityManager.GetAllComponentsOfType<T>();
-            foreach (var component in component_list)
+
+            foreach (T component in component_list)
             {
                 Console.Write($"{component.ComponentID}, ");
             }
+
             Console.WriteLine();
         }
         public static void AllEntitiesWithComponentType<T>() where T : IComponent
         {
+            List<int> entity_list = EntityManager.GetAllEntitiesWithComponentType<T>();
+
             Console.WriteLine($"All entities with component of type {typeof(T)}:");
-            var entity_list = EntityManager.GetAllEntitiesWithComponentType<T>();
+
             foreach (int entity in entity_list)
             {
                 Console.Write($"{entity}, ");
             }
-            Console.WriteLine();
+
+            Console.WriteLine($"{entity_list.Count} entities");
         }
         public static void OverheadMap()
         {
-            var mobs = Movement.entity_locations;
-            List<XY> all_locations = new List<XY>();
-            foreach (KeyValuePair<int, XY> mobile in mobs)
-            {
-                all_locations.Add(mobile.Value);
-            }
-
-            all_locations = all_locations.OrderBy(z => z.xValue).ThenBy(z => z.yValue).ToList();
-
             // Display the map
             for (int y = 5; y > -6; y--)
             {
+                // Y-axis label and padding logic
                 if (y >= 0) 
                     Console.Write($" {y}");
                 else
                     Console.Write(y);
 
+                // Logic for displaying each room
                 for (int x = -5; x < 6; x++)
                 {
-                    XY this_location = new XY(x,y);
-                    XY player_location = Movement.GetEntityLocation(1);
+                    XY this_location            = new XY(x,y);
+                    XY player_location          = Movement.GetEntityLocation(1);
 
-                    bool isPlayerLocation = (this_location.Equals(player_location));
-                    bool containsSomething = all_locations.Contains(this_location);
-                    bool roomExplored = Map.ExploredMap[this_location];
+                    bool is_player_location     = (this_location.Equals(player_location));
+                    bool contains_something     = occupied_locations.Contains(this_location);
+                    bool room_has_been_explored = Map.ExploredMap[this_location];
                     
-                    if (isPlayerLocation)
+                    if (is_player_location)
                     {
                         Console.Write($"[ P ]");
                     }
-                    else if (containsSomething && roomExplored)
+                    else if (contains_something && room_has_been_explored)
                     {
+                        // TODO: add a switch case here to display different symbols based on what is there
+                        // TODO: how do we find out what Something is contained here?
                         Console.Write($"[ o ]");
                     } 
-                    else if (containsSomething && !roomExplored)
+                    else if (contains_something && !room_has_been_explored)
                     {
                         Console.Write($"[ ? ]");
                     }
@@ -116,18 +132,20 @@ namespace homeworld
                     }
                 }
 
-                /* for bigger boxes, uncomment
+                // for bigger boxes, uncomment
+                /*
                 Console.WriteLine();
                 Console.Write("  ");
                 for (int y = -5; y < 6; y++)
                 {
                     Console.Write($"[   ]");
-                }*/
+                }
+                */
 
                 Console.WriteLine();
             }
             
-            // Displays the X-axis label
+            // X-axis label and padding
             Console.Write(" ");
             for (int x = -5; x < 6; x++)
             {
@@ -136,6 +154,7 @@ namespace homeworld
                 else
                     Console.Write($"   {x} ");
             }
+            
             Console.WriteLine();
         }
     }

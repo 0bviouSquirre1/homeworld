@@ -8,18 +8,19 @@ namespace homeworld
     {
         public static void Main()
         {
+            // TODO: Lookup class? Lookup.EntityByID, .EntityByComponentID, .ComponentsByEntity, ComponentOfTypeByEntity, etc
             Map.Setup();
             CreatePlayer();
 
-            CreateRandomPlants("tomato", CreateTomato);
-            CreateRandomPlants("mint", CreateMint);
-            CreateRandomPlants("thyme", CreateThyme);
-            CreateRandomPlants("sunflower", CreateSunflower);
-            CreateRandomPlants("nightshade", CreateNightshade);
+            Setup.CreateRandomPlants("tomato");
+            Setup.CreateRandomPlants("mint");
+            Setup.CreateRandomPlants("thyme");
+            Setup.CreateRandomPlants("sunflower");
+            Setup.CreateRandomPlants("nightshade");
 
-            CreateRandomItems("a teacup");
-            CreateRandomItems("a silver spoon");
-            CreateRandomItems("a saucer");
+            Setup.CreateRandomItems("a teacup");
+            Setup.CreateRandomItems("a silver spoon");
+            Setup.CreateRandomItems("a saucer");
 
             CreateWell(new XY(3,3));
             CreateBucket(new XY(-2,4));
@@ -28,9 +29,8 @@ namespace homeworld
             //Display.AllEntities();
 
             Display.OverheadMap();
-            Console.WriteLine();
+            /*Console.WriteLine();
 
-            // TODO: move player around and see if map updates appropriately
             Movement.MovePlayer(new XY(1,2));
             Movement.MovePlayer(new XY(2,2));
             Movement.MovePlayer(new XY(2,3));
@@ -39,7 +39,7 @@ namespace homeworld
             Movement.MovePlayer(new XY(3,3));
             Movement.MovePlayer(new XY(3,2));
 
-            Display.OverheadMap();
+            Display.OverheadMap();*/
         }
         public static void CreatePlayer()
         {
@@ -51,29 +51,13 @@ namespace homeworld
             };
             int player = EntityManager.CreateEntity(components);
         }
-        public static void CreateRandomPlants(string name, Func<int> CreateProduce)
-        {
-            for (int i = 0; i <= 2; i++)
-            {
-                XY location = XY.RandomLocation();
-                CreatePlant(name, location, CreateProduce);
-            }
-        }
-        public static void CreateRandomItems(string name)
-        {
-            for (int i = 0; i <= 2; i++)
-            {
-                XY location = XY.RandomLocation();
-                CreateItem(name, location);
-            }
-        }
-        public static int CreatePlant(string name, XY location, Func<int> CreateProduce)
+        public static int CreatePlant(string name, XY location)
         {
             List<IComponent> components = new List<IComponent>
             {
                 new NameComponent($"a {name} plant"),
                 new Inventory(),
-                new Growable(CreateProduce())
+                new Growable(CreateProduce(name))
             };
             int plant = EntityManager.CreateEntity(components);
             EntityManager.AddComponentToEntity(plant, new Mobility(plant, Immovable, location)); // Added Mobility after the fact to account for needing the entity's ID
@@ -136,68 +120,18 @@ namespace homeworld
             EntityManager.AddComponentToEntity(kettle, new Mobility(kettle, Portable, location)); // Added Mobility after the fact to account for needing the entity's ID
             return kettle;
         }
-        public static int CreateTomato()
+        public static int CreateProduce(string name)
         {
             List<IComponent> components = new List<IComponent>
             {
-                new NameComponent("a tomato"),
+                new NameComponent(name),
                 new Brewable(),
                 new Consumable(Edible)
             };
-            int tomato = EntityManager.CreateEntity(components);
-            EntityManager.AddComponentToEntity(tomato, new Mobility(tomato, Portable, new XY(99,99))); // Added Mobility after the fact to account for needing the entity's ID
+            int produce = EntityManager.CreateEntity(components);
+            EntityManager.AddComponentToEntity(produce, new Mobility(produce, Portable, new XY(99,99))); // Added Mobility after the fact to account for needing the entity's ID
             // 99,99 counts as an error value for now, for things that are not in the world. this will have to be fixed asap
-            return tomato;
-        }
-        public static int CreateMint()
-        {
-            List<IComponent> components = new List<IComponent>
-            {
-                new NameComponent("a sprig of mint"),
-                new Brewable(),
-                new Consumable(Edible)
-            };
-            int mint = EntityManager.CreateEntity(components);
-            EntityManager.AddComponentToEntity(mint, new Mobility(mint, Portable, new XY(99,99))); // Added Mobility after the fact to account for needing the entity's ID
-            // 99,99 counts as an error value for now, for things that are not in the world. this will have to be fixed asap
-            return mint;
-        }
-        public static int CreateThyme()
-        {
-            List<IComponent> components = new List<IComponent>
-            {
-                new NameComponent("a sprig of thyme"),
-                new Brewable(),
-                new Consumable(Edible)
-            };
-            int thyme = EntityManager.CreateEntity(components);
-            EntityManager.AddComponentToEntity(thyme, new Mobility(thyme, Portable, new XY(99,99))); // Added Mobility after the fact to account for needing the entity's ID
-            // 99,99 counts as an error value for now, for things that are not in the world. this will have to be fixed asap
-            return thyme;
-        }
-        public static int CreateSunflower()
-        {
-            List<IComponent> components = new List<IComponent>
-            {
-                new NameComponent("a a sunflower"),
-                new Brewable(),
-                new Consumable(Edible)
-            };
-            int sunflower = EntityManager.CreateEntity(components);
-            EntityManager.AddComponentToEntity(sunflower, new Mobility(sunflower, Portable, new XY(99,99))); // Added Mobility after the fact to account for needing the entity's ID
-            return sunflower;
-        }
-        public static int CreateNightshade()
-        {
-            List<IComponent> components = new List<IComponent>
-            {
-                new NameComponent("a handful of nightshade leaves"),
-                new Brewable(),
-                new Consumable(Edible)
-            };
-            int nightshade = EntityManager.CreateEntity(components);
-            EntityManager.AddComponentToEntity(nightshade, new Mobility(nightshade, Portable, new XY(99,99))); // Added Mobility after the fact to account for needing the entity's ID
-            return nightshade;
+            return produce;
         }
     }
 }

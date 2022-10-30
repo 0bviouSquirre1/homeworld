@@ -1,3 +1,6 @@
+using static homeworld.Mobility.States;
+using static homeworld.Consumable.States;
+
 namespace homeworld
 {
     public static class EntityManager
@@ -22,7 +25,7 @@ namespace homeworld
         }
         public static void AddComponentToEntity(int entity_id, IComponent component)
         {
-            var entity_components = GetComponentsOfEntity(entity_id);
+            Dictionary<int, IComponent> entity_components = GetComponentsOfEntity(entity_id);
             entity_components.Add(component.ComponentID, component);
         }
         public static Dictionary<int, IComponent> GetComponentsOfEntity(int entity_id)
@@ -51,9 +54,9 @@ namespace homeworld
             List<int> entity_list = new List<int>();
             foreach (KeyValuePair<int, Dictionary<int, IComponent>> entity in AllEntities)
             {
-                foreach (KeyValuePair<int, IComponent> componentNode in entity.Value)
+                foreach (KeyValuePair<int, IComponent> component_node in entity.Value)
                 {
-                    if (componentNode.Value is T)
+                    if (component_node.Value is T)
                     {
                         entity_list.Add(entity.Key);
                     }
@@ -63,7 +66,7 @@ namespace homeworld
         }
         public static void RemoveComponentFromEntity(int entity_id, int component_id)
         {
-            var entity_components = GetComponentsOfEntity(entity_id);
+            Dictionary<int, IComponent> entity_components = GetComponentsOfEntity(entity_id);
             entity_components.Remove(component_id);
 
         }

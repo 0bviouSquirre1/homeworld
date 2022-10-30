@@ -25,6 +25,8 @@ namespace homeworld
             return last_entity_id;
         }
 
+        // OVERRIDES
+
         public override string ToString()
         {
             return $"{EntityID}";

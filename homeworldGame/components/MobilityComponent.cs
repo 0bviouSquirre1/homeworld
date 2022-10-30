@@ -19,7 +19,7 @@ namespace homeworld
             State = state;
             EntityID = entity_id;
             Location = location;
-            Movement.entity_locations.Add(entity_id, Location);
+            Movement.entities_locations.Add(entity_id, Location);
             if (State == States.Movable)
             {
                 Movement.movable_entities.Add(entity_id, this);

@@ -10,7 +10,7 @@ namespace homeworld
             set => entity_name = value;
         }
 
-        public NameComponent(string name)
+        public NameComponent(string name = "(blank)")
         {
             Name = name;
             ComponentID = IComponent.NextComponentID();
