@@ -19,9 +19,10 @@ namespace homeworld
         // Rerolls on (1,1) so that nothing is assigned to the starting position
         public static XY RandomLocation()
         {
-            var random = new Random();
-            int x = random.Next(-5,6);
-            int y = random.Next(-5,6);
+            var random  = new Random();
+            int x       = random.Next(-5,6);
+            int y       = random.Next(-5,6);
+            
             if (x == 1 && y == 1)
             {
                 XY reroll = RandomLocation();

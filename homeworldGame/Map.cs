@@ -2,8 +2,6 @@ namespace homeworld
 {
     public static class Map
     {
-        public static Dictionary<XY, bool> ExploredMap = new Dictionary<XY, bool>();
-
         public static void Setup()
         {
             for (int y = -5; y < 6; y++)
@@ -12,15 +10,15 @@ namespace homeworld
                 {
                     // To account for the player's starting position (1,1)
                     if (x == 1 && y == 1)
-                        ExploredMap.Add(new XY(x,y), true);
+                        Lookup.ExploredMap.Add(new XY(x,y), true);
                     else
-                        ExploredMap.Add(new XY(x,y), false);
+                        Lookup.ExploredMap.Add(new XY(x,y), false);
                 }
             }
         }
         public static void ExploreRoom(XY location)
         {
-            ExploredMap[location] = true;
+            Lookup.ExploredMap[location] = true;
         }
     }
 }

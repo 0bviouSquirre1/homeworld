@@ -1,6 +1,7 @@
 ﻿using System;
 using static homeworld.Mobility.States;
 using static homeworld.Consumable.States;
+using static homeworld.Archetype.States;
 
 namespace homeworld
 {
@@ -8,9 +9,11 @@ namespace homeworld
     {
         public static void Main()
         {
-            // TODO: Lookup class? Lookup.EntityByID, .EntityByComponentID, .ComponentsByEntity, ComponentOfTypeByEntity, etc
             Map.Setup();
-            CreatePlayer();
+            CreatePlayer();             // id: 1
+            CreateWell(new XY(3,3));    // id: 2
+            CreateBucket(new XY(-2,4)); // id: 3
+            CreateKettle(new XY(1,1));  // id: 4
 
             Setup.CreateRandomPlants("tomato");
             Setup.CreateRandomPlants("mint");
@@ -21,11 +24,7 @@ namespace homeworld
             Setup.CreateRandomItems("a teacup");
             Setup.CreateRandomItems("a silver spoon");
             Setup.CreateRandomItems("a saucer");
-
-            CreateWell(new XY(3,3));
-            CreateBucket(new XY(-2,4));
-            CreateKettle(new XY(1,1));
-
+            
             //Display.AllEntities();
 
             Display.OverheadMap();
@@ -41,96 +40,63 @@ namespace homeworld
 
             Display.OverheadMap();*/
         }
-        public static void CreatePlayer()
+        public static int CreatePlayer()
         {
-            List<IComponent> components = new List<IComponent>
-            {
-                new NameComponent("player"),
-                new Inventory(),
-                new Mobility(1, Movable, new XY(1,1))
-            };
-            int player = EntityManager.CreateEntity(components);
+            int player = EntityManager.CreateEntity(Player);
+            return player;
         }
         public static int CreatePlant(string name, XY location)
         {
-            List<IComponent> components = new List<IComponent>
-            {
-                new NameComponent($"a {name} plant"),
-                new Inventory(),
-                new Growable(CreateProduce(name))
-            };
-            int plant = EntityManager.CreateEntity(components);
-            EntityManager.AddComponentToEntity(plant, new Mobility(plant, Immovable, location)); // Added Mobility after the fact to account for needing the entity's ID
+            int plant = EntityManager.CreateEntity(Plant);
+            NameComponent name_component = Lookup.ComponentOfEntityByType<NameComponent>(plant);
+            name_component.Name = name;
+            Movement.RegisterEntityAtLocation(plant, location);
+            //Movement.UpdateEntityLocation(plant, location);
+            
             return plant;
         }
         public static int CreateItem(string name, XY location)
         {
-            List<IComponent> components = new List<IComponent>
-            {
-                new NameComponent(name),
-            };
-
+            int item;
             if (name.Equals("a teacup"))
             {
-                components.Add(new Drinkable());
-                components.Add(new Fillable());
-                components.Add(new Emptyable());
+                item = EntityManager.CreateEntity(Cup);
             }
-
-            int item = EntityManager.CreateEntity(components);
-            EntityManager.AddComponentToEntity(item, new Mobility(item, Portable, location)); // Added Mobility after the fact to account for needing the entity's ID
+            else
+            {
+                item = EntityManager.CreateEntity(Item);
+            }
+            NameComponent name_component = Lookup.ComponentOfEntityByType<NameComponent>(item);
+            name_component.Name = name;
+            Movement.UpdateEntityLocation(item, location);
             return item;
         }
         public static int CreateWell(XY location)
         {
-            List<IComponent> components = new List<IComponent>
-            {
-                new NameComponent("a stone well"),
-                new Drinkable(),
-                new Fillable()
-            };
-            int well = EntityManager.CreateEntity(components);
-            EntityManager.AddComponentToEntity(well, new Mobility(well, Immovable, location)); // Added Mobility after the fact to account for needing the entity's ID
+            int well = EntityManager.CreateEntity(Well);
+            Movement.RegisterEntityAtLocation(well, location);
+            //Movement.UpdateEntityLocation(well, location);
             return well;
         }
         public static int CreateBucket(XY location)
         {
-            List<IComponent> components = new List<IComponent>
-            {
-                new NameComponent("a wooden bucket"),
-                new Drinkable(),
-                new Fillable(),
-                new Emptyable()
-            };
-            int bucket = EntityManager.CreateEntity(components);
-            EntityManager.AddComponentToEntity(bucket, new Mobility(bucket, Portable, location)); // Added Mobility after the fact to account for needing the entity's ID
+            int bucket = EntityManager.CreateEntity(Bucket);
+            Movement.RegisterEntityAtLocation(bucket, location);
+            //Movement.UpdateEntityLocation(bucket, location);
             return bucket;
         }
         public static int CreateKettle(XY location)
         {
-            List<IComponent> components = new List<IComponent>
-            {
-                new NameComponent("an iron kettle"),
-                new Drinkable(),
-                new Fillable(),
-                new Emptyable(),
-                new BrewCapable()
-            };
-            int kettle = EntityManager.CreateEntity(components);
-            EntityManager.AddComponentToEntity(kettle, new Mobility(kettle, Portable, location)); // Added Mobility after the fact to account for needing the entity's ID
+            int kettle = EntityManager.CreateEntity(Kettle);
+            Movement.RegisterEntityAtLocation(kettle, location);
+            //Movement.UpdateEntityLocation(kettle, location);
             return kettle;
         }
         public static int CreateProduce(string name)
         {
-            List<IComponent> components = new List<IComponent>
-            {
-                new NameComponent(name),
-                new Brewable(),
-                new Consumable(Edible)
-            };
-            int produce = EntityManager.CreateEntity(components);
-            EntityManager.AddComponentToEntity(produce, new Mobility(produce, Portable, new XY(99,99))); // Added Mobility after the fact to account for needing the entity's ID
-            // 99,99 counts as an error value for now, for things that are not in the world. this will have to be fixed asap
+            int produce = EntityManager.CreateEntity(Produce);
+            NameComponent name_component = Lookup.ComponentOfEntityByType<NameComponent>(produce);
+            name_component.Name = name;
             return produce;
         }
     }

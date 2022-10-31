@@ -2,18 +2,17 @@ namespace homeworld
 {
     public class NameComponent : IComponent
     {
-        private string entity_name = "(blank)";
-        public int ComponentID { get; set; }
-        public string Name
-        {
-            get => entity_name;
-            set => entity_name = value;
-        }
+        public int EntityID     { get; set; }
+        public int ComponentID  { get; set; }
+        public string Name      { get; set; }
 
         public NameComponent(string name = "(blank)")
         {
-            Name = name;
             ComponentID = IComponent.NextComponentID();
+
+            // Component-specific setup
+            Name        = name;
+
         }
 
         // METHODS

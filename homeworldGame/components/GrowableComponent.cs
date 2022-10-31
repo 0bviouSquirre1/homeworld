@@ -2,12 +2,19 @@ namespace homeworld
 {
     public class Growable : IComponent
     {
-        public int ComponentID { get; set; }
-        public int ProduceID { get; set; }
+        public int EntityID     { get; set; }
+        public int ComponentID  { get; set; }
+        public int ProduceID    { get; set; }
         public Growable(int produce_id)
         {
             ComponentID = IComponent.NextComponentID();
-            ProduceID = produce_id;
+
+            // Component-specific setup
+            ProduceID   = produce_id;
+        }
+        public void Grow()
+        {
+            
         }
     }
 }

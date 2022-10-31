@@ -2,7 +2,8 @@ namespace homeworld
 {
     public class Inventory : IComponent
     {
-        public int ComponentID { get; set; }
+        public int EntityID     { get; set; }
+        public int ComponentID  { get; set; }
         public List<int> InventoryList = new List<int>();
 
         public Inventory()

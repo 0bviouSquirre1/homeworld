@@ -2,19 +2,22 @@ namespace homeworld
 {
     public class Consumable : IComponent
     {
-        public enum States : int
+        public int EntityID     { get; set; }
+        public int ComponentID  { get; set; }
+        public States State     { get; set; }
+        public enum States
         {
-            Deadly = 0,
-            Edible = 1,
-            Potable = 2,
-            Applicable = 3
+            Deadly      = 0,
+            Edible      = 1,
+            Potable     = 2,
+            Applicable  = 3
         }
-        public States State { get; set; }
-        public int ComponentID { get; set; }
         public Consumable(States state)
         {
-            State = state;
             ComponentID = IComponent.NextComponentID();
+
+            // Component-specific setup
+            State       = state;
         }
 
         // METHODS

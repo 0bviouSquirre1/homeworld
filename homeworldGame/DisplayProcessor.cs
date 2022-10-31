@@ -2,60 +2,56 @@ namespace homeworld
 {
     public static class Display
     {
-        public static List<XY> occupied_locations = Movement.entities_locations.Values.ToList();
-
         public static void AllEntities()
         {
-            List<int> all_entities_display  = new List<int>();
-            string name                     = "";
-            XY location                     = new XY(99,99);
+            List<int> all_entities  = new List<int>();
+            string display_name             = "";
+            XY display_location             = new XY(99,99);
 
             Console.WriteLine($"All entities currently present:");
 
-            foreach (KeyValuePair<int, Dictionary<int, IComponent>> entity in EntityManager.AllEntities)
+            foreach (KeyValuePair<int, List<IComponent>> entity in Lookup.AllEntities)
             {
-                int entity_id                               = entity.Key;
-                Dictionary<int, IComponent> component_list  = entity.Value;
+                int entity_id                    = entity.Key;
+                List<IComponent> component_list  = entity.Value;
 
-                all_entities_display.Add(entity_id);
-                foreach (KeyValuePair<int, IComponent> component_node in component_list)
+                all_entities.Add(entity_id);
+                foreach (IComponent component in component_list)
                 {
-                    IComponent component             = component_node.Value;
                     if (component is NameComponent)
                     {
                         NameComponent name_component    = (NameComponent)component;
-                        name                            = name_component.Name;
+                        display_name                    = name_component.Name;
                     }
                     if (component is Mobility)
                     {
                         Mobility mobility_component     = (Mobility)component;
-                        location                        = mobility_component.Location;
+                        display_location                = mobility_component.Location;
                     }
                 }
                 string entity_id_display    = String.Format("{0,3}",   entity_id);
-                string name_display         = String.Format("{0,-20}", name);
-                string location_display     = String.Format("{0,-10}", location);
+                string name_display         = String.Format("{0,-20}", display_name);
+                string location_display     = String.Format("{0,-10}", display_location);
 
                 Console.WriteLine($"{entity_id_display} : {name_display} : {location_display}");
             }
 
-            Console.WriteLine($"{all_entities_display.Count} entities present");
+            Console.WriteLine($"{all_entities.Count} entities present");
         }
         public static void AllComponentsOfEntity(int entity_id)
         {
             // Validation
-            EntityManager.AllEntities.TryGetValue(entity_id, out Dictionary<int, IComponent>? entity);
+            Lookup.AllEntities.TryGetValue(entity_id, out List<IComponent>? entity);
             if (entity is not null)
             {
-                Dictionary<int, IComponent> component_list = EntityManager.GetComponentsOfEntity(entity_id);
+                List<IComponent> component_list = Lookup.AllComponentsOfEntity(entity_id);
 
                 Console.WriteLine($"Entity {entity_id} Component List:");
 
-                foreach (KeyValuePair<int, IComponent> component_node in component_list)
+                foreach (IComponent component in component_list)
                 {
-                    int component_id        = component_node.Key;
-                    string component_type   = component_node.Value.GetType().ToString();
-                    IComponent component    = component_node.Value;
+                    int component_id        = component.ComponentID;
+                    string component_type   = component.GetType().ToString();
 
                     Console.WriteLine($"{component_id} - {component_type} - {component}");
                 }
@@ -67,7 +63,7 @@ namespace homeworld
         }
         public static void AllComponentsOfType<T>() where T : IComponent
         {
-            List<T> component_list = EntityManager.GetAllComponentsOfType<T>();
+            List<T> component_list = Lookup.AllComponentsOfType<T>();
 
             Console.WriteLine($"All components of type {typeof(T)}:");
 
@@ -80,7 +76,7 @@ namespace homeworld
         }
         public static void AllEntitiesWithComponentType<T>() where T : IComponent
         {
-            List<int> entity_list = EntityManager.GetAllEntitiesWithComponentType<T>();
+            List<int> entity_list = Lookup.AllEntitiesWithComponentType<T>();
 
             Console.WriteLine($"All entities with component of type {typeof(T)}:");
 
@@ -106,11 +102,11 @@ namespace homeworld
                 for (int x = -5; x < 6; x++)
                 {
                     XY this_location            = new XY(x,y);
-                    XY player_location          = Movement.GetEntityLocation(1);
+                    XY player_location          = Lookup.EntityLocation(1);
 
                     bool is_player_location     = (this_location.Equals(player_location));
-                    bool contains_something     = occupied_locations.Contains(this_location);
-                    bool room_has_been_explored = Map.ExploredMap[this_location];
+                    bool contains_something     = Lookup.OccupiedLocations.Contains(this_location);
+                    bool room_has_been_explored = Lookup.ExploredMap[this_location];
                     
                     if (is_player_location)
                     {
@@ -118,9 +114,9 @@ namespace homeworld
                     }
                     else if (contains_something && room_has_been_explored)
                     {
-                        // TODO: add a switch case here to display different symbols based on what is there
-                        // TODO: how do we find out what Something is contained here?
-                        Console.Write($"[ o ]");
+                        int first_entity = Lookup.EntitiesByLocation[this_location][0];
+                        char entity_display = FindChar(first_entity);
+                        Console.Write($"[ {entity_display} ]");
                     } 
                     else if (contains_something && !room_has_been_explored)
                     {
@@ -156,6 +152,37 @@ namespace homeworld
             }
             
             Console.WriteLine();
+        }
+        public static char FindChar(int entity_id)
+        {
+            char return_char = ' ';
+            List<IComponent> component_list = Lookup.AllComponentsOfEntity(entity_id);
+            foreach (IComponent component in component_list)
+            {
+                if (component is Archetype)
+                {
+                    Archetype arch_component = (Archetype)component;
+                    switch (arch_component.State)
+                    {
+                        case Archetype.States.Plant:
+                            return_char = '#';
+                            break;
+                        case Archetype.States.Well:
+                            return_char = 'O';
+                            break;
+                        case Archetype.States.Bucket:
+                            return_char = 'U';
+                            break;
+                        case Archetype.States.Kettle:
+                            return_char = 'H';
+                            break;
+                        default:
+                            return_char = 'o';
+                            break;
+                    }
+                }
+            }
+            return return_char;
         }
     }
 }
