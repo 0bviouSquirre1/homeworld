@@ -35,22 +35,5 @@ namespace homeworld
                 Lookup.EntitiesByLocation.Add(location, entry);
             return entity;
         }
-
-        /*public static void AddComponentToEntity(int entity_id, IComponent component)
-        {
-            List<IComponent> component_list = Lookup.AllComponentsOfEntity(entity_id);
-            component_list.Add(component);
-        }
-        public static void RemoveComponentFromEntity(int entity_id, IComponent component)
-        {
-            List<IComponent> component_list = Lookup.AllComponentsOfEntity(entity_id);
-            component_list.Remove(component);
-
-        }
-        public static void DestroyEntity(int entity_id)
-        {
-            // possibly decommission components first?
-            Lookup.EntitiesAndComponents.Remove(entity_id);
-        }*/
     }
 }

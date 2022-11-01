@@ -13,5 +13,11 @@ namespace homeworld
             EntityID = EntityManager.NextEntityID();
             ComponentList = Lookup.ArchetypeComponents(archetype);
         }
+
+        public override string ToString()
+        {
+            string? name = Lookup.ComponentOfEntityByType<NameComponent>(EntityID).Name;
+            return $"{EntityID} - {name}";
+        }
     }
 }

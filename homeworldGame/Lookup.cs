@@ -9,10 +9,6 @@ namespace homeworld
         public static Dictionary<int, Entity> AllEntities = new Dictionary<int, Entity>();
         public static Dictionary<XY, Dictionary<int, Entity>> EntitiesByLocation = new Dictionary<XY, Dictionary<int, Entity>>();
         public static Dictionary<XY, bool>               ExploredMap = new Dictionary<XY, bool>();              // Location and Visibility
-        /*public static Dictionary<int, Mobility>      MovableEntities = new Dictionary<int, Mobility>();         // Entity # and Mobile Entities
-        public static Dictionary<XY, List<int>>   EntitiesByLocation = new Dictionary<XY, List<int>>();         // Location and Entity #s
-        public static List<XY>                     OccupiedLocations = EntitiesByLocation.Keys.ToList();        // Extracted list of Locations*/
-
 
         public static List<IComponent> ArchetypeComponents(Archetype.States archetype)
         {
@@ -34,6 +30,7 @@ namespace homeworld
                     return_list.Add(new NameComponent());
                     return_list.Add(new Brewable());
                     return_list.Add(new Consumable(Edible));
+                    return_list.Add(new Growable());
                     return_list.Add(new Mobility(Portable));
                     break;
                 case Cup:
@@ -75,7 +72,7 @@ namespace homeworld
                     return_list.Add(new Archetype(Plant));
                     return_list.Add(new NameComponent());
                     return_list.Add(new Inventory());
-                    return_list.Add(new Growable(0));
+                    return_list.Add(new Growable());
                     return_list.Add(new Mobility(Immovable));
                     break;
                 case Item:
@@ -113,31 +110,25 @@ namespace homeworld
         {
             return Lookup.AllEntities[entity_id].ComponentList;
         }
-        public static NameComponent NameComponentOfEntity(int entity_id)
+        public static T? ComponentOfEntityByType<T>(int entity_id) where T : IComponent
         {
             var component_list = AllComponentsOfEntity(entity_id);
-            NameComponent name_component = new NameComponent();
             foreach (IComponent component in component_list)
             {
-                if (component is NameComponent)
+                if (component is T)
                 {
-                    name_component = (NameComponent)component;
+                    T return_component = (T)component;
+                    return return_component;
                 }
             }
-            return name_component;
+            return default(T);
         }
         public static Entity EntityById(int entity_id)
         {
             return AllEntities[entity_id];
         }
 
-
-        // These might only be useful if I make the lists private, so that you have to go through a method
-        // That might be necessary when we start seeing concurrency issues
-        /*public static int EntityByComponent(IComponent component)
-        {
-            return component.EntityID;
-        }
+        /*
         public static List<int> AllEntitiesWithComponentType<T>()
         {
             List<int> entity_list = new List<int>();
@@ -169,19 +160,6 @@ namespace homeworld
                 }
             }
             return component_list;
-        }
-        public static T? ComponentOfEntityByType<T>(int entity_id) where T : IComponent
-        {
-            List<IComponent> list = EntitiesAndComponents[entity_id];
-
-            foreach (IComponent component in list)
-            {
-                if (component.GetType() is T)
-                {
-                    T return_component = (T)component;
-                }
-            }
-            return default(T); // TODO: I want this to throw an exception or return null
         }
         */
     }

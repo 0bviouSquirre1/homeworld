@@ -101,7 +101,20 @@ namespace homeworld
             
             Console.WriteLine();
         }
-        public static char FindChar(int entity_id)
+        public static void EntityInventory(int entity_id)
+        {
+            // what to do about nulllllllllssssssss
+            var list = Lookup.ComponentOfEntityByType<Inventory>(entity_id).InventoryList;
+            if (list is not null)
+            {
+                foreach (Entity item in list)
+                {
+                    Console.WriteLine(item);
+                }
+                Console.WriteLine($"{list.Count} items");
+            }
+        }        
+        public static char FindChar(int entity_id) // possible candidate for textutil class
         {
             char return_char = ' ';
             List<IComponent> component_list = Lookup.AllComponentsOfEntity(entity_id);
@@ -132,59 +145,5 @@ namespace homeworld
             }
             return return_char;
         }
-
-
-        /*
-        public static void AllComponentsOfEntity(int entity_id)
-        {
-            // Validation
-            Lookup.EntitiesAndComponents.TryGetValue(entity_id, out List<IComponent>? entity);
-            if (entity is not null)
-            {
-                List<IComponent> component_list = Lookup.AllComponentsOfEntity(entity_id);
-
-                Console.WriteLine($"Entity {entity_id} Component List:");
-
-                foreach (IComponent component in component_list)
-                {
-                    int component_id        = component.ComponentID;
-                    string component_type   = component.GetType().ToString();
-
-                    Console.WriteLine($"{component_id} - {component_type} - {component}");
-                }
-            }
-            else
-            {
-                Console.WriteLine($"Entity {entity_id} does not exist.");
-            }
-        }
-        public static void AllComponentsOfType<T>() where T : IComponent
-        {
-            List<T> component_list = Lookup.AllComponentsOfType<T>();
-
-            Console.WriteLine($"All components of type {typeof(T)}:");
-
-            foreach (T component in component_list)
-            {
-                Console.Write($"{component.ComponentID}, ");
-            }
-
-            Console.WriteLine();
-        }
-        public static void AllEntitiesWithComponentType<T>() where T : IComponent
-        {
-            List<int> entity_list = Lookup.AllEntitiesWithComponentType<T>();
-
-            Console.WriteLine($"All entities with component of type {typeof(T)}:");
-
-            foreach (int entity in entity_list)
-            {
-                Console.Write($"{entity}, ");
-            }
-
-            Console.WriteLine($"{entity_list.Count} entities");
-        }
-        
-        */
     }
 }

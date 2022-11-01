@@ -29,8 +29,9 @@ namespace homeworld
         public static Entity CreatePlant(string name, XY location)
         {
             Entity plant = EntityManager.CreateEntity(Plant, location);
-            NameComponent name_component = Lookup.NameComponentOfEntity(plant.EntityID);
-            name_component.Name = name;
+            string plant_name = $"a {name} plant";
+            NameSystem.ChangeName(plant.EntityID, plant_name);
+            GrowSystem.SetProduce(plant.EntityID, name);
             return plant;
         }
         public static Entity CreateItem(string name, XY location)
@@ -44,9 +45,7 @@ namespace homeworld
             {
                 item = EntityManager.CreateEntity(Item, location);
             }
-            NameComponent name_component = Lookup.NameComponentOfEntity(item.EntityID);
-            name_component.Name = name;
-
+            NameSystem.ChangeName(item.EntityID, name);
             return item;
         }
         public static void CreateRandomPlants(string name)
@@ -65,13 +64,5 @@ namespace homeworld
                 CreateItem(name, location);
             }
         }
-        /*public static int CreateProduce(string name)
-        {
-            int produce = EntityManager.CreateEntity(Produce);
-            NameComponent? name_component = Lookup.ComponentOfEntityByType<NameComponent>(produce);
-            if (name_component is not null)
-                name_component.Name = name;
-            return produce;
-        }*/
     }
 }
