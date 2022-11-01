@@ -6,27 +6,37 @@ namespace homeworld
 {
     public static class EntityManager
     {
-        // TODO: implement archetypes
         private static int last_entity_id = 0;
-        private static int NextEntityID()
+        public static int NextEntityID()
         {
             last_entity_id++;
             return last_entity_id;
         }
-        public static int CreateEntity(Archetype.States archetype)
+        public static Entity CreateEntity(Archetype.States archetype, XY location)
         {
-            int entity = EntityManager.NextEntityID();
+            // Create base entity
+            Entity entity = new Entity(archetype);
 
-            List<IComponent> component_list = Lookup.ArchetypeComponents(archetype);
-            foreach (IComponent component in component_list)
+            // Ensure each component knows its entity
+            foreach (IComponent component in entity.ComponentList)
             {
-                component.EntityID = entity;
+                component.EntityID = entity.EntityID;
             }
-            Lookup.AllEntities.Add(entity, component_list);
 
+            // Add to data stores
+            Lookup.AllEntities.Add(entity.EntityID, entity);
+            var entry           = new Dictionary<int, Entity>()
+            {
+                { entity.EntityID, entity }
+            };
+            if (Lookup.EntitiesByLocation.ContainsKey(location))
+                Lookup.EntitiesByLocation[location].Add(entity.EntityID, entity);
+            else
+                Lookup.EntitiesByLocation.Add(location, entry);
             return entity;
         }
-        public static void AddComponentToEntity(int entity_id, IComponent component)
+
+        /*public static void AddComponentToEntity(int entity_id, IComponent component)
         {
             List<IComponent> component_list = Lookup.AllComponentsOfEntity(entity_id);
             component_list.Add(component);
@@ -40,7 +50,7 @@ namespace homeworld
         public static void DestroyEntity(int entity_id)
         {
             // possibly decommission components first?
-            Lookup.AllEntities.Remove(entity_id);
-        }
+            Lookup.EntitiesAndComponents.Remove(entity_id);
+        }*/
     }
 }

@@ -12,6 +12,7 @@ namespace homeworld
             return last_component_id;
         }
 
+        // TODO This will be moved to the Update system
         public void Update()
         {
             

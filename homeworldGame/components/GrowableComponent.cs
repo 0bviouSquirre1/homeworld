@@ -12,6 +12,8 @@ namespace homeworld
             // Component-specific setup
             ProduceID   = produce_id;
         }
+
+        // TODO This will be moved to the GrowSystem
         public void Grow()
         {
             

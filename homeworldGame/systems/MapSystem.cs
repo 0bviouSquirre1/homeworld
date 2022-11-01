@@ -1,6 +1,6 @@
 namespace homeworld
 {
-    public static class Map
+    public static class Map // maybe not a system
     {
         public static void Setup()
         {
@@ -12,10 +12,11 @@ namespace homeworld
                     if (x == 1 && y == 1)
                         Lookup.ExploredMap.Add(new XY(x,y), true);
                     else
-                        Lookup.ExploredMap.Add(new XY(x,y), false);
+                        Lookup.ExploredMap.Add(new XY(x,y), false); // TODO: change back to false
                 }
             }
         }
+
         public static void ExploreRoom(XY location)
         {
             Lookup.ExploredMap[location] = true;
