@@ -9,9 +9,13 @@ namespace homeworld
         public static Dictionary<int, Entity> AllEntities = new Dictionary<int, Entity>();
         public static Dictionary<int, Entity> GetAllEntities()
         {
-            return new Dictionary<int, Entity>();
+            return AllEntities;
         }
-        
+        public static void SetAllEntities(Dictionary<int, Entity> data)
+        {
+            AllEntities = data;
+        }
+
         private static int last_entity_id = 0;
         public static int NextEntityID()
         {
@@ -31,18 +35,18 @@ namespace homeworld
             }
 
             // Add to data stores
-            EntityManager.AllEntities.Add(entity.EntityID, entity);
+            EntityManager.GetAllEntities().Add(entity.EntityID, entity);
 
             Movement.UpdateEntityLocation(entity.EntityID, location);
             return entity;
         }
         public static void KillEntity(int entity_id)
         {
-            EntityManager.AllEntities.Remove(entity_id);
+            EntityManager.GetAllEntities().Remove(entity_id);
         }
         public static void KillAllEntities()
         {
-            foreach (KeyValuePair<int, Entity> entity in EntityManager.AllEntities)
+            foreach (KeyValuePair<int, Entity> entity in EntityManager.GetAllEntities())
             {
                 KillEntity(entity.Key);
             }

@@ -138,7 +138,7 @@ namespace homeworld
         }
         public static List<IComponent> AllComponentsOfEntity(int entity_id)
         {
-            return EntityManager.AllEntities[entity_id].ComponentList;
+            return EntityManager.GetAllEntities()[entity_id].ComponentList;
         }
         public static Option<T> ComponentOfEntityByType<T>(int entity_id) where T : IComponent
         {
@@ -158,7 +158,7 @@ namespace homeworld
         {
             // This will fail if the Entity doesn't exist. This is good, we shouldn't be calling entities that don't exist
 
-            return EntityManager.AllEntities[entity_id];
+            return EntityManager.GetAllEntities()[entity_id];
         }
         public static List<Entity> EntityInventory(int entity_id)
         {
@@ -173,7 +173,7 @@ namespace homeworld
         {
             // need a list of all components, all entities, all systems, makes sense
             List<T> component_list = new List<T>();
-            foreach (KeyValuePair<int, Entity> entity in EntityManager.AllEntities)
+            foreach (KeyValuePair<int, Entity> entity in EntityManager.GetAllEntities())
             {
                 foreach (IComponent component in entity.Value.ComponentList)
                 {

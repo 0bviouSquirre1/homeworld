@@ -13,7 +13,7 @@ namespace homeworld
             Console.WriteLine();
             Console.WriteLine($"All entities currently present:");
 
-            foreach (KeyValuePair<int, Entity> entity_node in EntityManager.AllEntities)
+            foreach (KeyValuePair<int, Entity> entity_node in EntityManager.GetAllEntities())
             {
                 int entity_id                    = entity_node.Key;
 
