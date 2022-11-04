@@ -6,8 +6,8 @@ namespace homeworld
 {
     public static class EntityManager
     {
-        public static Dictionary<int, Entity> AllEntities = new Dictionary<int, Entity>();
-        public static Dictionary<int, Entity> GetAllEntities()
+        private static Dictionary<int, Entity> AllEntities = new Dictionary<int, Entity>();
+        public static IReadOnlyDictionary<int, Entity> GetAllEntities()
         {
             return AllEntities;
         }
