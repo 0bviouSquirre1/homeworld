@@ -34,6 +34,7 @@ namespace homeworld
         {
             Console.WriteLine();
             List<Entity> list = Lookup.EntitiesAtLocation(location);
+            Console.WriteLine();
             Console.WriteLine($"Entities present at {location}:");
             foreach (Entity item in list)
             {
@@ -42,8 +43,9 @@ namespace homeworld
         }
         public static void OverheadMap(Entity player)
         {
+            Console.WriteLine();
             // Display the map
-            for (int y = 3; y >= 0; y--)
+            for (int y = 5; y >= -5; y--)
             {
                 // Y-axis label and padding logic
                 if (y >= 0) 
@@ -52,7 +54,7 @@ namespace homeworld
                     Console.Write(y);
 
                 // Logic for displaying each room
-                for (int x = 0; x < 4; x++)
+                for (int x = -5; x < 6; x++)
                 {
                     XY this_location            = new XY(x,y);
                     XY player_location          = Lookup.EntityLocation(player);
@@ -85,7 +87,7 @@ namespace homeworld
                 /*
                 Console.WriteLine();
                 Console.Write("  ");
-                for (int y = -5; y < 6; y++)
+                for (int x = -5; x < 6; x++)
                 {
                     Console.Write($"[   ]");
                 }
@@ -96,7 +98,7 @@ namespace homeworld
             
             // X-axis label and padding
             Console.Write(" ");
-            for (int x = 0; x < 4; x++)
+            for (int x = -5; x < 6; x++)
             {
                 if (x < 0)
                     Console.Write($"  {x} ");
@@ -109,6 +111,7 @@ namespace homeworld
         public static void EntityInventory(Entity entity)
         {
             var display_list = Lookup.EntityInventory(entity);
+            Console.WriteLine();
             Console.WriteLine($"Inventory for entity {entity}");
             foreach (Entity item in display_list)
             {
@@ -120,6 +123,16 @@ namespace homeworld
         {
             Console.WriteLine();
             Console.WriteLine($"The player has moved from {previous_location} to {next_location}");
+        }
+        public static void DropItem(Entity item)
+        {
+            Console.WriteLine();
+            Console.WriteLine($"The player has dropped {item}.");
+        }
+        public static void GetItem(Entity item)
+        {
+            Console.WriteLine();
+            Console.WriteLine($"The player has retrieved {item}.");
         }
         public static char FindChar(Entity entity) // possible candidate for textutil class
         {
@@ -155,6 +168,7 @@ namespace homeworld
         public static void AllComponentsOfEntity(Entity entity)
         {
             var list = Lookup.AllComponentsOfEntity(entity);
+            Console.WriteLine();
             foreach (IComponent component in list)
             {
                 Console.WriteLine($"{component.ToString()}");

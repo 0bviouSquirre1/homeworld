@@ -20,5 +20,11 @@ namespace homeworld
         {
             return Lookup.EntityLocation(this);
         }
+
+        public override string ToString()
+        {
+            string name = Lookup.EntityName(this);
+            return $"{name}";
+        }
     }
 }

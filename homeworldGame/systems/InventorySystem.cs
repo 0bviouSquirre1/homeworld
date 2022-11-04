@@ -35,6 +35,7 @@ namespace homeworld
                 XY here = Lookup.EntityLocation(entity);
                 EntityManager.AddComponent<Location>(item);
                 Movement.UpdateEntityLocation(item, here);
+                Display.DropItem(item);
             }
         }
         public static void GetItem(Entity entity, Entity item)
@@ -42,6 +43,7 @@ namespace homeworld
             EntityManager.RemoveComponent<Location>(item);
 
             InventorySystem.AddToInventory(entity, item);
+            Display.GetItem(item);
         }
     }
 }
