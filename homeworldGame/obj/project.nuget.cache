@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "92XVDsGRx2AfRv9UofR2Kxv0evD3v8RgbGrW7GXY09LYQEaJVA+kCisJCZBFvLPUToAHWBqyWgtb/54XfH9Z6g==",
+  "dgSpecHash": "28G7Z1mh2tk3pc4+QawLdtsIvOlPzh4dYCDggfdiF3/myT8ByAy4U4/QVeQppiGK14cDcSKdlAjnxoP+s2SWyQ==",
   "success": true,
   "projectFilePath": "/home/shannon/Documents/programming/homeworld/homeworldGame/homeworldGame.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "/home/shannon/.nuget/packages/optional/4.0.0/optional.4.0.0.nupkg.sha512"
+  ],
   "logs": []
 }

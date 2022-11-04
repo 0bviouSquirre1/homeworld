@@ -7,7 +7,7 @@ namespace homeworld
         public int xValue { get; }
         public int yValue { get; }
 
-        public XY(int x = 0, int y = 0)
+        public XY(int x = 99, int y = 99)
         {
             xValue = x;
             yValue = y;

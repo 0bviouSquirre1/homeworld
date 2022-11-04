@@ -1,6 +1,7 @@
 using static homeworld.Mobility.States;
 using static homeworld.Consumable.States;
 using static homeworld.Archetype.States;
+using Optional;
 
 namespace homeworld
 {
@@ -9,8 +10,9 @@ namespace homeworld
         public static void SetProduce(int plant_id, string name)
         {
             Entity produce = CreateProduce(plant_id, name);
-            Growable? grow_component = Lookup.ComponentOfEntityByType<Growable>(plant_id);
-            grow_component!.ProduceID = produce.EntityID;
+            var grow_component = Lookup.ComponentOfEntityByType<Growable>(plant_id);
+            grow_component
+                .MatchSome(c => c.ProduceID = produce.EntityID);
             InventorySystem.AddToInventory(plant_id, produce);
         }
         public static Entity CreateProduce(int plant_id, string name)

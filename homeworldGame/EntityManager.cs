@@ -15,7 +15,7 @@ namespace homeworld
         public static Entity CreateEntity(Archetype.States archetype, XY location)
         {
             // Create base entity
-            Entity entity = new Entity(archetype);
+            Entity entity = new Entity(archetype, location);
 
             // Ensure each component knows its entity
             foreach (IComponent component in entity.ComponentList)
@@ -25,14 +25,12 @@ namespace homeworld
 
             // Add to data stores
             Lookup.AllEntities.Add(entity.EntityID, entity);
-            var entry           = new Dictionary<int, Entity>()
+            var entry = new Dictionary<int, Entity>()
             {
                 { entity.EntityID, entity }
             };
-            if (Lookup.EntitiesByLocation.ContainsKey(location))
-                Lookup.EntitiesByLocation[location].Add(entity.EntityID, entity);
-            else
-                Lookup.EntitiesByLocation.Add(location, entry);
+
+            Movement.UpdateEntityLocation(entity.EntityID, location);
             return entity;
         }
     }

@@ -1,6 +1,7 @@
 using static homeworld.Mobility.States;
 using static homeworld.Consumable.States;
 using static homeworld.Archetype.States;
+using Optional;
 
 namespace homeworld
 {
@@ -8,26 +9,16 @@ namespace homeworld
     {
         public static void UpdateEntityLocation(int entity_id, XY location)
         {
-            XY leaving_location = Lookup.EntityLocation(entity_id);
-            Entity entity       = Lookup.EntityById(entity_id);
-            var entry           = new Dictionary<int, Entity>()
-            {
-                { entity_id, entity }
-            };
-
-            // Remove them from the old location
-            Lookup.EntitiesByLocation[leaving_location].Remove(entity_id);
-
-            // Add them to the new location
-            if (Lookup.EntitiesByLocation.ContainsKey(location))
-                Lookup.EntitiesByLocation[location].Add(entity.EntityID, entity);
-            else
-                Lookup.EntitiesByLocation.Add(location, entry);
+            Option<Location> location_component = Lookup.ComponentOfEntityByType<Location>(entity_id);
+            location_component.MatchSome(lc => lc.Coordinates = location);
         }
-        public static void MovePlayer(XY nextLocation)
+        public static void MovePlayer(XY next_location)
         {
-            UpdateEntityLocation(1, nextLocation);
-            Map.ExploreRoom(nextLocation);
+            XY previous_location = Lookup.EntityLocation(1);
+            Display.PlayerMoved(previous_location, next_location);
+            UpdateEntityLocation(1, next_location);
+            Map.ExploreRoom(next_location);
+            Display.EntitiesAtLocation(next_location);
         }
     }
 }

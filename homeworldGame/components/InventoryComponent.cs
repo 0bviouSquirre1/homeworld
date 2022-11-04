@@ -4,12 +4,13 @@ namespace homeworld
     {
         public int EntityID     { get; set; }
         public int ComponentID  { get; set; }
-        public List<Entity> InventoryList = new List<Entity>();
+        public List<Entity> InventoryList;
         // TODO: set optional max inventory size
 
         public Inventory()
         {
             ComponentID = IComponent.NextComponentID();
+            InventoryList = new List<Entity>();
         }
 
         // METHODS

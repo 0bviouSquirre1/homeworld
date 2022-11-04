@@ -6,6 +6,24 @@ namespace homeworld
 {
     public static class Setup
     {
+        public static void PopulateWorld()
+        {
+            Setup.CreatePlayer(new XY(1,1));  // id: 1
+            Setup.CreateWell(new XY(3,3));    // id: 2
+            Setup.CreateBucket(new XY(-2,4)); // id: 3
+            Setup.CreateKettle(new XY(1,1));  // id: 4
+
+            // TODO: more sophisticated name generation
+            Setup.CreateRandomPlants("tomato");
+            Setup.CreateRandomPlants("mint");
+            Setup.CreateRandomPlants("thyme");
+            Setup.CreateRandomPlants("sunflower");
+            Setup.CreateRandomPlants("nightshade");
+
+            Setup.CreateRandomItems("a teacup");
+            Setup.CreateRandomItems("a silver spoon");
+            Setup.CreateRandomItems("a saucer");
+        }
         public static Entity CreatePlayer(XY location)
         {
             Entity player = EntityManager.CreateEntity(Player, location);
@@ -53,7 +71,18 @@ namespace homeworld
             for (int i = 0; i <= 2; i++)
             {
                 XY location = XY.RandomLocation();
-                CreatePlant(name, location);
+                var plant = CreatePlant(name, location);
+            }
+        }
+        public static void WalkThePlayerAround(XY player_location, int steps)
+        {
+            for (int i = 0; i <= steps; i++)
+            {
+                var rand = new Random();
+                List<XY> nearby_rooms = Lookup.NearbyRooms(player_location);
+                XY next_location = nearby_rooms[rand.Next(4)];
+                player_location = next_location;
+                Movement.MovePlayer(next_location);
             }
         }
         public static void CreateRandomItems(string name)

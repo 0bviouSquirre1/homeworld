@@ -13,3 +13,5 @@
 /home/shannon/Documents/programming/homeworld/homeworldGame/obj/Debug/net6.0/ref/homeworldGame.dll
 /home/shannon/Documents/programming/homeworld/homeworldGame/obj/Debug/net6.0/homeworldGame.pdb
 /home/shannon/Documents/programming/homeworld/homeworldGame/obj/Debug/net6.0/homeworldGame.genruntimeconfig.cache
+/home/shannon/Documents/programming/homeworld/homeworldGame/bin/Debug/net6.0/Optional.dll
+/home/shannon/Documents/programming/homeworld/homeworldGame/obj/Debug/net6.0/homeworldGame.csproj.CopyComplete

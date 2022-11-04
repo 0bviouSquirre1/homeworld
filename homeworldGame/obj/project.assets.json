@@ -1,11 +1,43 @@
 {
   "version": 3,
   "targets": {
-    "net6.0": {}
+    "net6.0": {
+      "Optional/4.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/Optional.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Optional.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "Optional/4.0.0": {
+      "sha512": "Q9NdZ39K/tPuV8JDs6ntRxW3idN9J4jSoBK/2ovld+Gh8if4Yhs+OTPvI84mN5YGAI3pzbhLcNUrm+VFKutC3Q==",
+      "type": "package",
+      "path": "optional/4.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net35/Optional.dll",
+        "lib/net35/Optional.xml",
+        "lib/net45/Optional.dll",
+        "lib/net45/Optional.xml",
+        "lib/netstandard1.0/Optional.dll",
+        "lib/netstandard1.0/Optional.xml",
+        "lib/netstandard2.0/Optional.dll",
+        "lib/netstandard2.0/Optional.xml",
+        "optional.4.0.0.nupkg.sha512",
+        "optional.nuspec"
+      ]
+    }
+  },
   "projectFileDependencyGroups": {
-    "net6.0": []
+    "net6.0": [
+      "optional >= 4.0.0"
+    ]
   },
   "packageFolders": {
     "/home/shannon/.nuget/packages/": {}
@@ -43,6 +75,12 @@
     "frameworks": {
       "net6.0": {
         "targetAlias": "net6.0",
+        "dependencies": {
+          "optional": {
+            "target": "Package",
+            "version": "[4.0.0, )"
+          }
+        },
         "imports": [
           "net461",
           "net462",

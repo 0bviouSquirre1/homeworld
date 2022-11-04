@@ -12,7 +12,7 @@ namespace homeworld
                     if (x == 1 && y == 1)
                         Lookup.ExploredMap.Add(new XY(x,y), true);
                     else
-                        Lookup.ExploredMap.Add(new XY(x,y), false); 
+                        Lookup.ExploredMap.Add(new XY(x,y), true); 
                 }
             }
         }
