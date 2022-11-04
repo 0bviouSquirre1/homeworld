@@ -8,13 +8,15 @@ namespace homeworld
         {
             Map.Setup();
             Entity player = Setup.CreatePlayer(new XY(1,1));  // id: 1
-            Entity saucer = Setup.CreateItem("a saucer", new XY(1,2));
+            Entity saucer = Setup.CreateItem("a saucer", new XY(1,1));
             Entity cup = Setup.CreateItem("a cup", new XY(2,1));
 
             Display.OverheadMap();
 
+
+
             // player starts at 1,1
-            Display.EntityInventory(player.EntityID);
+            /*Display.EntityInventory(player.EntityID);
 
             Movement.MovePlayer(new XY(1,2));
             Display.OverheadMap();
@@ -24,7 +26,7 @@ namespace homeworld
             Movement.MovePlayer(new XY(2,2));
             Display.OverheadMap();
             InventorySystem.DropItem(player.EntityID, saucer);
-            Display.EntityInventory(player.EntityID);
+            Display.EntityInventory(player.EntityID);*/
 
             /*Movement.MovePlayer(new XY(2,1));
             Display.OverheadMap();

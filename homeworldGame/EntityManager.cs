@@ -18,6 +18,7 @@ namespace homeworld
             Entity entity = new Entity(archetype, location);
 
             // Ensure each component knows its entity
+            entity.ComponentList.ForEach(c => c.EntityID = entity.EntityID);
             foreach (IComponent component in entity.ComponentList)
             {
                 component.EntityID = entity.EntityID;
@@ -25,13 +26,32 @@ namespace homeworld
 
             // Add to data stores
             Lookup.AllEntities.Add(entity.EntityID, entity);
-            var entry = new Dictionary<int, Entity>()
-            {
-                { entity.EntityID, entity }
-            };
 
             Movement.UpdateEntityLocation(entity.EntityID, location);
             return entity;
+        }
+        public static void KillEntity(int entity_id)
+        {
+            Lookup.AllEntities.Remove(entity_id);
+        }
+        public static void KillAllEntities()
+        {
+            foreach (KeyValuePair<int, Entity> entity in Lookup.AllEntities)
+            {
+                KillEntity(entity.Key);
+            }
+        }
+        public static T AddComponent<T>(int entity_id) where T : IComponent, new()
+        {
+            var return_component = new T();
+            Lookup.AllComponentsOfEntity(entity_id).Add(return_component);
+            return return_component;
+        }
+        public static void RemoveComponent<T>(int entity_id) where T : IComponent
+        {
+            var component = Lookup.ComponentOfEntityByType<T>(entity_id);
+            component
+                .MatchSome(c => Lookup.AllComponentsOfEntity(entity_id).Remove(c));
         }
     }
 }

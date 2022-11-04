@@ -26,10 +26,10 @@ namespace homeworld
             return Lookup.EntityLocation(EntityID);
         }
 
-        public override string ToString()
+        /*public override string ToString()
         {
             string name = Lookup.EntityName(EntityID);
             return $"{EntityID} - {name}";
-        }
+        }*/
     }
 }

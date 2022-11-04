@@ -32,11 +32,11 @@ namespace homeworld
         public static void EntitiesAtLocation(XY location)
         {
             Console.WriteLine();
-            List<int> list = Lookup.EntitiesAtLocation(location);
+            List<Entity> list = Lookup.EntitiesAtLocation(location);
             Console.WriteLine($"Entities present at {location}:");
-            foreach (int item_id in list)
+            foreach (Entity item in list)
             {
-                Console.WriteLine(Lookup.EntityName(item_id));
+                Console.WriteLine(Lookup.EntityName(item.EntityID));
             }
         }
         public static void OverheadMap()
@@ -66,8 +66,8 @@ namespace homeworld
                     }
                     else if (contains_something && room_has_been_explored)
                     {
-                        List<int> present_entities = Lookup.EntitiesAtLocation(this_location);
-                        char entity_display = FindChar(present_entities[0]);
+                        List<Entity> present_entities = Lookup.EntitiesAtLocation(this_location);
+                        char entity_display = FindChar(present_entities[0].EntityID);
                         Console.Write($"[ {entity_display} ]");
                     } 
                     else if (contains_something && !room_has_been_explored)

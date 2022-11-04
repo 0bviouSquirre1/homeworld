@@ -103,17 +103,13 @@ namespace homeworld
                 .MatchSome(c => return_location = c);
             return return_location;
         }
-        public static List<int> EntitiesAtLocation(XY target_location)
+        public static List<Entity> EntitiesAtLocation(XY target_location)
         {
-            List<int> entity_list = new List<int>();
-            foreach (Location component in AllComponentsOfType<Location>())
-            {
-                if (component.Coordinates.Equals(target_location))
-                {
-                    entity_list.Add(component.EntityID);
-                }
-            }
-            return entity_list;
+            List<Entity> return_list = 
+                AllComponentsOfType<Location>()
+                .FindAll(c => c.Coordinates.Equals(target_location))
+                .Select(c => Lookup.EntityById(c.EntityID)).ToList();
+            return return_list;
         }
         public static List<XY> NearbyRooms(XY room)
         {
@@ -160,9 +156,11 @@ namespace homeworld
             }
             return return_component;
         }
-        public static Entity EntityById(int entity_id)
+        public static Option<Entity> EntityById(int entity_id)
         {
-            return AllEntities[entity_id];
+            var return_entity = Option.None<Entity>();
+            // Handle Entity Not Found
+            return return_entity;
         }
         public static List<Entity> EntityInventory(int entity_id)
         {

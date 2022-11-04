@@ -10,8 +10,18 @@ namespace homeworld
                 .MatchSome(list =>
                     list.Add(added_item));
         }
+        public static void RemoveFromInventory(int entity_id, Entity removed_item)
+        {
+            var inventory = Lookup.ComponentOfEntityByType<Inventory>(entity_id);
+            inventory
+                .Map(inv => inv.InventoryList)
+                .MatchSome(list =>
+                    list.Remove(removed_item));
+        }
         public static bool EntityInventoryContains(int entity_id, Entity item)
         {
+            var entity = Lookup.EntityById(entity_id);
+            entity.Map(e => e.Inventory());
             List<Entity> inventory = Lookup.EntityById(entity_id).Inventory();
             return inventory.Contains(item);
         }
@@ -19,23 +29,18 @@ namespace homeworld
         {
             if (EntityInventoryContains(entity_id, item))
             {
-                List<Entity> inventory = Lookup.EntityById(entity_id).Inventory();
-                inventory.Remove(item);
+                InventorySystem.RemoveFromInventory(entity_id, item);
 
                 XY here = Lookup.EntityLocation(entity_id);
-                List<int> room_inventory = Lookup.EntitiesAtLocation(here);
-                room_inventory.Add(item.EntityID);
+                EntityManager.AddComponent<Location>(item.EntityID);
+                Movement.UpdateEntityLocation(item.EntityID, here);
             }
         }
         public static void GetItem(int entity_id, Entity item)
         {
-            List<int> entity_list = Lookup.EntitiesAtLocation(Lookup.EntityLocation(entity_id));
-            if (entity_list.Contains(item.EntityID))
-            {
-                entity_list.Remove(item.EntityID);
+            EntityManager.RemoveComponent<Location>(item.EntityID);
 
-                Lookup.EntityById(entity_id).Inventory().Add(item);
-            }
+            InventorySystem.AddToInventory(entity_id, item);
         }
     }
 }

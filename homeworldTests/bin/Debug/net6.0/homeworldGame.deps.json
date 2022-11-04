@@ -1,0 +1,41 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "homeworldGame/1.0.0": {
+        "dependencies": {
+          "Optional": "4.0.0"
+        },
+        "runtime": {
+          "homeworldGame.dll": {}
+        }
+      },
+      "Optional/4.0.0": {
+        "runtime": {
+          "lib/netstandard2.0/Optional.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "4.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "homeworldGame/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Optional/4.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Q9NdZ39K/tPuV8JDs6ntRxW3idN9J4jSoBK/2ovld+Gh8if4Yhs+OTPvI84mN5YGAI3pzbhLcNUrm+VFKutC3Q==",
+      "path": "optional/4.0.0",
+      "hashPath": "optional.4.0.0.nupkg.sha512"
+    }
+  }
+}
