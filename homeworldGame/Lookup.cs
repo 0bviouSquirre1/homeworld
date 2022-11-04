@@ -16,10 +16,9 @@ namespace homeworld
             return_list.Add(new Location(location));
             return_list.Add(new Mobility(mobility));
         }
-        public static List<IComponent> ArchetypeComponents(Archetype.States archetype, string name, XY location, Mobility.States mobility)
+        public static List<IComponent> ArchetypeComponents(Archetype.States archetype, XY location)
         {
             List<IComponent> return_list = new List<IComponent>();
-            // Beetroot(return_list, archetype, name, location, mobility);
             switch (archetype)
             {
                 case None:

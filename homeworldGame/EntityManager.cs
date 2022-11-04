@@ -28,12 +28,12 @@ namespace homeworld
             last_entity_id++;
             return last_entity_id;
         }
-        public static Entity CreateEntity(Archetype.States archetype, string name, XY location, Mobility.States mobility)
+        public static Entity CreateEntity(Archetype.States archetype, XY location)
         {
-            Entity entity = new Entity(archetype, name, location, mobility);
+            Entity entity = new Entity(archetype, location);
             EntityManager.UpdateComponentEntityIDs(entity);
             EntityManager.AddEntity(entity.EntityID, entity);
-            Movement.UpdateEntityLocation(entity.EntityID, location);
+            // Movement.UpdateEntityLocation(entity.EntityID, location);
             return entity;
         }
         public static void KillEntity(int entity_id)
