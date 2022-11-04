@@ -8,14 +8,14 @@ namespace homeworld
     public static class Lookup
     {
         public static Dictionary<XY, bool> ExploredMap = new Dictionary<XY, bool>();
-
+        /* I want to use this to clean up the archetype code at some point, but there's too much to change right now
         public static void Beetroot(List<IComponent> return_list, Archetype.States archetype, string name, XY location, Mobility.States mobility)
         {
             return_list.Add(new Archetype(archetype));
             return_list.Add(new NameComponent(name));
             return_list.Add(new Location(location));
             return_list.Add(new Mobility(mobility));
-        }
+        }*/
         public static List<IComponent> ArchetypeComponents(Archetype.States archetype, XY location)
         {
             List<IComponent> return_list = new List<IComponent>();
@@ -192,23 +192,6 @@ namespace homeworld
         }
     }
 }
-
-/*public static List<int> AllEntitiesWithComponentType<T>()
-{
-    List<int> entity_list = new List<int>();
-
-    foreach (KeyValuePair<int, List<IComponent>> entity in EntitiesAndComponents)
-    {
-        foreach (IComponent component in entity.Value)
-        {
-            if (component is T)
-            {
-                entity_list.Add(component.EntityID);
-            }
-        }
-    }
-    return entity_list;
-}*/
 
 
 // TODO NOTES
