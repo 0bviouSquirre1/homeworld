@@ -11,9 +11,13 @@ namespace homeworld
         {
             return AllEntities;
         }
-        public static void SetAllEntities(Dictionary<int, Entity> data)
+        public static void AddEntity(int entity_id, Entity entity)
         {
-            AllEntities = data;
+            AllEntities.Add(entity_id, entity);
+        }
+        public static void RemoveEntity(int entity_id)
+        {
+            AllEntities.Remove(entity_id);
         }
 
         private static int last_entity_id = 0;
@@ -35,14 +39,14 @@ namespace homeworld
             }
 
             // Add to data stores
-            EntityManager.GetAllEntities().Add(entity.EntityID, entity);
+            EntityManager.AddEntity(entity.EntityID, entity);
 
             Movement.UpdateEntityLocation(entity.EntityID, location);
             return entity;
         }
         public static void KillEntity(int entity_id)
         {
-            EntityManager.GetAllEntities().Remove(entity_id);
+            EntityManager.RemoveEntity(entity_id);
         }
         public static void KillAllEntities()
         {
