@@ -29,9 +29,9 @@ namespace homeworld
             last_entity_id++;
             return last_entity_id;
         }
-        public static Entity CreateEntity(Archetype.States archetype, XY location)
+        public static Entity CreateEntity(Archetype.States archetype, string name, XY location, Mobility.States mobility)
         {
-            Entity entity = new Entity(archetype, location);
+            Entity entity = new Entity(archetype, name, location, mobility);
             EntityManager.UpdateComponentEntityIDs(entity);
             EntityManager.AddEntityToAllEntities(entity.EntityID, entity);
             // Movement.UpdateEntityLocation(entity.EntityID, location);

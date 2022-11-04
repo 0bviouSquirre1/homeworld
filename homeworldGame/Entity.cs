@@ -1,18 +1,13 @@
-using static homeworld.Mobility.States;
-using static homeworld.Consumable.States;
-using static homeworld.Archetype.States;
-using Optional;
-
 namespace homeworld
 {
     public class Entity
     {
         public int EntityID { get; set; }
         public List<IComponent> ComponentList { get; set; }
-        public Entity(Archetype.States archetype, XY location)
+        public Entity(Archetype.States archetype, string name, XY location, Mobility.States mobility)
         {
             EntityID = EntityManager.NextEntityID();
-            ComponentList = Lookup.ArchetypeComponents(archetype, location);
+            ComponentList = Lookup.ArchetypeComponents(archetype, name, location, mobility);
         }
 
         // METHODS
@@ -25,11 +20,5 @@ namespace homeworld
         {
             return Lookup.EntityLocation(EntityID);
         }
-
-        /*public override string ToString()
-        {
-            string name = Lookup.EntityName(EntityID);
-            return $"{EntityID} - {name}";
-        }*/
     }
 }

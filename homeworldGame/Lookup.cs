@@ -9,9 +9,17 @@ namespace homeworld
     {
         public static Dictionary<XY, bool> ExploredMap = new Dictionary<XY, bool>();
 
-        public static List<IComponent> ArchetypeComponents(Archetype.States archetype, XY location)
+        public static void Beetroot(List<IComponent> return_list, Archetype.States archetype, string name, XY location, Mobility.States mobility)
+        {
+            return_list.Add(new Archetype(archetype));
+            return_list.Add(new NameComponent(name));
+            return_list.Add(new Location(location));
+            return_list.Add(new Mobility(mobility));
+        }
+        public static List<IComponent> ArchetypeComponents(Archetype.States archetype, string name, XY location, Mobility.States mobility)
         {
             List<IComponent> return_list = new List<IComponent>();
+            // Beetroot(return_list, archetype, name, location, mobility);
             switch (archetype)
             {
                 case None:

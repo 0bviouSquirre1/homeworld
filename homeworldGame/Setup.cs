@@ -26,29 +26,28 @@ namespace homeworld
         }
         public static Entity Player(XY location)
         {
-            Entity player = EntityManager.CreateEntity(Archetype.States.Player, location);
+            Entity player = EntityManager.CreateEntity(Archetype.States.Player, "player", location, Mobility.States.Movable);
             return player;
         }
         public static Entity Well(XY location)
         {
-            Entity well = EntityManager.CreateEntity(Archetype.States.Well, location);
+            Entity well = EntityManager.CreateEntity(Archetype.States.Well, "a stone well", location, Mobility.States.Immovable);
             return well;
         }
         public static Entity Bucket(XY location)
         {
-            Entity bucket = EntityManager.CreateEntity(Archetype.States.Bucket, location);
+            Entity bucket = EntityManager.CreateEntity(Archetype.States.Bucket, "a wooden bucket", location, Mobility.States.Portable);
             return bucket;
         }
         public static Entity Kettle(XY location)
         {
-            Entity kettle = EntityManager.CreateEntity(Archetype.States.Kettle, location);
+            Entity kettle = EntityManager.CreateEntity(Archetype.States.Kettle, "an iron kettle", location, Mobility.States.Portable);
             return kettle;
         }
         public static Entity Plant(string name, XY location)
         {
-            Entity plant = EntityManager.CreateEntity(Archetype.States.Plant, location);
             string plant_name = $"a {name} plant";
-            NameSystem.ChangeName(plant.EntityID, plant_name);
+            Entity plant = EntityManager.CreateEntity(Archetype.States.Plant, plant_name, location, Mobility.States.Immovable);
             GrowSystem.SetProduce(plant.EntityID, name);
             return plant;
         }
@@ -57,11 +56,11 @@ namespace homeworld
             Entity item;
             if (name.Equals("a teacup"))
             {
-                item = EntityManager.CreateEntity(Cup, location);
+                item = EntityManager.CreateEntity(Cup, name, location, Mobility.States.Portable);
             }
             else
             {
-                item = EntityManager.CreateEntity(Archetype.States.Item, location);
+                item = EntityManager.CreateEntity(Archetype.States.Item, name, location, Mobility.States.Portable);
             }
             NameSystem.ChangeName(item.EntityID, name);
             return item;
