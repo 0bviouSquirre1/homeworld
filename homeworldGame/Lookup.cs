@@ -157,7 +157,8 @@ namespace homeworld
         }
         public static Entity EntityById(int entity_id)
         {
-            // TODO: Handle Entity Not Found
+            // This will fail if the Entity doesn't exist. This is good, we shouldn't be calling entities that don't exist
+
             return AllEntities[entity_id];
         }
         public static List<Entity> EntityInventory(int entity_id)

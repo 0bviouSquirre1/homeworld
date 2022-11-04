@@ -23,13 +23,12 @@ namespace homeworld
         }
         public static void Grow(int plant_id, string name)
         {
-            // TODO: grow more tomatoes
-            // check plant's inventory by plant_id for fullness
-            // may need to set a max size for plant inventories
-            Entity produce = CreateProduce(plant_id, name);
-            InventorySystem.AddToInventory(plant_id, produce);
-            // if less than full, add one produce
-            // if full, do nothing
+            Entity plant = Lookup.EntityById(plant_id);
+            if (plant.Inventory().Count <= 5)
+            {
+                Entity produce = CreateProduce(plant_id, name);
+                InventorySystem.AddToInventory(plant_id, produce);
+            }
         }
     }
 }

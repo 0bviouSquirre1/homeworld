@@ -7,9 +7,9 @@ namespace homeworld
         public static void Main()
         {
             Map.Setup();
-            Entity player = Setup.CreatePlayer(new XY(1,1));  // id: 1
-            Entity saucer = Setup.CreateItem("a saucer", new XY(1,1));
-            Entity cup = Setup.CreateItem("a cup", new XY(2,1));
+            Entity player = Create.Player(new XY(1,1));  // id: 1
+            Entity saucer = Create.Item("a saucer", new XY(1,1));
+            Entity cup = Create.Item("a cup", new XY(2,1));
 
             Display.OverheadMap();
 

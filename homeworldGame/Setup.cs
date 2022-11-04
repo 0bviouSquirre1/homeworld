@@ -4,55 +4,55 @@ using static homeworld.Archetype.States;
 
 namespace homeworld
 {
-    public static class Setup
+    public static class Create
     {
         public static void PopulateWorld()
         {
-            Setup.CreatePlayer(new XY(1,1));  // id: 1
-            Setup.CreateWell(new XY(3,3));    // id: 2
-            Setup.CreateBucket(new XY(-2,4)); // id: 3
-            Setup.CreateKettle(new XY(1,1));  // id: 4
+            Create.Player(new XY(1,1));  // id: 1
+            Create.Well(new XY(3,3));    // id: 2
+            Create.Bucket(new XY(-2,4)); // id: 3
+            Create.Kettle(new XY(1,1));  // id: 4
 
             // TODO: more sophisticated name generation
-            Setup.CreateRandomPlants("tomato");
-            Setup.CreateRandomPlants("mint");
-            Setup.CreateRandomPlants("thyme");
-            Setup.CreateRandomPlants("sunflower");
-            Setup.CreateRandomPlants("nightshade");
+            Create.RandomPlants("tomato");
+            Create.RandomPlants("mint");
+            Create.RandomPlants("thyme");
+            Create.RandomPlants("sunflower");
+            Create.RandomPlants("nightshade");
 
-            Setup.CreateRandomItems("a teacup");
-            Setup.CreateRandomItems("a silver spoon");
-            Setup.CreateRandomItems("a saucer");
+            Create.RandomItems("a teacup");
+            Create.RandomItems("a silver spoon");
+            Create.RandomItems("a saucer");
         }
-        public static Entity CreatePlayer(XY location)
+        public static Entity Player(XY location)
         {
-            Entity player = EntityManager.CreateEntity(Player, location);
+            Entity player = EntityManager.CreateEntity(Archetype.States.Player, location);
             return player;
         }
-        public static Entity CreateWell(XY location)
+        public static Entity Well(XY location)
         {
-            Entity well = EntityManager.CreateEntity(Well, location);
+            Entity well = EntityManager.CreateEntity(Archetype.States.Well, location);
             return well;
         }
-        public static Entity CreateBucket(XY location)
+        public static Entity Bucket(XY location)
         {
-            Entity bucket = EntityManager.CreateEntity(Bucket, location);
+            Entity bucket = EntityManager.CreateEntity(Archetype.States.Bucket, location);
             return bucket;
         }
-        public static Entity CreateKettle(XY location)
+        public static Entity Kettle(XY location)
         {
-            Entity kettle = EntityManager.CreateEntity(Kettle, location);
+            Entity kettle = EntityManager.CreateEntity(Archetype.States.Kettle, location);
             return kettle;
         }
-        public static Entity CreatePlant(string name, XY location)
+        public static Entity Plant(string name, XY location)
         {
-            Entity plant = EntityManager.CreateEntity(Plant, location);
+            Entity plant = EntityManager.CreateEntity(Archetype.States.Plant, location);
             string plant_name = $"a {name} plant";
             NameSystem.ChangeName(plant.EntityID, plant_name);
             GrowSystem.SetProduce(plant.EntityID, name);
             return plant;
         }
-        public static Entity CreateItem(string name, XY location)
+        public static Entity Item(string name, XY location)
         {
             Entity item;
             if (name.Equals("a teacup"))
@@ -61,17 +61,17 @@ namespace homeworld
             }
             else
             {
-                item = EntityManager.CreateEntity(Item, location);
+                item = EntityManager.CreateEntity(Archetype.States.Item, location);
             }
             NameSystem.ChangeName(item.EntityID, name);
             return item;
         }
-        public static void CreateRandomPlants(string name)
+        public static void RandomPlants(string name)
         {
             for (int i = 0; i <= 2; i++)
             {
                 XY location = XY.RandomLocation();
-                var plant = CreatePlant(name, location);
+                var plant = Plant(name, location);
             }
         }
         public static void WalkThePlayerAround(XY player_location, int steps)
@@ -85,12 +85,12 @@ namespace homeworld
                 Movement.MovePlayer(next_location);
             }
         }
-        public static void CreateRandomItems(string name)
+        public static void RandomItems(string name)
         {
             for (int i = 0; i <= 2; i++)
             {
                 XY location = XY.RandomLocation();
-                CreateItem(name, location);
+                Item(name, location);
             }
         }
     }
