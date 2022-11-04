@@ -19,8 +19,8 @@ public class MovementSystemTests
         Entity player = EntityManager.CreateEntity(Archetype.States.Player, here);
 
         // Act
-        Movement.UpdateEntityLocation(player.EntityID, there);
-        var return_location = Lookup.EntityLocation(player.EntityID);
+        Movement.UpdateEntityLocation(player, there);
+        var return_location = Lookup.EntityLocation(player);
 
         // Assert
         Assert.AreEqual(there, return_location);

@@ -49,18 +49,18 @@ namespace homeworld
         }
 
         #region Components
-        public static T AddComponent<T>(int entity_id) where T : IComponent, new()
+        public static T AddComponent<T>(Entity entity) where T : IComponent, new()
         {
             var return_component = new T();
-            Lookup.AllComponentsOfEntity(entity_id).Add(return_component);
-            return_component.EntityID = entity_id;
+            Lookup.AllComponentsOfEntity(entity).Add(return_component);
+            return_component.EntityID = entity.EntityID;
             return return_component;
         }
-        public static void RemoveComponent<T>(int entity_id) where T : IComponent
+        public static void RemoveComponent<T>(Entity entity) where T : IComponent
         {
-            var component = Lookup.ComponentOfEntityByType<T>(entity_id);
+            var component = Lookup.ComponentOfEntityByType<T>(entity);
             component
-                .MatchSome(c => Lookup.AllComponentsOfEntity(entity_id).Remove(c));
+                .MatchSome(c => Lookup.AllComponentsOfEntity(entity).Remove(c));
         }
         public static void UpdateComponentEntityIDs(Entity entity)
         {

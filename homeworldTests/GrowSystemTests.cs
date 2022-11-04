@@ -19,7 +19,7 @@ public class GrowSystemTests
         Entity plant = Create.Plant(name, here);
 
         // Act
-        GrowSystem.Grow(plant.EntityID, name);
+        GrowSystem.Grow(plant, name);
 
         // Assert
         Assert.AreEqual(2, plant.Inventory().Count);

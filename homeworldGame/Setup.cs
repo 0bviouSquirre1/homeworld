@@ -48,8 +48,8 @@ namespace homeworld
         {
             Entity plant = EntityManager.CreateEntity(Archetype.States.Plant, location);
             string plant_name = $"a {name} plant";
-            NameSystem.ChangeName(plant.EntityID, plant_name);
-            GrowSystem.SetProduce(plant.EntityID, name);
+            NameSystem.ChangeName(plant, plant_name);
+            GrowSystem.SetProduce(plant, name);
             return plant;
         }
         public static Entity Item(string name, XY location)
@@ -63,7 +63,7 @@ namespace homeworld
             {
                 item = EntityManager.CreateEntity(Archetype.States.Item, location);
             }
-            NameSystem.ChangeName(item.EntityID, name);
+            NameSystem.ChangeName(item, name);
             return item;
         }
         public static void RandomPlants(string name)
@@ -74,7 +74,7 @@ namespace homeworld
                 var plant = Plant(name, location);
             }
         }
-        public static void WalkThePlayerAround(XY player_location, int steps)
+        public static void WalkThePlayerAround(Entity player, XY player_location, int steps)
         {
             for (int i = 0; i <= steps; i++)
             {
@@ -82,7 +82,7 @@ namespace homeworld
                 List<XY> nearby_rooms = Lookup.NearbyRooms(player_location);
                 XY next_location = nearby_rooms[rand.Next(4)];
                 player_location = next_location;
-                Movement.MovePlayer(next_location);
+                Movement.MovePlayer(player, next_location);
             }
         }
         public static void RandomItems(string name)

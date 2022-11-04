@@ -99,10 +99,10 @@ namespace homeworld
             }
             return return_list;
         }
-        public static XY EntityLocation(int entity_id)
+        public static XY EntityLocation(Entity entity)
         {
             XY return_location = new XY();
-            var location = ComponentOfEntityByType<Location>(entity_id);
+            var location = ComponentOfEntityByType<Location>(entity);
             location
                 .Map(l => l.Coordinates)
                 .MatchSome(c => return_location = c);
@@ -134,22 +134,22 @@ namespace homeworld
             }
             return nearby_rooms;
         }
-        public static string EntityName(int entity_id)
+        public static string EntityName(Entity entity)
         {
             string display_name = "(no)";
-            var name = Lookup.ComponentOfEntityByType<NameComponent>(entity_id);
+            var name = Lookup.ComponentOfEntityByType<NameComponent>(entity);
                 name
                     .Map(c => c.Name)
                     .MatchSome(n => display_name = n);
             return display_name;
         }
-        public static List<IComponent> AllComponentsOfEntity(int entity_id)
+        public static List<IComponent> AllComponentsOfEntity(Entity entity)
         {
-            return EntityManager.GetAllEntities()[entity_id].ComponentList;
+            return entity.ComponentList;
         }
-        public static Option<T> ComponentOfEntityByType<T>(int entity_id) where T : IComponent
+        public static Option<T> ComponentOfEntityByType<T>(Entity entity) where T : IComponent
         {
-            var component_list = AllComponentsOfEntity(entity_id);
+            var component_list = AllComponentsOfEntity(entity);
             var return_component = Option.None<T>();
 
             foreach (IComponent component in component_list)
@@ -167,9 +167,9 @@ namespace homeworld
 
             return EntityManager.GetAllEntities()[entity_id];
         }
-        public static List<Entity> EntityInventory(int entity_id)
+        public static List<Entity> EntityInventory(Entity entity)
         {
-            var inventory = Lookup.ComponentOfEntityByType<Inventory>(entity_id);
+            var inventory = Lookup.ComponentOfEntityByType<Inventory>(entity);
             List<Entity> return_list = new List<Entity>();
             inventory
                 .Map(inv => inv.InventoryList)

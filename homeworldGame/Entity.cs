@@ -14,11 +14,11 @@ namespace homeworld
 
         public List<Entity> Inventory()
         {
-            return Lookup.EntityInventory(EntityID);
+            return Lookup.EntityInventory(this);
         }
         public XY Location()
         {
-            return Lookup.EntityLocation(EntityID);
+            return Lookup.EntityLocation(this);
         }
     }
 }

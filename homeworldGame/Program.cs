@@ -11,9 +11,9 @@ namespace homeworld
             Entity saucer = Create.Item("a saucer", new XY(1,1));
             Entity cup = Create.Item("a cup", new XY(2,1));
 
-            Display.OverheadMap();
+            Display.OverheadMap(player);
 
-            Display.AllComponentsOfEntity(player.EntityID);
+            Display.AllComponentsOfEntity(player);
 
             // player starts at 1,1
             /*Display.EntityInventory(player.EntityID);
@@ -38,7 +38,7 @@ namespace homeworld
             InventorySystem.DropItem(player.EntityID, cup);
             Display.EntityInventory(player.EntityID);*/
 
-            Display.OverheadMap();
+            Display.OverheadMap(player);
         }        
     }
 }

@@ -2,46 +2,46 @@ namespace homeworld
 {
     public static class InventorySystem
     {
-        public static void AddToInventory(int entity_id, Entity added_item)
+        public static void AddToInventory(Entity entity, Entity added_item)
         {
-            var inventory = Lookup.ComponentOfEntityByType<Inventory>(entity_id);
+            var inventory = Lookup.ComponentOfEntityByType<Inventory>(entity);
             inventory
                 .Map(inv => inv.InventoryList)
                 .MatchSome(list =>
                     list.Add(added_item));
         }
-        public static void RemoveFromInventory(int entity_id, Entity removed_item)
+        public static void RemoveFromInventory(Entity entity, Entity removed_item)
         {
-            var inventory = Lookup.ComponentOfEntityByType<Inventory>(entity_id);
+            var inventory = Lookup.ComponentOfEntityByType<Inventory>(entity);
             inventory
                 .Map(inv => inv.InventoryList)
                 .MatchSome(list =>
                     list.Remove(removed_item));
         }
-        public static bool EntityInventoryContains(int entity_id, Entity item)
+        public static bool EntityInventoryContains(Entity entity, Entity item)
         {
             bool result = false;
-            var list = Lookup.ComponentOfEntityByType<Inventory>(entity_id);
+            var list = Lookup.ComponentOfEntityByType<Inventory>(entity);
             list.Map(inv => inv.InventoryList)
                 .MatchSome(inv_list => result = inv_list.Contains(item));
             return result;
         }
-        public static void DropItem(int entity_id, Entity item)
+        public static void DropItem(Entity entity, Entity item)
         {
-            if (EntityInventoryContains(entity_id, item))
+            if (EntityInventoryContains(entity, item))
             {
-                InventorySystem.RemoveFromInventory(entity_id, item);
+                InventorySystem.RemoveFromInventory(entity, item);
 
-                XY here = Lookup.EntityLocation(entity_id);
-                EntityManager.AddComponent<Location>(item.EntityID);
-                Movement.UpdateEntityLocation(item.EntityID, here);
+                XY here = Lookup.EntityLocation(entity);
+                EntityManager.AddComponent<Location>(item);
+                Movement.UpdateEntityLocation(item, here);
             }
         }
-        public static void GetItem(int entity_id, Entity item)
+        public static void GetItem(Entity entity, Entity item)
         {
-            EntityManager.RemoveComponent<Location>(item.EntityID);
+            EntityManager.RemoveComponent<Location>(item);
 
-            InventorySystem.AddToInventory(entity_id, item);
+            InventorySystem.AddToInventory(entity, item);
         }
     }
 }

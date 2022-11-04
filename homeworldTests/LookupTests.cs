@@ -17,7 +17,7 @@ public class LookupTests
         Entity entity = EntityManager.CreateEntity(Archetype.States.Item, here);
 
         // Act
-        var return_location = Lookup.EntityLocation(entity.EntityID);
+        var return_location = Lookup.EntityLocation(entity);
 
         // Assert
         Assert.AreEqual(here, return_location);

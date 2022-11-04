@@ -18,9 +18,9 @@ public class InventorySystemTests
         Entity item = EntityManager.CreateEntity(Archetype.States.Item, here);
 
         // Act
-        InventorySystem.AddToInventory(player.EntityID, item);
+        InventorySystem.AddToInventory(player, item);
         bool result = false;
-        var list = Lookup.ComponentOfEntityByType<Inventory>(player.EntityID);
+        var list = Lookup.ComponentOfEntityByType<Inventory>(player);
         list.Map(inv => inv.InventoryList)
             .MatchSome(inv_list => result = inv_list.Contains(item));
 
@@ -34,10 +34,10 @@ public class InventorySystemTests
         XY here = new XY(1,1);
         Entity player = EntityManager.CreateEntity(Archetype.States.Player, here);
         Entity item = EntityManager.CreateEntity(Archetype.States.Item, here);
-        InventorySystem.AddToInventory(player.EntityID, item);
+        InventorySystem.AddToInventory(player, item);
 
         // Act
-        InventorySystem.RemoveFromInventory(player.EntityID, item);
+        InventorySystem.RemoveFromInventory(player, item);
 
         // Assert
         Assert.That(!player.Inventory().Contains(item));
@@ -52,7 +52,7 @@ public class InventorySystemTests
         Assert.That(!player.Inventory().Contains(item));
 
         // Act
-        InventorySystem.GetItem(player.EntityID, item);
+        InventorySystem.GetItem(player, item);
 
         // Assert
         Assert.That(!Lookup.EntitiesAtLocation(here).Contains(item));
@@ -65,10 +65,10 @@ public class InventorySystemTests
         XY here = new XY(1,1);
         Entity player = EntityManager.CreateEntity(Archetype.States.Player, here);
         Entity item = EntityManager.CreateEntity(Archetype.States.Item, here);
-        InventorySystem.GetItem(player.EntityID, item);
+        InventorySystem.GetItem(player, item);
 
         // Act
-        InventorySystem.DropItem(player.EntityID, item);
+        InventorySystem.DropItem(player, item);
 
         // Assert
         Assert.That(!player.Inventory().Contains(item));
@@ -81,10 +81,10 @@ public class InventorySystemTests
         XY here = new XY(1,1);
         Entity player = EntityManager.CreateEntity(Archetype.States.Player, here);
         Entity item = EntityManager.CreateEntity(Archetype.States.Item, here);
-        InventorySystem.AddToInventory(player.EntityID, item);
+        InventorySystem.AddToInventory(player, item);
 
         // Act
-        var result = InventorySystem.EntityInventoryContains(player.EntityID, item);
+        var result = InventorySystem.EntityInventoryContains(player, item);
 
         // Assert
         Assert.IsTrue(result);
