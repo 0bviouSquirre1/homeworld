@@ -7,6 +7,11 @@ namespace homeworld
     public static class EntityManager
     {
         public static Dictionary<int, Entity> AllEntities = new Dictionary<int, Entity>();
+        public static Dictionary<int, Entity> GetAllEntities()
+        {
+            return new Dictionary<int, Entity>();
+        }
+        
         private static int last_entity_id = 0;
         public static int NextEntityID()
         {
