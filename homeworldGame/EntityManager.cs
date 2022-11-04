@@ -6,6 +6,7 @@ namespace homeworld
 {
     public static class EntityManager
     {
+        #region AllEntities
         private static Dictionary<int, Entity> AllEntities = new Dictionary<int, Entity>();
         public static IReadOnlyDictionary<int, Entity> GetAllEntities()
         {
@@ -19,6 +20,7 @@ namespace homeworld
         {
             AllEntities.Remove(entity_id);
         }
+        #endregion
 
         private static int last_entity_id = 0;
         public static int NextEntityID()
@@ -28,19 +30,9 @@ namespace homeworld
         }
         public static Entity CreateEntity(Archetype.States archetype, XY location)
         {
-            // Create base entity
             Entity entity = new Entity(archetype, location);
-
-            // Ensure each component knows its entity
-            entity.ComponentList.ForEach(c => c.EntityID = entity.EntityID);
-            foreach (IComponent component in entity.ComponentList)
-            {
-                component.EntityID = entity.EntityID;
-            }
-
-            // Add to data stores
+            EntityManager.UpdateComponentEntityIDs(entity);
             EntityManager.AddEntity(entity.EntityID, entity);
-
             Movement.UpdateEntityLocation(entity.EntityID, location);
             return entity;
         }
@@ -55,6 +47,8 @@ namespace homeworld
                 KillEntity(entity.Key);
             }
         }
+
+        #region Components
         public static T AddComponent<T>(int entity_id) where T : IComponent, new()
         {
             var return_component = new T();
@@ -68,5 +62,14 @@ namespace homeworld
             component
                 .MatchSome(c => Lookup.AllComponentsOfEntity(entity_id).Remove(c));
         }
+        public static void UpdateComponentEntityIDs(Entity entity)
+        {
+            entity.ComponentList.ForEach(c => c.EntityID = entity.EntityID);
+            foreach (IComponent component in entity.ComponentList)
+            {
+                component.EntityID = entity.EntityID;
+            }
+        }
+        #endregion
     }
 }
