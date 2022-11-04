@@ -12,7 +12,7 @@ namespace homeworld
         {
             return AllEntities;
         }
-        public static void AddEntity(int entity_id, Entity entity)
+        public static void AddEntityToAllEntities(int entity_id, Entity entity)
         {
             AllEntities.Add(entity_id, entity);
         }
@@ -22,6 +22,7 @@ namespace homeworld
         }
         #endregion
 
+        #region EntityCreation
         private static int last_entity_id = 0;
         public static int NextEntityID()
         {
@@ -32,8 +33,8 @@ namespace homeworld
         {
             Entity entity = new Entity(archetype, location);
             EntityManager.UpdateComponentEntityIDs(entity);
-            EntityManager.AddEntity(entity.EntityID, entity);
-            Movement.UpdateEntityLocation(entity.EntityID, location);
+            EntityManager.AddEntityToAllEntities(entity.EntityID, entity);
+            // Movement.UpdateEntityLocation(entity.EntityID, location);
             return entity;
         }
         public static void KillEntity(int entity_id)
@@ -47,6 +48,7 @@ namespace homeworld
                 KillEntity(entity.Key);
             }
         }
+        #endregion
 
         #region Components
         public static T AddComponent<T>(int entity_id) where T : IComponent, new()
