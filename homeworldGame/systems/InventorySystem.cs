@@ -1,3 +1,5 @@
+using Optional;
+
 namespace homeworld
 {
     public static class InventorySystem

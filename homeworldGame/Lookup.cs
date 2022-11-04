@@ -16,7 +16,7 @@ namespace homeworld
             return_list.Add(new Location(location));
             return_list.Add(new Mobility(mobility));
         }*/
-        public static List<IComponent> ArchetypeComponents(Archetype.States archetype, XY location)
+        public static List<IComponent> ArchetypeComponents(Archetype.States archetype)
         {
             List<IComponent> return_list = new List<IComponent>();
             switch (archetype)
@@ -29,7 +29,7 @@ namespace homeworld
                     return_list.Add(new Archetype(Player));
                     return_list.Add(new NameComponent("player"));
                     return_list.Add(new Inventory());
-                    return_list.Add(new Location(location));
+                    return_list.Add(new Location());
                     return_list.Add(new Mobility(Movable));
                     break;
                 case Produce:
@@ -38,7 +38,6 @@ namespace homeworld
                     return_list.Add(new Brewable());
                     return_list.Add(new Consumable(Edible));
                     return_list.Add(new Growable());
-                    return_list.Add(new Location(location));
                     return_list.Add(new Mobility(Portable));
                     break;
                 case Cup:
@@ -47,7 +46,7 @@ namespace homeworld
                     return_list.Add(new Drinkable());
                     return_list.Add(new Fillable());
                     return_list.Add(new Emptyable());
-                    return_list.Add(new Location(location));
+                    return_list.Add(new Location());
                     return_list.Add(new Mobility(Portable));
                     break;
                 case Kettle:
@@ -57,7 +56,7 @@ namespace homeworld
                     return_list.Add(new Fillable());
                     return_list.Add(new Emptyable());
                     return_list.Add(new BrewCapable());
-                    return_list.Add(new Location(location));
+                    return_list.Add(new Location());
                     return_list.Add(new Mobility(Portable));
                     break;
                 case Bucket:
@@ -66,7 +65,7 @@ namespace homeworld
                     return_list.Add(new Drinkable());
                     return_list.Add(new Fillable());
                     return_list.Add(new Emptyable());
-                    return_list.Add(new Location(location));
+                    return_list.Add(new Location());
                     return_list.Add(new Mobility(Portable));
                     break;
                 case Well:
@@ -74,24 +73,28 @@ namespace homeworld
                     return_list.Add(new NameComponent("a stone well"));
                     return_list.Add(new Drinkable());
                     return_list.Add(new Fillable());
-                    return_list.Add(new Location(location));
+                    return_list.Add(new Location());
                     return_list.Add(new Mobility(Immovable));
                     break;
                 case Tea:
-                    // TODO: make tea
+                    return_list.Add(new Archetype(Tea));
+                    return_list.Add(new NameComponent());
+                    return_list.Add(new Consumable(Potable));
+                    return_list.Add(new Location());
+                    return_list.Add(new Mobility(Portable)); // TODO: liquid system? need to put tea in cup
                     break;
                 case Plant:
                     return_list.Add(new Archetype(Plant));
                     return_list.Add(new NameComponent());
                     return_list.Add(new Inventory());
                     return_list.Add(new Growable());
-                    return_list.Add(new Location(location));
+                    return_list.Add(new Location());
                     return_list.Add(new Mobility(Immovable));
                     break;
                 case Item:
                     return_list.Add(new Archetype(Item));
                     return_list.Add(new NameComponent());
-                    return_list.Add(new Location(location));
+                    return_list.Add(new Location());
                     return_list.Add(new Mobility(Portable));
                     break;
                 default:
@@ -113,7 +116,7 @@ namespace homeworld
             List<Entity> return_list = 
                 AllComponentsOfType<Location>()
                 .FindAll(c => c.Coordinates.Equals(target_location))
-                .Select(c => Lookup.EntityById(c.EntityID)).ToList();
+                .Select(c => Lookup.EntityById(c.PlantID)).ToList();
             return return_list;
         }
         public static List<XY> NearbyRooms(XY room)

@@ -2,7 +2,7 @@ namespace homeworld
 {
     public class Mobility : IComponent
     {
-        public int EntityID     { get; set; }
+        public int PlantID     { get; set; }
         public int ComponentID  { get; set; }
         //public XY Location      { get; set; }
         public States State     { get; set; }
@@ -15,7 +15,7 @@ namespace homeworld
 
         public Mobility(States state, /*XY location,*/ int entity_id = 0)
         {
-            EntityID    = entity_id;
+            PlantID    = entity_id;
             ComponentID = IComponent.NextComponentID();
 
             // Component-specific setup

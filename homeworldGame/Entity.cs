@@ -4,10 +4,10 @@ namespace homeworld
     {
         public int EntityID { get; set; }
         public List<IComponent> ComponentList { get; set; }
-        public Entity(Archetype.States archetype, XY location)
+        public Entity(Archetype.States archetype)
         {
             EntityID = EntityManager.NextEntityID();
-            ComponentList = Lookup.ArchetypeComponents(archetype, location);
+            ComponentList = Lookup.ArchetypeComponents(archetype);
         }
 
         // METHODS

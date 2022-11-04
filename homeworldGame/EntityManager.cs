@@ -30,10 +30,10 @@ namespace homeworld
         }
         public static Entity CreateEntity(Archetype.States archetype, XY location)
         {
-            Entity entity = new Entity(archetype, location);
+            Entity entity = new Entity(archetype);
             EntityManager.UpdateComponentEntityIDs(entity);
             EntityManager.AddEntity(entity.EntityID, entity);
-            // Movement.UpdateEntityLocation(entity.EntityID, location);
+            Movement.UpdateEntityLocation(entity, location);
             return entity;
         }
         public static void KillEntity(int entity_id)
@@ -53,7 +53,7 @@ namespace homeworld
         {
             var return_component = new T();
             Lookup.AllComponentsOfEntity(entity).Add(return_component);
-            return_component.EntityID = entity.EntityID;
+            return_component.PlantID = entity.EntityID;
             return return_component;
         }
         public static void RemoveComponent<T>(Entity entity) where T : IComponent
@@ -64,10 +64,10 @@ namespace homeworld
         }
         public static void UpdateComponentEntityIDs(Entity entity)
         {
-            entity.ComponentList.ForEach(c => c.EntityID = entity.EntityID);
+            entity.ComponentList.ForEach(c => c.PlantID = entity.EntityID);
             foreach (IComponent component in entity.ComponentList)
             {
-                component.EntityID = entity.EntityID;
+                component.PlantID = entity.EntityID;
             }
         }
         #endregion

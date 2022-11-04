@@ -44,14 +44,6 @@ namespace homeworld
             Entity kettle = EntityManager.CreateEntity(Archetype.States.Kettle, location);
             return kettle;
         }
-        public static Entity Plant(string name, XY location)
-        {
-            Entity plant = EntityManager.CreateEntity(Archetype.States.Plant, location);
-            string plant_name = $"a {name} plant";
-            NameSystem.ChangeName(plant, plant_name);
-            GrowSystem.SetProduce(plant, name);
-            return plant;
-        }
         public static Entity Item(string name, XY location)
         {
             Entity item;
@@ -71,7 +63,7 @@ namespace homeworld
             for (int i = 0; i <= 2; i++)
             {
                 XY location = XY.RandomLocation();
-                var plant = Plant(name, location);
+                var plant = GrowSystem.CreatePlant(name, location);
             }
         }
         public static void WalkThePlayerAround(Entity player, XY player_location, int steps)

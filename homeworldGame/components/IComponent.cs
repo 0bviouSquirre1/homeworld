@@ -2,7 +2,7 @@ namespace homeworld
 {
     public interface IComponent
     {
-        public int EntityID { get; set; }
+        public int PlantID { get; set; }
         public int ComponentID { get; set; }
         private static int last_component_id = 0;
 

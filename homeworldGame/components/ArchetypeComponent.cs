@@ -1,9 +1,8 @@
-using System.Data;
 namespace homeworld
 {
     public class Archetype : IComponent
     {
-        public int EntityID     { get; set; }
+        public int PlantID     { get; set; }
         public int ComponentID  { get; set; }
         public States State { get; set; }
         public enum States
