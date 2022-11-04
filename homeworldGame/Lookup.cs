@@ -18,7 +18,6 @@ namespace homeworld
                 case None:
                     return_list.Add(new Archetype(None));
                     return_list.Add(new NameComponent());
-                    return_list.Add(new Location(location));
                     break;
                 case Player:
                     return_list.Add(new Archetype(Player));
@@ -156,11 +155,10 @@ namespace homeworld
             }
             return return_component;
         }
-        public static Option<Entity> EntityById(int entity_id)
+        public static Entity EntityById(int entity_id)
         {
-            var return_entity = Option.None<Entity>();
-            // Handle Entity Not Found
-            return return_entity;
+            // TODO: Handle Entity Not Found
+            return AllEntities[entity_id];
         }
         public static List<Entity> EntityInventory(int entity_id)
         {

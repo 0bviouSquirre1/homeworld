@@ -45,6 +45,7 @@ namespace homeworld
         {
             var return_component = new T();
             Lookup.AllComponentsOfEntity(entity_id).Add(return_component);
+            return_component.EntityID = entity_id;
             return return_component;
         }
         public static void RemoveComponent<T>(int entity_id) where T : IComponent

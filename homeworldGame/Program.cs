@@ -13,7 +13,7 @@ namespace homeworld
 
             Display.OverheadMap();
 
-
+            Display.AllComponentsOfEntity(player.EntityID);
 
             // player starts at 1,1
             /*Display.EntityInventory(player.EntityID);

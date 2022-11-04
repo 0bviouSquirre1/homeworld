@@ -20,10 +20,11 @@ namespace homeworld
         }
         public static bool EntityInventoryContains(int entity_id, Entity item)
         {
-            var entity = Lookup.EntityById(entity_id);
-            entity.Map(e => e.Inventory());
-            List<Entity> inventory = Lookup.EntityById(entity_id).Inventory();
-            return inventory.Contains(item);
+            bool result = false;
+            var list = Lookup.ComponentOfEntityByType<Inventory>(entity_id);
+            list.Map(inv => inv.InventoryList)
+                .MatchSome(inv_list => result = inv_list.Contains(item));
+            return result;
         }
         public static void DropItem(int entity_id, Entity item)
         {

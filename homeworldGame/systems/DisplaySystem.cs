@@ -10,6 +10,7 @@ namespace homeworld
             string name                     = "";
             XY location                     = new XY();
 
+            Console.WriteLine();
             Console.WriteLine($"All entities currently present:");
 
             foreach (KeyValuePair<int, Entity> entity_node in Lookup.AllEntities)
@@ -22,9 +23,9 @@ namespace homeworld
 
                 string entity_id_display    = String.Format("{0,3}",   entity_id);
                 string name_display         = String.Format("{0,-20}", name);
-                string location_display     = String.Format("{0,3}",   location);
+                // string location_display     = String.Format("{0,3}",   location);
 
-                Console.WriteLine($"{entity_id_display} : {name_display} : {location_display}");
+                Console.WriteLine($"{entity_id_display} : {name_display} : {location}");
             }
 
             Console.WriteLine($"{all_entities.Count} entities present");
@@ -150,6 +151,14 @@ namespace homeworld
                 }
             }
             return return_char;
+        }
+        public static void AllComponentsOfEntity(int entity_id)
+        {
+            var list = Lookup.AllComponentsOfEntity(entity_id);
+            foreach (IComponent component in list)
+            {
+                Console.WriteLine($"{component.ToString()}");
+            }
         }
     }
 }
