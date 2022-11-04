@@ -6,6 +6,7 @@ namespace homeworld
 {
     public static class EntityManager
     {
+        public static Dictionary<int, Entity> AllEntities = new Dictionary<int, Entity>();
         private static int last_entity_id = 0;
         public static int NextEntityID()
         {
@@ -25,18 +26,18 @@ namespace homeworld
             }
 
             // Add to data stores
-            Lookup.AllEntities.Add(entity.EntityID, entity);
+            EntityManager.AllEntities.Add(entity.EntityID, entity);
 
             Movement.UpdateEntityLocation(entity.EntityID, location);
             return entity;
         }
         public static void KillEntity(int entity_id)
         {
-            Lookup.AllEntities.Remove(entity_id);
+            EntityManager.AllEntities.Remove(entity_id);
         }
         public static void KillAllEntities()
         {
-            foreach (KeyValuePair<int, Entity> entity in Lookup.AllEntities)
+            foreach (KeyValuePair<int, Entity> entity in EntityManager.AllEntities)
             {
                 KillEntity(entity.Key);
             }

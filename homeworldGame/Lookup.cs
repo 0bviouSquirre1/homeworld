@@ -7,7 +7,6 @@ namespace homeworld
 {
     public static class Lookup
     {
-        public static Dictionary<int, Entity> AllEntities = new Dictionary<int, Entity>();
         public static Dictionary<XY, bool> ExploredMap = new Dictionary<XY, bool>();
 
         public static List<IComponent> ArchetypeComponents(Archetype.States archetype, XY location)
@@ -139,7 +138,7 @@ namespace homeworld
         }
         public static List<IComponent> AllComponentsOfEntity(int entity_id)
         {
-            return Lookup.AllEntities[entity_id].ComponentList;
+            return EntityManager.AllEntities[entity_id].ComponentList;
         }
         public static Option<T> ComponentOfEntityByType<T>(int entity_id) where T : IComponent
         {
@@ -159,7 +158,7 @@ namespace homeworld
         {
             // This will fail if the Entity doesn't exist. This is good, we shouldn't be calling entities that don't exist
 
-            return AllEntities[entity_id];
+            return EntityManager.AllEntities[entity_id];
         }
         public static List<Entity> EntityInventory(int entity_id)
         {
@@ -174,7 +173,7 @@ namespace homeworld
         {
             // need a list of all components, all entities, all systems, makes sense
             List<T> component_list = new List<T>();
-            foreach (KeyValuePair<int, Entity> entity in AllEntities)
+            foreach (KeyValuePair<int, Entity> entity in EntityManager.AllEntities)
             {
                 foreach (IComponent component in entity.Value.ComponentList)
                 {
