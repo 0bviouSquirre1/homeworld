@@ -1,5 +1,3 @@
-using static homeworld.Mobility.States;
-using static homeworld.Consumable.States;
 using static homeworld.Archetype.States;
 using Optional;
 
@@ -27,6 +25,11 @@ namespace homeworld
             // Set Produce ID
             SetProduceID(plant, produce);
             InventorySystem.AddToInventory(plant, produce);
+            if (name == "nightshade")
+            {
+                var component = Lookup.ComponentOfEntityByType<Consumable>(produce);
+                component.Map(cc => cc.State = Consumable.States.Deadly);
+            }
         }
         public static void SetProduceID(Entity plant, Entity produce)
         {
@@ -42,7 +45,7 @@ namespace homeworld
                 InventorySystem.AddToInventory(plant, produce);
             }
         }
-        public static void Harvest(Entity entity, Entity plant)
+        public static Entity Harvest(Entity entity, Entity plant)
         {
             // get plant produce
             Entity produce = CreateProduce(plant, "(no)");
@@ -57,6 +60,7 @@ namespace homeworld
                 InventorySystem.RemoveFromInventory(plant, produce);
                 InventorySystem.AddToInventory(entity, produce);
             }
+            return produce;
         }
     }
 }

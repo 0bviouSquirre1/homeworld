@@ -7,38 +7,20 @@ namespace homeworld
         public static void Main()
         {
             Map.Setup();
-            Entity player = Create.Player(new XY(1,1));
-            Entity saucer = Create.Item("a saucer", new XY(1,2));
-            Entity cup = Create.Item("a cup", new XY(2,1));
-
-            Display.OverheadMap(player);
-
-            Display.AllComponentsOfEntity(player);
-
+            XY here = new XY(1,1);
+            Entity player = Create.Player(here);
+            Entity tomato_plant = GrowSystem.CreatePlant("tomato", here);
+            Entity nightshade_plant = GrowSystem.CreatePlant("nightshade", here);
+            
             // player starts at 1,1
+            Entity tomato = GrowSystem.Harvest(player, tomato_plant);
+            Display.EntityInventory(player);
+            Entity nightshade = GrowSystem.Harvest(player, nightshade_plant);
             Display.EntityInventory(player);
 
-            Movement.MovePlayer(player, new XY(1,2));
-            Display.OverheadMap(player);
-            InventorySystem.GetItem(player, saucer);
+            Intake.Consume(player, tomato);
+            Intake.Consume(player, nightshade);
             Display.EntityInventory(player);
-
-            Movement.MovePlayer(player, new XY(2,2));
-            Display.OverheadMap(player);
-            InventorySystem.DropItem(player, saucer);
-            Display.EntityInventory(player);
-
-            Movement.MovePlayer(player, new XY(2,1));
-            Display.OverheadMap(player);
-            InventorySystem.GetItem(player, cup);
-            Display.EntityInventory(player);
-
-            Movement.MovePlayer(player, new XY(2,0));
-            Display.OverheadMap(player);
-            InventorySystem.DropItem(player, cup);
-            Display.EntityInventory(player);
-
-            Display.OverheadMap(player);
         }        
     }
 }

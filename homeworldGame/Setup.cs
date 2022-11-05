@@ -1,5 +1,3 @@
-using static homeworld.Mobility.States;
-using static homeworld.Consumable.States;
 using static homeworld.Archetype.States;
 
 namespace homeworld
@@ -23,6 +21,34 @@ namespace homeworld
             Create.RandomItems("a teacup");
             Create.RandomItems("a silver spoon");
             Create.RandomItems("a saucer");
+        }
+        public static void PickupTest(Entity player)
+        {
+            Entity saucer = Create.Item("a saucer", new XY(1,2));
+            Entity cup = Create.Item("a cup", new XY(2,1));
+            Display.EntityInventory(player);
+
+            Movement.MovePlayer(player, new XY(1,2));
+            Display.OverheadMap(player);
+            InventorySystem.GetItem(player, saucer);
+            Display.EntityInventory(player);
+
+            Movement.MovePlayer(player, new XY(2,2));
+            Display.OverheadMap(player);
+            InventorySystem.DropItem(player, saucer);
+            Display.EntityInventory(player);
+
+            Movement.MovePlayer(player, new XY(2,1));
+            Display.OverheadMap(player);
+            InventorySystem.GetItem(player, cup);
+            Display.EntityInventory(player);
+
+            Movement.MovePlayer(player, new XY(2,0));
+            Display.OverheadMap(player);
+            InventorySystem.DropItem(player, cup);
+            Display.EntityInventory(player);
+
+            Display.OverheadMap(player);
         }
         public static Entity Player(XY location)
         {

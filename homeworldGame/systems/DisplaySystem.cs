@@ -1,4 +1,4 @@
-using Optional;
+using static homeworld.Consumable.States;
 
 namespace homeworld
 {
@@ -173,6 +173,32 @@ namespace homeworld
             {
                 Console.WriteLine($"{component.ToString()}");
             }
+        }
+        public static void ConsumedItem(Entity entity, Entity consumed_item, Consumable.States consumption_style)
+        {
+            string verb = "";
+            switch(consumption_style)
+            {
+                case Deadly:
+                    verb = "You shouldn't have eaten that!";
+                    break;
+                case Edible:
+                    verb = "eats";
+                    break;
+                case Potable:
+                    verb = "drinks";
+                    break;
+                case Applicable:
+                    verb = "applies";
+                    break;
+                default:
+                    break;
+            }
+            Console.WriteLine();
+            if (consumption_style == Deadly)
+                Console.WriteLine(verb);
+            else
+                Console.WriteLine($"{entity.Name()} {verb} {consumed_item}.");
         }
     }
 }

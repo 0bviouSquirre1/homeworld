@@ -12,6 +12,10 @@ namespace homeworld
 
         // METHODS
 
+        public string Name()
+        {
+            return Lookup.EntityName(this);
+        }
         public List<Entity> Inventory()
         {
             return Lookup.EntityInventory(this);
@@ -20,7 +24,6 @@ namespace homeworld
         {
             return Lookup.EntityLocation(this);
         }
-
         public override string ToString()
         {
             string name = Lookup.EntityName(this);
