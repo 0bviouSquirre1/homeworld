@@ -7,10 +7,15 @@ namespace homeworld
         public States State     { get; set; }
         public enum States
         {
-            Deadly      = 0,
-            Edible      = 1,
-            Potable     = 2,
-            Applicable  = 3
+            None,
+            Deadly,
+            Edible,
+            Potable,
+            Applicable
+        }
+        public Consumable()
+        {
+            ComponentID = IComponent.NextComponentID();
         }
         public Consumable(States state)
         {

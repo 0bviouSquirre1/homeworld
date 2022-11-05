@@ -191,6 +191,9 @@ namespace homeworld
                 case Applicable:
                     verb = "applies";
                     break;
+                case None:
+                    verb = "cannot";
+                    break;
                 default:
                     break;
             }
@@ -203,7 +206,12 @@ namespace homeworld
         public static void ContainerContents(Entity container)
         {
             Console.WriteLine();
-            Console.WriteLine($"{container} contains {LiquidSystem.GetContents(container)} sips of liquid.");
+            Console.WriteLine($"{container} contains {LiquidSystem.GetContents(container)} sips of {BrewingSystem.GetLiquid(container)}.");
+        }
+        public static void ConsumeDrink(Entity entity, Entity drink)
+        {
+            Console.WriteLine();
+            Console.WriteLine($"{Lookup.EntityName(entity)} sips from {Lookup.EntityName(drink)}.");
         }
     }
 }

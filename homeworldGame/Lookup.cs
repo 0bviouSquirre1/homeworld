@@ -21,8 +21,8 @@ namespace homeworld
             List<IComponent> return_list = new List<IComponent>();
             switch (archetype)
             {
-                case None:
-                    return_list.Add(new Archetype(None));
+                case Archetype.States.None:
+                    return_list.Add(new Archetype(Archetype.States.None));
                     return_list.Add(new NameComponent());
                     break;
                 case Player:

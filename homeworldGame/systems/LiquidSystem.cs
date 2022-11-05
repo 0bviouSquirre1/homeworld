@@ -2,7 +2,7 @@ namespace homeworld
 {
     public static class LiquidSystem
     {
-        public static void Transfer(Entity from_container, int volume, Entity? to_container = null)
+        public static void Transfer(Entity from_container, int volume, string liquid, Entity? to_container = null)
         {
             var from_capacity = LiquidSystem.GetCapacity(from_container);
             var from_contents = LiquidSystem.GetContents(from_container);
@@ -21,25 +21,42 @@ namespace homeworld
                 var to_capacity = LiquidSystem.GetCapacity(to_container);
                 var to_contents = LiquidSystem.GetContents(to_container);
 
-                if (volume + to_contents > to_capacity)
+                if (volume + to_contents >= to_capacity)
                 {
-                    LiquidSystem.Fill(to_container);
+                    LiquidSystem.Fill(to_container, liquid);
                 }
                 else
                 {
                     LiquidSystem.SetContents(to_container, to_contents + volume);
                 }
+                BrewingSystem.SetLiquid(to_container, liquid);
+                // Add consumable(potable) component
+                EntityManager.AddComponent<Consumable>(to_container);
+                Intake.SetState(to_container, Consumable.States.Potable);
             }
         }
         public static void Empty(Entity container)
         {
             LiquidSystem.SetContents(container, 0);
+            Intake.SetState(container, Consumable.States.None);
         }
-        public static void Fill(Entity container)
+        public static void Fill(Entity to_container, string liquid, Entity? from_container = null)
         {
-            var capacity = LiquidSystem.GetCapacity(container);
-            var contents = LiquidSystem.GetContents(container);
-            LiquidSystem.SetContents(container, capacity);
+            var to_capacity = LiquidSystem.GetCapacity(to_container);
+            var to_contents = LiquidSystem.GetContents(to_container);
+
+            if (from_container is not null)
+            {
+                liquid = BrewingSystem.GetLiquid(from_container);
+                var from_capacity = LiquidSystem.GetCapacity(from_container);
+                var from_contents = LiquidSystem.GetContents(from_container);
+
+                LiquidSystem.SetContents(from_container, from_contents - (to_capacity - to_contents));
+            }
+
+            LiquidSystem.SetContents(to_container, to_capacity);
+            BrewingSystem.SetLiquid(to_container, liquid);
+            Intake.SetState(to_container, Consumable.States.Potable);
         }
         public static void SetContents(Entity container, int volume)
         {

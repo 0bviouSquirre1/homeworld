@@ -9,24 +9,31 @@ namespace homeworld
             Map.Setup();
             XY here = new XY(1,1);
             Entity player = Create.Player(here);
-            Entity tomato_plant = GrowSystem.CreatePlant("tomato", here);
+            Entity mint_plant = GrowSystem.CreatePlant("mint", here);
             Entity nightshade_plant = GrowSystem.CreatePlant("nightshade", here);
             
             // player starts at 1,1
-            Entity tomato = GrowSystem.Harvest(player, tomato_plant);
-            Display.EntityInventory(player);
+            Entity mint = GrowSystem.Harvest(player, mint_plant);
             Entity nightshade = GrowSystem.Harvest(player, nightshade_plant);
             Display.EntityInventory(player);
 
-            Intake.Consume(player, tomato);
-            Intake.Consume(player, nightshade);
+            Entity cup = Create.Item("a teacup", here);
+            InventorySystem.GetItem(player, cup);
+            Entity kettle = Create.Kettle(here);
+            LiquidSystem.Fill(kettle, "water");
+            Display.ContainerContents(kettle);
+
+            string liquid = BrewingSystem.BrewTea(player, mint, kettle);
+            Display.ContainerContents(kettle);
             Display.EntityInventory(player);
 
-            Entity kettle = Create.Kettle(here);
-            Entity bucket = Create.Bucket(here);
-            LiquidSystem.Fill(kettle);
-            Display.ContainerContents(kettle);
-            Display.ContainerContents(bucket);
+            LiquidSystem.Fill(cup, liquid, kettle);
+            Display.ContainerContents(cup);
+
+            Intake.Drink(player, cup);
+            Display.ContainerContents(cup);
         }        
     }
 }
+
+// shout out to sazzer, bbuck, thiez of the MUD coders guild slack for literally invaluable assistance

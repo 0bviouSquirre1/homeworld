@@ -16,10 +16,11 @@ public class LiquidSystemTests
         XY here = new XY(1,1);
         Entity well = Create.Well(here);
         Entity bucket = Create.Bucket(here);
+        string liquid = "water";
         var bucket_capacity = LiquidSystem.GetCapacity(bucket);
 
         // Act
-        LiquidSystem.Transfer(well, bucket_capacity, bucket);
+        LiquidSystem.Transfer(well, bucket_capacity, liquid, bucket);
         var well_contents = LiquidSystem.GetContents(well);
         var bucket_contents = LiquidSystem.GetContents(bucket);
         
@@ -34,11 +35,12 @@ public class LiquidSystemTests
         XY here = new XY(1,1);
         Entity bucket = Create.Bucket(here);
         Entity kettle = Create.Kettle(here);
-        LiquidSystem.Fill(bucket);
+        string liquid = "water";
+        LiquidSystem.Fill(bucket, liquid);
         var kettle_capacity = LiquidSystem.GetCapacity(kettle);
 
         // Act
-        LiquidSystem.Transfer(bucket, kettle_capacity, kettle);
+        LiquidSystem.Transfer(bucket, kettle_capacity, liquid, kettle);
         var kettle_contents = LiquidSystem.GetContents(kettle);
         var bucket_contents = LiquidSystem.GetContents(bucket);
         
@@ -53,11 +55,12 @@ public class LiquidSystemTests
         XY here = new XY(1,1);
         Entity kettle = Create.Kettle(here);
         Entity bucket = Create.Bucket(here);
-        LiquidSystem.Fill(kettle);
+        string liquid = "water";
+        LiquidSystem.Fill(kettle, liquid);
         var kettle_capacity = LiquidSystem.GetCapacity(kettle);
 
         // Act
-        LiquidSystem.Transfer(kettle, kettle_capacity, bucket);
+        LiquidSystem.Transfer(kettle, kettle_capacity, liquid, bucket);
         var kettle_contents = LiquidSystem.GetContents(kettle);
         var bucket_contents = LiquidSystem.GetContents(bucket);
         

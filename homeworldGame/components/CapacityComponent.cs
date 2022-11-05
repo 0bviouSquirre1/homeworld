@@ -6,11 +6,14 @@ namespace homeworld
         public int ComponentID  { get; set; }
         public int Capacity     { get; set; }
         public int Contents     { get; set; }
+        public string Liquid    { get; set; }
+
         public CapacityComponent(int capacity)
         {
             ComponentID = IComponent.NextComponentID();
             Capacity = capacity;
             Contents = 0;
+            Liquid = "nothing";
         }
     }
 }
