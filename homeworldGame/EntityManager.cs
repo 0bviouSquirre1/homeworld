@@ -49,7 +49,7 @@ namespace homeworld
         {
             var return_component = new T();
             Lookup.AllComponentsOfEntity(entity).Add(return_component);
-            return_component.PlantID = entity.EntityID;
+            return_component.EntityID = entity.EntityID;
             return return_component;
         }
         public static void RemoveComponent<T>(Entity entity) where T : IComponent
@@ -60,10 +60,10 @@ namespace homeworld
         }
         public static void UpdateComponentEntityIDs(Entity entity)
         {
-            entity.ComponentList.ForEach(c => c.PlantID = entity.EntityID);
+            entity.ComponentList.ForEach(c => c.EntityID = entity.EntityID);
             foreach (IComponent component in entity.ComponentList)
             {
-                component.PlantID = entity.EntityID;
+                component.EntityID = entity.EntityID;
             }
         }
         #endregion

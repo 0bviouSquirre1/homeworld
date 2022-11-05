@@ -58,6 +58,9 @@ namespace homeworld
         public static Entity Well(XY location)
         {
             Entity well = EntityManager.CreateEntity(Archetype.States.Well, location);
+            // set well contents to 1000
+            var capacity_component = Lookup.ComponentOfEntityByType<CapacityComponent>(well);
+            capacity_component.MatchSome(cc => cc.Contents = 1000);
             return well;
         }
         public static Entity Bucket(XY location)

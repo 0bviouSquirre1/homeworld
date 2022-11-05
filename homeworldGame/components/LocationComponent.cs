@@ -2,7 +2,7 @@ namespace homeworld
 {
     public class Location : IComponent
     {
-        public int PlantID     { get; set; }
+        public int EntityID     { get; set; }
         public int ComponentID  { get; set; }
         public XY Coordinates { get; set; }
         public Location()

@@ -21,6 +21,12 @@ namespace homeworld
             Intake.Consume(player, tomato);
             Intake.Consume(player, nightshade);
             Display.EntityInventory(player);
+
+            Entity kettle = Create.Kettle(here);
+            Entity bucket = Create.Bucket(here);
+            LiquidSystem.Fill(kettle);
+            Display.ContainerContents(kettle);
+            Display.ContainerContents(bucket);
         }        
     }
 }

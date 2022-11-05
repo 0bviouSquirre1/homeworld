@@ -2,7 +2,7 @@ namespace homeworld
 {
     public class Consumable : IComponent
     {
-        public int PlantID     { get; set; }
+        public int EntityID     { get; set; }
         public int ComponentID  { get; set; }
         public States State     { get; set; }
         public enum States

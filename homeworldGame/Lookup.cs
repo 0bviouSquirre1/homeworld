@@ -43,37 +43,30 @@ namespace homeworld
                 case Cup:
                     return_list.Add(new Archetype(Cup));
                     return_list.Add(new NameComponent());
-                    return_list.Add(new Drinkable());
-                    return_list.Add(new Fillable());
-                    return_list.Add(new Emptyable());
                     return_list.Add(new Location());
+                    return_list.Add(new CapacityComponent(5));
                     return_list.Add(new Mobility(Portable));
                     break;
                 case Kettle:
                     return_list.Add(new Archetype(Kettle));
                     return_list.Add(new NameComponent("an iron kettle"));
-                    return_list.Add(new Drinkable());
-                    return_list.Add(new Fillable());
-                    return_list.Add(new Emptyable());
                     return_list.Add(new BrewCapable());
                     return_list.Add(new Location());
+                    return_list.Add(new CapacityComponent(20));
                     return_list.Add(new Mobility(Portable));
                     break;
                 case Bucket:
                     return_list.Add(new Archetype(Bucket));
                     return_list.Add(new NameComponent("a wooden bucket"));
-                    return_list.Add(new Drinkable());
-                    return_list.Add(new Fillable());
-                    return_list.Add(new Emptyable());
                     return_list.Add(new Location());
+                    return_list.Add(new CapacityComponent(100));
                     return_list.Add(new Mobility(Portable));
                     break;
                 case Well:
                     return_list.Add(new Archetype(Well));
                     return_list.Add(new NameComponent("a stone well"));
-                    return_list.Add(new Drinkable());
-                    return_list.Add(new Fillable());
                     return_list.Add(new Location());
+                    return_list.Add(new CapacityComponent(1000));
                     return_list.Add(new Mobility(Immovable));
                     break;
                 case Tea:
@@ -116,7 +109,7 @@ namespace homeworld
             List<Entity> return_list = 
                 AllComponentsOfType<Location>()
                 .FindAll(c => c.Coordinates.Equals(target_location))
-                .Select(c => Lookup.EntityById(c.PlantID)).ToList();
+                .Select(c => Lookup.EntityById(c.EntityID)).ToList();
             return return_list;
         }
         public static List<XY> NearbyRooms(XY room)

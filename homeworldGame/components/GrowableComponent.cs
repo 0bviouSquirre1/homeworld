@@ -2,7 +2,7 @@ namespace homeworld
 {
     public class Growable : IComponent
     {
-        public int PlantID      { get; set; }
+        public int EntityID      { get; set; }
         public int ComponentID  { get; set; }
         public int ProduceID    { get; set; }
         public Growable()
@@ -11,7 +11,7 @@ namespace homeworld
         }
         public Entity GetPlant()
         {
-            return Lookup.EntityById(PlantID);
+            return Lookup.EntityById(EntityID);
         }
         public Entity GetProduce()
         {

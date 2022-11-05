@@ -2,7 +2,7 @@ namespace homeworld
 {
     public class Inventory : IComponent
     {
-        public int PlantID     { get; set; }
+        public int EntityID     { get; set; }
         public int ComponentID  { get; set; }
         public List<Entity> InventoryList;
         // TODO: actually use the MaxInventorySize, later

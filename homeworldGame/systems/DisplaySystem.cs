@@ -200,5 +200,10 @@ namespace homeworld
             else
                 Console.WriteLine($"{entity.Name()} {verb} {consumed_item}.");
         }
+        public static void ContainerContents(Entity container)
+        {
+            Console.WriteLine();
+            Console.WriteLine($"{container} contains {LiquidSystem.GetContents(container)} sips of liquid.");
+        }
     }
 }
