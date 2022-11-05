@@ -4,7 +4,6 @@ namespace homeworld
     {
         public int EntityID     { get; set; }
         public int ComponentID  { get; set; }
-        //public XY Location      { get; set; }
         public States State     { get; set; }
         public enum States
         {
@@ -13,14 +12,13 @@ namespace homeworld
             Movable     = 2
         }
 
-        public Mobility(States state, /*XY location,*/ int entity_id = 0)
+        public Mobility(States state, int entity_id = 0)
         {
             EntityID    = entity_id;
             ComponentID = IComponent.NextComponentID();
 
             // Component-specific setup
             State       = state;
-            //Location    = location;
         }
 
         // METHODS

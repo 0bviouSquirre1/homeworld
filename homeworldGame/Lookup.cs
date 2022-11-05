@@ -174,7 +174,6 @@ namespace homeworld
         }
         public static List<T> AllComponentsOfType<T>() where T : IComponent
         {
-            // need a list of all components, all entities, all systems, makes sense
             List<T> component_list = new List<T>();
             foreach (KeyValuePair<int, Entity> entity in EntityManager.GetAllEntities())
             {

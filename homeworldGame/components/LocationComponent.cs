@@ -4,7 +4,7 @@ namespace homeworld
     {
         public int EntityID     { get; set; }
         public int ComponentID  { get; set; }
-        public XY Coordinates { get; set; }
+        public XY Coordinates   { get; set; }
         public Location()
         {
             ComponentID = IComponent.NextComponentID();

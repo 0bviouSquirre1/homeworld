@@ -12,7 +12,6 @@ namespace homeworld
 
             // Component-specific setup
             Name        = name;
-
         }
 
         // METHODS

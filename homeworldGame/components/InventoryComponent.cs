@@ -5,8 +5,6 @@ namespace homeworld
         public int EntityID     { get; set; }
         public int ComponentID  { get; set; }
         public List<Entity> InventoryList;
-        // TODO: actually use the MaxInventorySize, later
-        public int MaxInventorySize = 20;
 
         public Inventory()
         {

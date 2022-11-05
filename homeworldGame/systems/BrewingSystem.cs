@@ -15,8 +15,6 @@ namespace homeworld
                 InventorySystem.RemoveFromInventory(entity, produce);
                 liquid = $"{Lookup.EntityName(produce)} tea";
                 BrewingSystem.SetLiquid(container, liquid);
-                // NameSystem.ChangeName(tea, name);
-                // Entity tea = EntityManager.CreateEntity(Archetype.States.Tea, new XY(99,99));
             }
             return liquid;
         }

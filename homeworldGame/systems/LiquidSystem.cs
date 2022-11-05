@@ -30,7 +30,6 @@ namespace homeworld
                     LiquidSystem.SetContents(to_container, to_contents + volume);
                 }
                 BrewingSystem.SetLiquid(to_container, liquid);
-                // Add consumable(potable) component
                 EntityManager.AddComponent<Consumable>(to_container);
                 Intake.SetState(to_container, Consumable.States.Potable);
             }

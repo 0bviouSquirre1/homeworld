@@ -23,7 +23,6 @@ namespace homeworld
 
                 string entity_id_display    = String.Format("{0,3}",   entity_id);
                 string name_display         = String.Format("{0,-20}", name);
-                // string location_display     = String.Format("{0,3}",   location);
 
                 Console.WriteLine($"{entity_id_display} : {name_display} : {location}");
             }
